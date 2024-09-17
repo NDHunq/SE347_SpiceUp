@@ -3,7 +3,7 @@ import React from "react";
 import "./recipe.css";
 import Header from "../widget/top";
 import { LiaFilterSolid } from "react-icons/lia";
-
+import FilterCategory from "./filter_drop_category/filter_category";
 function Recipes() {
   const navItems = [{ link: "/recipes", text: "Recipes" }];
   return (
@@ -21,6 +21,9 @@ function Recipes() {
                     <p>Filter</p>
                     <LiaFilterSolid className="img"></LiaFilterSolid>
                   </div>
+                </div>
+                <div className="filter_content">
+                  <FilterCategory></FilterCategory>
                 </div>
               </div>
             </div>

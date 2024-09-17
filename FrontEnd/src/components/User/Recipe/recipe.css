@@ -163,3 +163,8 @@
   width: 25px;
   height: 25px;
 }
+
+.filter_content {
+  width: 100%;
+  height: 1000px;
+}
