@@ -35,12 +35,14 @@ function Recipes() {
                     <LiaFilterSolid className="img"></LiaFilterSolid>
                   </div>
                 </div>
+                <hr className="line"></hr>
                 <div className="filter_content">
                   <FilterCategory
                     listname={"Recipe Types"}
                     listCategory={listCategory}
                   ></FilterCategory>
-                  <div className="rectangle"></div>
+                  <hr className="line"></hr>
+                  <p>Recenty Saved</p>
                 </div>
               </div>
             </div>
@@ -61,7 +63,7 @@ function Recipes() {
               </div>
               <div className="div2">
                 <div className="flex">
-                  <p className="txt">Sort by:</p>
+                  <p className="txt_Sortby"> Sort by:</p>
                   <select className="sort-by">
                     <option value="latest"> Latest </option>
                     <option value="best-seller"> Best Seller </option>

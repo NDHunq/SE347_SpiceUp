@@ -28,6 +28,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 30px */
+  user-select: none;
 }
 .category {
   display: flex;
@@ -38,9 +39,11 @@
 }
 .ul {
   list-style-type: none; /* Remove default bullet points */
-  padding: 0; /* Remove default padding */
+
   margin: 0; /* Remove default margin */
-  padding-bottom: 10px;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .category_name {
@@ -49,13 +52,13 @@
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-style: normal;
+  width: fit-content;
   font-weight: 400;
   line-height: 150%; /* 21px */
 }
 .category {
   display: flex;
   align-items: center;
-  padding: 10px; /* Add padding if needed */
 }
 
 .category_radio {
@@ -73,7 +76,6 @@
 .category_name,
 .category_number {
   margin: 0;
-  padding: 0 5px; /* Adjust padding if needed */
 }
 .category_radio:checked + .category_label {
   color: #00b207; /* Change text color to green when selected */
