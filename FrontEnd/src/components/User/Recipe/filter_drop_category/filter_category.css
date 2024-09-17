@@ -1,0 +1,90 @@
+.img {
+  cursor: pointer;
+}
+.dropdown-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.img_frame {
+  margin-right: 5px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  transition: transform 0.3s ease-out;
+}
+.img_frame.rotated {
+  transform: rotate(180deg);
+}
+.dropdown-list.open {
+  max-height: 10000px; /* Adjust as needed */
+}
+.txt {
+  margin-left: 10px;
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body XL/Body XL, 500 */
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 30px */
+}
+.category {
+  display: flex;
+
+  height: 40px;
+
+  cursor: pointer;
+}
+.ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  padding-bottom: 10px;
+}
+
+.category {
+  padding: 10px; /* Add padding if needed */
+  border-bottom: 1px solid #ccc; /* Optional: Add a border for separation */
+}
+.category_name {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body Small/Body Small, 400 */
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+}
+.category {
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Add padding if needed */
+  border-bottom: 1px solid #ccc; /* Optional: Add a border for separation */
+}
+
+.category_radio {
+  margin-right: 10px; /* Adjust spacing between radio button and text */
+  accent-color: green;
+}
+
+.category_label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category_name,
+.category_number {
+  margin: 0;
+  padding: 0 5px; /* Adjust padding if needed */
+}
+.category_radio:checked + .category_label {
+  color: #00b207; /* Change text color to green when selected */
+}
+
+.category_radio:checked + .category_label .category_name,
+.category_radio:checked + .category_label .category_number {
+  color: #00b207; /* Change text color to green when selected */
+}

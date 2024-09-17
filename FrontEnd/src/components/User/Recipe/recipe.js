@@ -6,6 +6,19 @@ import { LiaFilterSolid } from "react-icons/lia";
 import FilterCategory from "./filter_drop_category/filter_category";
 function Recipes() {
   const navItems = [{ link: "/recipes", text: "Recipes" }];
+  const listCategory = [
+    { name: "Cate1", number: 10 },
+    { name: "Cate2", number: 20 },
+    { name: "Cate3", number: 30 },
+    { name: "Cate4", number: 40 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+    { name: "Cate5", number: 50 },
+  ];
   return (
     <div className="recipes">
       <Header navItems={navItems} />
@@ -23,7 +36,11 @@ function Recipes() {
                   </div>
                 </div>
                 <div className="filter_content">
-                  <FilterCategory></FilterCategory>
+                  <FilterCategory
+                    listname={"Recipe Types"}
+                    listCategory={listCategory}
+                  ></FilterCategory>
+                  <div className="rectangle"></div>
                 </div>
               </div>
             </div>
