@@ -1,27 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/User/Home/Home";
-import About from "./components/User/About/About";
-import SignIn from "./components/Auth/signIn";
-import SignUp from "./components/Auth/signUp";
-
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import Layout from "./Layout";
+import store from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Route>
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
+      <Layout />
     </BrowserRouter>
   </React.StrictMode>
 );
