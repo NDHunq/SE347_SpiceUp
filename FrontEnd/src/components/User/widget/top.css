@@ -1,0 +1,68 @@
+.header_route {
+  display: flex;
+  height: 100px;
+  /* Đặt chiều rộng bằng kích thước màn hình */
+  background-size: cover; /* Đảm bảo hình ảnh nền bao phủ toàn bộ phần tử */
+  background-image: url(../../../assets/images/Breadcrumbs.png);
+}
+.text {
+  color: white;
+}
+.text a {
+  color: #999999; /* Đặt màu cho các liên kết bên trong lớp .text */
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+.text a:hover,
+.text a:focus,
+.text a:active {
+  color: white; /* Đảm bảo màu không thay đổi khi hover, focus, hoặc active */
+}
+.text2 {
+  color: #00b207;
+}
+.text2 a {
+  color: #00b207; /* Đặt màu cho các liên kết bên trong lớp .text */
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+.text2 a:hover,
+.text2 a:focus,
+.text2 a:active {
+  color: #16c11c; /* Đảm bảo màu không thay đổi khi hover, focus, hoặc active */
+}
+.recipes {
+  background-color: white;
+  width: 100%;
+  margin: 0;
+}
+.bg {
+  margin-top: 100px;
+  color: white;
+  height: 400px;
+  background-color: wheat;
+}
+.displayFlex {
+  display: flex;
+  height: 100px;
+
+  align-items: center;
+}
+.home_icon {
+  display: flex;
+  width: 24px;
+  height: 24px;
+
+  /* Đặt chiều rộng bằng kích thước màn hình */
+  background-size: cover; /* Đảm bảo hình ảnh nền bao phủ toàn bộ phần tử */
+  background-image: url(../../../assets/images/home.svg);
+}
+
+.larger_icon {
+  display: flex;
+
+  margin: 0px 12px;
+  margin-top: 2px;
+  width: 6.167px;
+  height: 11.083px;
+  background-size: cover;
+  background-image: url(../../../assets/images/Group.svg);
+}
