@@ -1,86 +1,102 @@
 .feature-navi,
 .phone-navi {
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  align-self: center;
-  margin-top: 22px;
-  color: var(--Gren-Gray-Scale-900, #002603);
+  font-family    : "Poppins", sans-serif;
+  font-size      : 14px;
+  align-self     : center;
+  margin-top     : 22px;
+  color          : var(--Gren-Gray-Scale-900, #002603);
   text-decoration: none;
 }
 
 .display {
-  display: flex;
-  align-items: center;
+  display        : flex;
+  align-items    : center;
   justify-content: center;
+
 }
 
 .app-navi {
-  margin-top: 12px;
-  color: var(--Gren-Gray-Scale-900, #002603);
-  font-family: Poppins;
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 38px; /* 118.75% */
+  margin-top    : 12px;
+  color         : var(--Gren-Gray-Scale-900, #002603);
+  font-family   : Poppins;
+  font-size     : 25px;
+  font-style    : normal;
+  font-weight   : 500;
+  line-height   : 38px;
+  /* 118.75% */
   letter-spacing: -0.96px;
+  cursor        : pointer;
 }
 
 .logo,
 .phone {
-  background-size: contain; /* Đảm bảo hình ảnh không bị cắt */
-  background-repeat: no-repeat; /* Không lặp lại hình ảnh */
-  width: 30px; /* Đặt chiều rộng cho logo */
-  height: 30px;
+  background-size  : contain;
+  /* Đảm bảo hình ảnh không bị cắt */
+  background-repeat: no-repeat;
+  /* Không lặp lại hình ảnh */
+  width            : 30px;
+  /* Đặt chiều rộng cho logo */
+  height           : 30px;
 }
+
 .phone {
   margin-top: 5px;
 }
+
 .logo {
-  background-image: url("../../../assets/images/plant1.svg"); /* Đường dẫn đến hình ảnh */
-  margin-right: 8px; /* Đặt khoảng cách giữa logo và chữ */
+  background-image: url("../../../assets/images/plant1.svg");
+  /* Đường dẫn đến hình ảnh */
+  margin-right    : 8px;
+  /* Đặt khoảng cách giữa logo và chữ */
 }
+
 .phone {
   background-image: url("../../../assets/images/PhoneCall.svg");
-  margin-right: 8px;
+  margin-right    : 8px;
 }
+
 .SignUp-btn,
 .SignIn-btn {
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  width: 112px;
-  height: 45px;
-  padding: 10px 24px;
+  font-size  : 14px;
+  width      : 112px;
+  height     : 45px;
+  padding    : 10px 24px;
   font-weight: 600;
   user-select: none;
 }
+
 .SignUp-btn {
   border-radius: 43px;
-  border: 2px solid var(--Main-Green, #00b207);
-  background: var(--Gray-Scale-White, #fff);
-  text-align: center;
-  color: var(--Main-Green, #00b207);
-  margin-right: 13px;
+  border       : 2px solid var(--Main-Green, #00b207);
+  background   : var(--Gray-Scale-White, #fff);
+  text-align   : center;
+  color        : var(--Main-Green, #00b207);
+  margin-right : 13px;
 }
+
 .SignIn-btn {
-  border-radius: 43px;
-  border: 2px solid var(--Main-Green, #00b207);
-  background: var(--Main-Green, #00b207);
-  text-align: center;
-  padding: 10px 20px;
+  border-radius  : 43px;
+  border         : 2px solid var(--Main-Green, #00b207);
+  background     : var(--Main-Green, #00b207);
+  text-align     : center;
+  padding        : 10px 20px;
   text-decoration: white;
-  color: white;
+  color          : white;
 }
+
 .phone-navi {
   margin-right: 15px;
 }
+
 .App-footer {
   background-color: var(--Gray-Scale-White, #000000);
-  padding: 20px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  color: var(--Gren-Gray-Scale-900, #002603);
-  height: 333px;
+  padding         : 20px 0;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  font-family     : "Poppins", sans-serif;
+  font-size       : 14px;
+  color           : var(--Gren-Gray-Scale-900, #002603);
+  height          : 333px;
 }

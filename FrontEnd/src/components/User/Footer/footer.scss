@@ -1,0 +1,110 @@
+.footer-container {
+  width           : 100%;
+  background-color: #191919;
+
+  .top {
+    height : 200px;
+    width  : 100%;
+    display: flex;
+
+    .decor-left {
+      display: flex;
+
+      .decor-image {
+        background-image: url("../../../assets/images/footer_decor_left.svg");
+        background-size : cover;
+
+      }
+
+      .content {
+        .display {}
+
+        .contact {
+          margin-top: 10px;
+          color     : white;
+          cursor    : pointer;
+
+          .or {
+            cursor: auto;
+            color : #808080;
+          }
+        }
+
+        .texxt {
+          color: #808080;
+        }
+
+        .app-navi {
+          margin-top    : 12px;
+          color         : var(--Gren-Gray-Scale-900, #fbfbfb);
+          font-family   : Poppins;
+          font-size     : 25px;
+          font-style    : normal;
+          font-weight   : 500;
+          line-height   : 38px;
+          /* 118.75% */
+          letter-spacing: -0.96px;
+          cursor        : pointer;
+        }
+
+        .logo {
+          background-size  : contain;
+          /* Đảm bảo hình ảnh không bị cắt */
+          background-repeat: no-repeat;
+          /* Không lặp lại hình ảnh */
+          width            : 30px;
+          /* Đặt chiều rộng cho logo */
+          height           : 30px;
+          background-image : url("../../../assets/images/plant1.svg");
+          /* Đường dẫn đến hình ảnh */
+          margin-right     : 8px;
+          /* Đặt khoảng cách giữa logo và chữ */
+        }
+
+
+
+      }
+    }
+
+    .content-center {
+      display: flex;
+      color  : #808080;
+
+
+      .cc {
+        align-content: space-around;
+        padding-left : 40px;
+
+        .title {
+          color : white;
+          cursor: pointer;
+
+        }
+      }
+
+      .cc1 {
+        padding-left: 200px;
+      }
+    }
+
+    .decor-right {
+      display: flex;
+
+      .decor-image {
+        background-image: url("../../../assets/images/footer_decor_right.svg ");
+        background-size : cover;
+      }
+    }
+  }
+
+  .bottom {
+    color         : #808080;
+    width         : 100%;
+    text-align    : center;
+    padding-bottom: 15px;
+  }
+}
+
+hr {
+  color: white;
+}
