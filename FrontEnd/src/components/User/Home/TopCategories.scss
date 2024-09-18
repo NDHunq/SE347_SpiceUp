@@ -1,0 +1,100 @@
+.TC-container {
+    height: 700px;
+
+    .main {
+        background-color: #F2F5F2;
+        height          : 700px;
+
+
+        .container {
+            padding-top: 05px;
+
+            .title {
+                font-size    : 25px;
+                font-weight  : 650;
+                margin-bottom: 20px;
+                margin-top   : 20px;
+            }
+
+            .row-1 {
+                display: flex;
+
+                .product1 {
+                    background-color: yellow;
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+
+                .product2 {
+                    background-color: rgb(67, 208, 39);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+
+                .product3 {
+                    background-color: rgb(27, 122, 255);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+
+                .product4 {
+                    background-color: rgb(246, 49, 49);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+
+                .product5 {
+                    background-color: rgb(239, 51, 173);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+
+                .product6 {
+                    background-color: rgb(37, 205, 221);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+            }
+
+            .space {
+                height: 30px;
+            }
+
+            .row-2 {
+                display: flex;
+
+                .imgg {
+                    display: flex;
+
+                    .product1 {
+                        background-color: yellow;
+                        padding-left    : 10px;
+                        height          : 270px;
+
+                    }
+
+                    .product2 {
+                        background-color: rgb(67, 208, 39);
+                        padding-left    : 10px;
+                        height          : 270px;
+
+                    }
+                }
+
+
+                .product3 {
+                    background-color: rgb(27, 122, 255);
+                    padding-left    : 10px;
+                    height          : 270px;
+
+                }
+            }
+        }
+    }
+}
