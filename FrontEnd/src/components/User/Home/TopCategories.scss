@@ -2,9 +2,11 @@
     height: 700px;
 
     .main {
-        background-color: #F2F5F2;
+        background-image: url("../../../assets/images/Home/cateBG.svg");
         height          : 700px;
 
+        background-size  : cover;
+        background-repeat: no-repeat;
 
         .container {
             padding-top: 05px;

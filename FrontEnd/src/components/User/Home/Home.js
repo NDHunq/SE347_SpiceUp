@@ -4,6 +4,10 @@ import { Carousel } from "antd";
 import { Link } from "react-router-dom";
 import FeaturedProducts from "./FeaturedProducts";
 import TopCategories from "./TopCategories";
+import Analysis from "./Analysis";
+import BestSeller from "./BestSeller";
+import LatestRecipe from "./LatestRecipe";
+import Review from "./Review";
 import {
   LiaShippingFastSolid,
   LiaShoppingBagSolid,
@@ -85,6 +89,10 @@ const Home = (props) => {
       </main>
       <FeaturedProducts />
       <TopCategories />
+      <Analysis />
+      <BestSeller />
+      <LatestRecipe />
+      <Review />
     </div>
   );
 };

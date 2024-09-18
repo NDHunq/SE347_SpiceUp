@@ -1,0 +1,49 @@
+.A-container {
+    height: 280px;
+
+    .main {
+
+
+        background-image : url("../../../assets/images/Home/analysisBG.svg");
+        background-size  : cover;
+        background-repeat: no-repeat;
+        height           : 280px;
+
+        .container {
+            padding-top: 55px;
+
+
+            .row {
+                display: flex;
+
+                .product1 {
+                    background-color: yellow;
+                    padding-left    : 10px;
+                    height          : 170px;
+
+                }
+
+                .product2 {
+                    background-color: rgb(67, 208, 39);
+                    padding-left    : 10px;
+                    height          : 170px;
+
+                }
+
+                .product3 {
+                    background-color: rgb(27, 122, 255);
+                    padding-left    : 10px;
+                    height          : 170px;
+
+                }
+
+                .product4 {
+                    background-color: rgb(246, 49, 49);
+                    padding-left    : 10px;
+                    height          : 170px;
+
+                }
+            }
+        }
+    }
+}
