@@ -39,11 +39,24 @@ const Header2 = () => {
                   <p className="phone-navi">033333333</p>
                 </div>
                 <div className="col icon-group">
-                  <LiaSearchSolid className="col icon" />
-                  <Badge count={5} size="small">
-                    <LiaShoppingCartSolid className="col icon" />
-                  </Badge>
-                  <LiaUser className="col icon" />
+                  <div className="col icon">
+                    {" "}
+                    <LiaSearchSolid className="icon-1" />
+                  </div>
+                  <div className="col icon">
+                    <Link to="/shopping-cart">
+                      <Badge count={5} size="small">
+                        <LiaShoppingCartSolid className="icon-1" />
+                      </Badge>
+                    </Link>
+                  </div>
+
+                  <div className="col icon">
+                    {" "}
+                    <Link to="/account" className="link-acc">
+                      <LiaUser className="icon-1" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

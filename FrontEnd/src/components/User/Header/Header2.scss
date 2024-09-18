@@ -107,10 +107,19 @@
     display     : flex;
     padding-left: 50px;
 
+    .link-acc {
+        color: #000000;
+    }
+
     .icon {
-        height: 27px;
-        width : 27px;
+        height: 30px;
+        width : 30px;
         cursor: pointer;
+
+        .icon-1 {
+            height: 30px;
+            width : 30px;
+        }
     }
 }
 
