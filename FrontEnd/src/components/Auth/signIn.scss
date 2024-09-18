@@ -1,0 +1,167 @@
+.center-si {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 450px;
+
+    .container {
+        font-family: "Roboto",
+            sans-serif;
+        justify-content: center;
+        align-items    : center;
+        border-radius  : 13px;
+        padding        : 20px;
+        background     : var(--Main-White, white);
+        box-shadow     : 0 0 10px 0 rgba(0, 0, 0, 0.09);
+        border         : solid 1px #F2F2F2;
+        width          : 370px;
+        height         : 365px;
+
+        .title {
+            text-align    : center;
+            padding-bottom: 5px;
+            font-size     : 29px;
+        }
+
+        .email {
+            margin-bottom: 15px;
+            width        : 100%;
+            border-radius: 6px;
+            border       : solid 1px #E6E6E6;
+            padding      : 8px;
+            font-size    : 15x;
+        }
+
+        .password {
+            margin-bottom: 10px;
+            width        : 100%;
+            border-radius: 6px;
+            padding      : 8px;
+            border       : solid 1px #E6E6E6;
+            font-size    : 14px;
+
+        }
+
+        .email:focus,
+        .password:focus {
+            border-color: #7a7a7a;
+            outline     : #7a7a7a;
+        }
+
+        .forget-pass {
+            color          : #666666;
+            text-decoration: none;
+            float          : right;
+            font-size      : 15px;
+        }
+
+        .submit {
+            border-radius  : 50px;
+            border         : 2px solid var(--Main-Green, #00b207);
+            background     : var(--Main-Green, #00b207);
+            text-align     : center;
+            padding        : 7px 20px;
+            text-decoration: white;
+            color          : white;
+            width          : 100%;
+        }
+
+        /* Đặt label chứa checkbox */
+        .custom-checkbox {
+            display      : inline-block;
+            position     : relative;
+            padding-left : 25px;
+            margin-bottom: 12px;
+            cursor       : pointer;
+            font-size    : 15px;
+            color        : #666666;
+            user-select  : none;
+        }
+
+        /* Ẩn checkbox mặc định */
+        .custom-checkbox input {
+            position: absolute;
+            opacity : 0;
+            cursor  : pointer;
+        }
+
+        /* Thiết kế phần checkmark (ô vuông nhỏ) */
+        .custom-checkbox .checkmark {
+            position        : absolute;
+            top             : 1px;
+            left            : 0;
+            height          : 16px;
+            width           : 16px;
+            background-color: #ffffff;
+            border          : 2px solid #ccc;
+            border-radius   : 3px;
+        }
+
+
+
+        /* Khi checkbox được chọn, thay đổi màu nền */
+        .custom-checkbox input:checked~.checkmark {
+            background-color: #00B207;
+            border-color    : #00B207;
+        }
+
+        /* Tạo dấu tick khi checkbox được chọn */
+        .custom-checkbox .checkmark:after {
+            content : "";
+            position: absolute;
+            display : none;
+        }
+
+        /* Hiển thị dấu tick */
+        .custom-checkbox input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Kiểu cho dấu tick */
+        .custom-checkbox .checkmark:after {
+            left        : 4px;
+            top         : 0px;
+            width       : 5px;
+            height      : 10px;
+            border      : solid white;
+            border-width: 0 2px 2px 0;
+            transform   : rotate(45deg);
+        }
+
+        .group-icon {
+            display        : flex;
+            margin-top     : 20px;
+            justify-content: center;
+
+            .gg {
+                height          : 35px;
+                width           : 35px;
+                background-size : contain;
+                margin-right    : 20px;
+                border-radius   : 50%;
+                background-image: url(../../assets/icons/google.png);
+            }
+
+            .fb {
+                height          : 35px;
+                width           : 35px;
+                border-radius   : 50%;
+                background-image: url(../../assets/icons/facebook.png);
+                background-size : contain;
+            }
+        }
+
+        .sign-up {
+            text-align: center;
+            margin-top: 15px;
+            color     : #666666;
+            font-size : 15px;
+
+            .link {
+                color          : black;
+                font-weight    : 600;
+                text-decoration: none;
+            }
+        }
+    }
+}

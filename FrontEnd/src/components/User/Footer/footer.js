@@ -3,7 +3,7 @@ function Footer() {
   return (
     <div className="footer-container">
       <div className="col-5 top">
-        <div className="col-3 decor-left">
+        <div className="col-4 decor-left">
           <div className="col decor-image"></div>
           <div className="col content">
             <div className="display">
@@ -16,11 +16,11 @@ function Footer() {
             </div>
             <div className="contact">
               <u>(034) 566-4024</u> <span className="or"> or </span>{" "}
-              <u>priceup@gmail.com</u>
+              <u>spiceup@gmail.com</u>
             </div>
           </div>
         </div>
-        <div className="col-6 content-center">
+        <div className="col-4 content-center">
           <div className="col"></div>
           <div className="col cc ">
             <div>
@@ -36,6 +36,7 @@ function Footer() {
             </div>
             <div>Contact</div>
             <div>Terms & Condition</div>
+            {/* <div>Privacy Policy</div> */}
           </div>
           <div className="col cc">
             <div>
@@ -43,11 +44,10 @@ function Footer() {
             </div>
             <div>Fruit & Vegetable</div>
             <div>Meat & Fish</div>
-            <div>Bread & Bakery</div>
+            {/* <div>Bread & Bakery</div> */}
           </div>
-          <div className="col"></div>
         </div>
-        <div className="col-3 decor-right">
+        <div className="col-4 decor-right">
           <div className="col"></div>
           <div className="col decor-image"></div>
         </div>

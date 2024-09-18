@@ -54,9 +54,9 @@
     /* Đảm bảo hình ảnh không bị cắt */
     background-repeat: no-repeat;
     /* Không lặp lại hình ảnh */
-    width            : 30px;
+    width            : 35px;
     /* Đặt chiều rộng cho logo */
-    height           : 30px;
+    height           : 35px;
 }
 
 
@@ -107,10 +107,19 @@
     display     : flex;
     padding-left: 50px;
 
+    .link-acc {
+        color: #000000;
+    }
+
     .icon {
-        height: 27px;
-        width : 27px;
+        height: 30px;
+        width : 30px;
         cursor: pointer;
+
+        .icon-1 {
+            height: 30px;
+            width : 30px;
+        }
     }
 }
 
