@@ -43,12 +43,9 @@ const DisplayItem = ({ istrue, ttime, ttag, tby, tcomments, tname, tlink }) => {
           <LiaCommentAltSolid className="tagicon3" />
           <div className="tagtxt">{comments} Comments</div>
         </div>
-        <div className="bot_row txt_name">{name}</div>
+        <div className="height"></div>
         <div className="bot_row3">
-          <div className="readmore">
-            Read More
-            <IoArrowForward className="arrow" />
-          </div>
+          <div className="bot_row txt_name">{name}</div>
           <div onClick={toggleBookmark} className="bookmark">
             {isBookmarked ? (
               <FaBookmark className="bookmark-icon active" />

@@ -20,7 +20,7 @@ const Header2 = () => {
                 <Link to="/recipes" className="col feature-navi">
                   Recipes
                 </Link>
-                <Link to="/about" className="col feature-navi">
+                <Link to="/account/settings" className="col feature-navi">
                   About Us
                 </Link>
               </div>
