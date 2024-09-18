@@ -16,7 +16,7 @@ function Footer() {
             </div>
             <div className="contact">
               <u>(034) 566-4024</u> <span className="or"> or </span>{" "}
-              <u>priceup@gmail.com</u>
+              <u>spiceup@gmail.com</u>
             </div>
           </div>
         </div>

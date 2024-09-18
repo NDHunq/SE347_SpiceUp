@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header2.scss";
 import { LiaShoppingCartSolid, LiaSearchSolid, LiaUser } from "react-icons/lia";
-// import Badge from "@mui/material/Badge";
+import { ClockCircleOutlined } from "@ant-design/icons";
+import { Avatar, Badge, Space } from "antd";
 const Header2 = () => {
   return (
     <div className="header">
@@ -39,8 +40,9 @@ const Header2 = () => {
                 </div>
                 <div className="col icon-group">
                   <LiaSearchSolid className="col icon" />
-                  <LiaShoppingCartSolid className="col icon" />
-
+                  <Badge count={5} size="small">
+                    <LiaShoppingCartSolid className="col icon" />
+                  </Badge>
                   <LiaUser className="col icon" />
                 </div>
               </div>
