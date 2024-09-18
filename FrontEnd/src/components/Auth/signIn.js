@@ -16,7 +16,7 @@ function SignIn() {
   return (
     <>
       <Header1 />
-      <div className="center">
+      <div className="center-si">
         <div className="container">
           <h1 className="title">
             <b>Sign In</b>

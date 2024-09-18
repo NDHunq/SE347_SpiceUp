@@ -73,6 +73,7 @@
   text-align   : center;
   color        : var(--Main-Green, #00b207);
   margin-right : 13px;
+  min-width    : fit-content;
 }
 
 .SignIn-btn {
@@ -83,6 +84,7 @@
   padding        : 10px 20px;
   text-decoration: white;
   color          : white;
+  min-width      : fit-content;
 }
 
 .phone-navi {
