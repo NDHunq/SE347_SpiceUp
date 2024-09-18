@@ -1,0 +1,17 @@
+#ddbSort{
+    margin-left: 8px;
+}
+.textSort{
+    margin-bottom: 0;
+    line-height: 100%;
+    float: left;
+}
+.numberFound{
+    float: right;
+}
+.btn-group{
+    clear: both;
+}
+.search-bar{
+    margin-top: 8px;
+}
