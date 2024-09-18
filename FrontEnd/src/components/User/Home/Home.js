@@ -1,6 +1,7 @@
 import "./Home.scss";
 import React from "react";
 import { Carousel } from "antd";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   return (
@@ -24,7 +25,9 @@ const Home = (props) => {
             <div className="text-5">
               Free shipping on all your order. we deliver, you enjoy
             </div>
-            <div className="shop-now">Shop now</div>
+            <Link to="/shop">
+              <div className="shop-now">Shop now</div>
+            </Link>
           </div>
           <div className="col-2 banner1-4"></div>
         </div>
