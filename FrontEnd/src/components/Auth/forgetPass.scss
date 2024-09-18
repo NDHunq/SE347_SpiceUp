@@ -1,0 +1,69 @@
+.center-fg {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 400px;
+
+    .container {
+        font-family: "Roboto",
+            sans-serif;
+        justify-content: center;
+        align-items    : center;
+        border-radius  : 13px;
+        padding        : 20px;
+        background     : var(--Main-White, white);
+        box-shadow     : 0 0 10px 0 rgba(0, 0, 0, 0.09);
+        border         : solid 1px #F2F2F2;
+        width          : 370px;
+        height         : 240px;
+
+        .title {
+            text-align    : center;
+            padding-bottom: 10px;
+            font-size     : 25px;
+        }
+
+        .email {
+            margin-bottom: 10px;
+            width        : 100%;
+            border-radius: 6px;
+            border       : solid 1px #E6E6E6;
+            padding      : 8px;
+            font-size    : 15px;
+        }
+
+        .email:focus {
+            border-color: #7a7a7a;
+            outline     : #7a7a7a;
+        }
+
+
+
+
+        .submit {
+            border-radius  : 50px;
+            border         : 2px solid var(--Main-Green, #00b207);
+            background     : var(--Main-Green, #00b207);
+            text-align     : center;
+            padding        : 7px 20px;
+            text-decoration: white;
+            color          : white;
+            width          : 100%;
+            margin-top     : 10px;
+        }
+
+
+
+        .sign-up {
+            text-align: center;
+            margin-top: 15px;
+            color     : #666666;
+
+            .link {
+                color          : black;
+                font-weight    : 600;
+                text-decoration: none;
+            }
+        }
+    }
+}

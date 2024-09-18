@@ -17,12 +17,13 @@
       }
 
       .content {
-        .display {}
+
 
         .contact {
           margin-top: 10px;
           color     : white;
           cursor    : pointer;
+          font-size : 14px;
 
           .or {
             cursor: auto;
@@ -31,35 +32,42 @@
         }
 
         .texxt {
-          color: #808080;
+          color    : #808080;
+          font-size: 14px;
         }
 
-        .app-navi {
-          margin-top    : 12px;
-          color         : var(--Gren-Gray-Scale-900, #fbfbfb);
-          font-family   : Poppins;
-          font-size     : 25px;
-          font-style    : normal;
-          font-weight   : 500;
-          line-height   : 38px;
-          /* 118.75% */
-          letter-spacing: -0.96px;
-          cursor        : pointer;
+        .display {
+          margin-top     : 40px;
+          display        : flex;
+          justify-content: flex-start;
+
+          .app-navi {
+            color         : var(--Gren-Gray-Scale-900, #fbfbfb);
+            font-family   : Poppins;
+            font-size     : 22px;
+            font-style    : normal;
+            font-weight   : 500;
+            line-height   : 38px;
+            /* 118.75% */
+            letter-spacing: -0.96px;
+            cursor        : pointer;
+          }
+
+          .logo {
+            background-size  : contain;
+            /* Đảm bảo hình ảnh không bị cắt */
+            background-repeat: no-repeat;
+            /* Không lặp lại hình ảnh */
+            width            : 27px;
+            /* Đặt chiều rộng cho logo */
+            height           : 27px;
+            background-image : url("../../../assets/images/plant1.svg");
+            /* Đường dẫn đến hình ảnh */
+            margin-right     : 8px;
+            /* Đặt khoảng cách giữa logo và chữ */
+          }
         }
 
-        .logo {
-          background-size  : contain;
-          /* Đảm bảo hình ảnh không bị cắt */
-          background-repeat: no-repeat;
-          /* Không lặp lại hình ảnh */
-          width            : 30px;
-          /* Đặt chiều rộng cho logo */
-          height           : 30px;
-          background-image : url("../../../assets/images/plant1.svg");
-          /* Đường dẫn đến hình ảnh */
-          margin-right     : 8px;
-          /* Đặt khoảng cách giữa logo và chữ */
-        }
 
 
 
@@ -67,17 +75,18 @@
     }
 
     .content-center {
-      display: flex;
-      color  : #808080;
-
+      display  : flex;
+      color    : #808080;
+      font-size: 14px;
 
       .cc {
         align-content: space-around;
         padding-left : 40px;
 
         .title {
-          color : white;
-          cursor: pointer;
+          color      : white;
+          font-weight: 500;
+          cursor     : pointer;
 
         }
       }
@@ -102,9 +111,11 @@
     width         : 100%;
     text-align    : center;
     padding-bottom: 15px;
+    font-size     : 14px;
   }
 }
 
 hr {
-  color: white;
+  color : white;
+  margin: revert-layer;
 }
