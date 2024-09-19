@@ -1,65 +1,53 @@
 .TC-container {
-    height: 700px;
+    height: 840px;
 
     .main {
         background-image: url("../../../assets/images/Home/cateBG.svg");
-        height          : 700px;
+        height          : 840px;
 
         background-size  : cover;
         background-repeat: no-repeat;
+        align-content    : space-around;
 
         .container {
             padding-top: 05px;
 
             .title {
-                font-size    : 25px;
+                font-size    : 30px;
                 font-weight  : 650;
                 margin-bottom: 20px;
                 margin-top   : 20px;
             }
 
             .row-1 {
-                display: flex;
+                display       : flex;
+                padding-bottom: 70px;
 
-                .product1 {
-                    background-color: yellow;
-                    padding-left    : 10px;
-                    height          : 270px;
+                .productt {
+                    height          : 200px;
+                    width           : 190px;
+                    border          : 1px solid #EDEDED;
+                    border-radius   : 10px;
+                    align-content   : center;
+                    text-align      : -webkit-center;
+                    background-color: white;
 
-                }
+                    .img {
+                        height: 150px;
+                        width : 150px;
+                    }
 
-                .product2 {
-                    background-color: rgb(67, 208, 39);
-                    padding-left    : 10px;
-                    height          : 270px;
+                    .name {
+                        font-size  : 17px;
+                        font-weight: 600;
+                        padding-top: 10px;
+                    }
 
-                }
-
-                .product3 {
-                    background-color: rgb(27, 122, 255);
-                    padding-left    : 10px;
-                    height          : 270px;
-
-                }
-
-                .product4 {
-                    background-color: rgb(246, 49, 49);
-                    padding-left    : 10px;
-                    height          : 270px;
-
-                }
-
-                .product5 {
-                    background-color: rgb(239, 51, 173);
-                    padding-left    : 10px;
-                    height          : 270px;
-
-                }
-
-                .product6 {
-                    background-color: rgb(37, 205, 221);
-                    padding-left    : 10px;
-                    height          : 270px;
+                    .count {
+                        padding-top: 5px;
+                        font-size  : 15px;
+                        color      : #808080;
+                    }
 
                 }
             }
@@ -75,25 +63,72 @@
                     display: flex;
 
                     .product1 {
-                        background-color: yellow;
-                        padding-left    : 10px;
-                        height          : 270px;
+                        background-image : url("../../../assets/images/Home/cate1.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+
+                        height: 350px;
 
                     }
 
                     .product2 {
-                        background-color: rgb(67, 208, 39);
-                        padding-left    : 10px;
-                        height          : 270px;
+                        background-image : url("../../../assets/images/Home/cate2.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                        height           : 470px;
 
                     }
                 }
 
 
                 .product3 {
-                    background-color: rgb(27, 122, 255);
-                    padding-left    : 10px;
-                    height          : 270px;
+                    padding-left: 25px;
+                    height      : 270px;
+
+                    .shop-now {
+                        border-radius  : 43px;
+                        border         : 2px solid var(--Main-Green, #00b207);
+                        background     : var(--Main-Green, #00b207);
+                        text-align     : center;
+                        padding        : 10px 20px;
+                        text-decoration: white;
+                        color          : white;
+                        min-width      : fit-content;
+                        width          : 50px;
+                        font-weight    : 500;
+                        margin-top     : 15px;
+                    }
+
+                    .text-2 {
+                        font-weight: 700;
+                        font-size  : 30px;
+
+
+
+                    }
+
+                    .text-2-1 {
+                        transform: translateY(-8px);
+                    }
+
+                    .title1 {
+                        font-weight: 600;
+                        font-size  : 20px;
+                        padding-top: 10px;
+
+                        .check {
+                            color       : #00B207;
+                            margin-right: 10px;
+                            font-size   : 20px;
+                            transform   : translateY(-3px);
+                        }
+                    }
+
+                    .content {
+                        padding-top: 5px;
+                        font-size  : 16px;
+                        color      : #808080;
+                    }
 
                 }
             }

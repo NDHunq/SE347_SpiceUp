@@ -1,5 +1,5 @@
 .B-container {
-    height: 1120px;
+    height: 1300px;
 
     .main {
 
@@ -7,10 +7,11 @@
         background-image : url("../../../assets/images/Home/bestSellerBG.svg");
         background-size  : cover;
         background-repeat: no-repeat;
-        height           : 1120px;
+        height           : 1300px;
+        align-content    : space-around;
 
         .ad-container {
-            padding-top: 55px;
+            padding-top: 30px;
 
             .title {
                 font-size    : 25px;
@@ -22,18 +23,69 @@
             .row {
                 display: flex;
 
+                .sub-title {
+                    font-size: 17px;
+                    color    : white;
+                }
+
+                .title {
+                    font-size    : 35px;
+                    color        : white;
+                    margin-bottom: 10px;
+                    margin-top   : 0px;
+                }
+
+                .shop-now {
+                    border-radius  : 43px;
+                    border         : 2px solid var(--Main-Green, #00b207);
+                    background     : var(--Main-Green, #00b207);
+                    text-align     : center;
+                    padding        : 10px 20px;
+                    text-decoration: white;
+                    color          : white;
+                    min-width      : fit-content;
+                    width          : 50px;
+                    font-weight    : 500;
+                    margin-top     : 15px;
+                }
+
                 .product1 {
-                    background-color: yellow;
+                    background-image: url("../../../assets/images/Home/bestSellerBanner1.svg");
                     padding-left    : 10px;
-                    height          : 300px;
+                    height          : 350px;
+                    border-radius   : 10px;
+                    align-content   : center;
+                    padding         : 30px;
+                    background-size : cover;
+
+                    .price {
+                        color    : #ffffff;
+                        font-size: 15px;
+
+                        .pricee {
+                            background-color: #FF8A00;
+                            padding         : 5px;
+                            border-radius   : 5px;
+                            margin-left     : 5px;
+                        }
+                    }
 
                 }
 
                 .product2 {
-                    background-color: rgb(67, 208, 39);
+                    background-image: url("../../../assets/images/Home/spiceBG.jpg");
                     padding-left    : 10px;
-                    height          : 300px;
+                    height          : 350px;
+                    border-radius   : 10px;
+                    align-content   : center;
+                    padding         : 30px;
+                    background-size : cover;
 
+                    .day {
+                        color      : white;
+                        font-weight: 500;
+                        font-size  : 16px;
+                    }
                 }
 
             }
@@ -43,7 +95,7 @@
             padding-top: 20px;
 
             .title {
-                font-size    : 25px;
+                font-size    : 29px;
                 font-weight  : 650;
                 margin-bottom: 20px;
                 margin-top   : 20px;
@@ -97,29 +149,87 @@
             .row {
                 display: flex;
 
-                .product1 {
-                    background-color: yellow;
-                    padding-left    : 10px;
-                    height          : 330px;
+                .product {
+                    padding-left: 10px;
+                    height      : 450px;
+
+                    .title {
+                        color         : black;
+                        font-size     : 23px;
+                        font-weight   : 600;
+                        padding-bottom: 10px;
+
+                    }
+
+                    .list-pro {
+                        height: 400px;
+
+                    }
+
+                    .sub-product {
+                        background-color: #FF8A00;
+                        height          : 125px;
+                        margin-top      : 10px;
+                    }
 
                 }
 
                 .product2 {
                     background-color: rgb(67, 208, 39);
                     padding-left    : 10px;
-                    height          : 330px;
+                    height          : 450px;
                 }
 
                 .product3 {
                     background-color: rgb(27, 122, 255);
                     padding-left    : 10px;
-                    height          : 330px;
+                    height          : 450px;
                 }
 
                 .product4 {
-                    background-color: rgb(246, 49, 49);
-                    padding-left    : 10px;
-                    height          : 330px;
+
+                    background-image : url("../../../assets/images/Home/meatAD2.jpg");
+                    background-size  : cover;
+                    background-repeat: no-repeat;
+                    padding-left     : 10px;
+                    height           : 450px;
+                    border-radius    : 10px;
+                    text-align       : -webkit-center;
+
+                    .text-1 {
+                        font-weight: 500;
+                        font-size  : 15px;
+                        padding-top: 30px;
+                        color      : rgb(191, 191, 191);
+
+                    }
+
+                    .text-2 {
+                        font-weight: 400;
+                        font-size  : 30px;
+                        color      : white;
+
+
+                    }
+
+                    .text-2-1 {
+                        transform: translateY(-8px);
+                        color    : rgb(191, 191, 191);
+                    }
+
+                    .shop-now {
+                        border-radius  : 43px;
+                        border         : 2px solid var(--Main-Green, #00b207);
+                        background     : var(--Main-Green, #00b207);
+                        text-align     : center;
+                        padding        : 10px 20px;
+                        text-decoration: white;
+                        color          : white;
+                        min-width      : fit-content;
+                        width          : 50px;
+                        font-weight    : 500;
+                        margin-top     : 15px;
+                    }
                 }
 
 

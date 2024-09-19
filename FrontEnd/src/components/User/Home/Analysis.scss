@@ -16,33 +16,26 @@
             .row {
                 display: flex;
 
-                .product1 {
-                    background-color: yellow;
-                    padding-left    : 10px;
+                .product {
+                    background-color: rgba($color: #FFFFFF, $alpha: 0.07);
                     height          : 170px;
+                    border-radius   : 8px;
+                    text-align      : -webkit-center;
+                    align-content   : center;
+
+                    .num {
+                        font-size: 50px;
+                        color    : #00B207;
+                    }
+
+                    .tex {
+                        font-size     : 20px;
+                        color         : #FFFFFF;
+                        padding-bottom: 20px;
+                    }
 
                 }
 
-                .product2 {
-                    background-color: rgb(67, 208, 39);
-                    padding-left    : 10px;
-                    height          : 170px;
-
-                }
-
-                .product3 {
-                    background-color: rgb(27, 122, 255);
-                    padding-left    : 10px;
-                    height          : 170px;
-
-                }
-
-                .product4 {
-                    background-color: rgb(246, 49, 49);
-                    padding-left    : 10px;
-                    height          : 170px;
-
-                }
             }
         }
     }

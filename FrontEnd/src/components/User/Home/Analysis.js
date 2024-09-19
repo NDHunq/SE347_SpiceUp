@@ -8,10 +8,33 @@ const Analysis = (props) => {
       <main className="main">
         <div className="container">
           <div className="row">
-            <div className="col product1">111111111</div>
-            <div className="col product2">2222222222</div>
-            <div className="col product3">333333333333</div>
-            <div className="col product4">4444444444</div>
+            <div className="col ">
+              <div className="product">
+                {" "}
+                <div className="num">3+</div>
+                <div className="tex">Years of Hard Work</div>
+              </div>
+            </div>{" "}
+            <div className="col ">
+              <div className="product">
+                {" "}
+                <div className="num">50k+</div>
+                <div className="tex">Happy Customer</div>
+              </div>
+            </div>{" "}
+            <div className="col ">
+              <div className="product">
+                <div className="num">27</div>
+                <div className="tex">Qualified Team Member</div>
+              </div>
+            </div>
+            <div className="col ">
+              <div className="product">
+                {" "}
+                <div className="num">7k+</div>
+                <div className="tex">Monthly Orders</div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
