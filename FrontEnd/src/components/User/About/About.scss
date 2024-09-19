@@ -1,0 +1,233 @@
+.AB-container {
+    .text-2 {
+        font-weight: 700;
+        font-size  : 34px;
+
+
+
+    }
+
+    .text-2-1 {
+        transform: translateY(-8px);
+    }
+
+    .content-1 {
+        .container {
+            padding-bottom: 40px;
+
+            .row {
+                padding-top: 40px;
+
+                .about1 {
+                    display: flex;
+                    height : 370px;
+
+                    .about1-content {
+                        align-content: center;
+
+
+                        .content {
+                            font-size: 15px;
+                            color    : #808080;
+                        }
+
+
+                    }
+
+                    .about1-image {
+                        background-image : url("../../../assets/images/About/about1.svg");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                        margin-left      : 100px;
+                    }
+                }
+            }
+        }
+    }
+
+    .content-2 {
+        height           : 450px;
+        background-image : url("../../../assets/images/About/aboutBG.svg");
+        background-size  : contain;
+        background-repeat: no-repeat;
+        stroke           : white;
+        stroke-width     : 2px;
+        align-content    : center;
+
+        .container {
+            display: flex;
+
+            .content {
+                .des {
+                    color    : #808080;
+                    font-size: 15px;
+                }
+
+
+
+                .info {
+                    display: flex;
+
+                    .col1 {
+
+                        .detail-info {
+                            display   : flex;
+                            margin-top: 20px;
+
+                            .icon {
+                                margin-right    : 15px;
+                                padding         : 10px;
+                                width           : 55px;
+                                height          : 55px;
+                                background-color: rgba($color: #00B207, $alpha: 0.1);
+                                border-radius   : 50%;
+                                color           : #00B207;
+                            }
+
+                            .title {
+                                font-size  : 18px;
+                                font-weight: 600;
+                            }
+
+                            .dess {
+                                color: #808080;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    .content-3 {
+        background-color: white;
+
+        .container {
+            display   : flex;
+            height    : 430px;
+            margin-top: 40px;
+
+            .content {
+                align-content: center;
+                margin-right : 40px;
+
+                .des {
+                    color    : #808080;
+                    font-size: 16px;
+                }
+
+                .desss {
+                    margin-top: 10px;
+
+                    .icon {
+                        color       : #00B207;
+                        height      : 27px;
+                        width       : 27px;
+                        margin-right: 10px;
+                        margin-top  : -6px;
+                    }
+
+                    .content {
+                        font-size: 16px;
+                        color    : #484848;
+                    }
+                }
+
+                .shop-now {
+                    margin-top     : 15px;
+                    border-radius  : 43px;
+                    border         : 2px solid var(--Main-Green, #00b207);
+                    background     : var(--Main-Green, #00b207);
+                    text-align     : center;
+                    padding        : 10px 20px;
+                    text-decoration: white;
+                    color          : white;
+                    min-width      : fit-content;
+                    width          : 50px;
+                    font-weight    : 500;
+                }
+            }
+
+            .image {
+                background-image : url("../../../assets/images/About/about2.svg");
+                background-size  : contain;
+                background-repeat: no-repeat;
+            }
+        }
+    }
+
+    .content-4 {
+        background: #F2F2F2;
+
+        .container {
+            height       : 600px;
+            text-align   : center;
+            align-content: center;
+
+            .title {
+                font-weight: 700;
+                font-size  : 32px;
+            }
+
+            .content {
+                color: #555555;
+            }
+
+            .team {
+                margin-top: 20px;
+                display   : flex;
+                gap       : 20px;
+
+                .member {
+                    background-color: rgb(255, 255, 255);
+                    height          : 360px;
+                    border-radius   : 10px;
+                    text-align      : start;
+
+                    .image1 {
+                        height           : 300px;
+                        background-image : url("../../../assets/images/About/member1.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                    }
+
+                    .image2 {
+                        height           : 300px;
+                        background-image : url("../../../assets/images/About/member2.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                    }
+
+                    .image3 {
+                        height           : 300px;
+                        background-image : url("../../../assets/images/About/member3.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                    }
+
+                    .image4 {
+                        height           : 300px;
+                        background-image : url("../../../assets/images/About/member4.png");
+                        background-size  : contain;
+                        background-repeat: no-repeat;
+                    }
+
+                    .name {
+                        font-size  : 18px;
+                        font-weight: 600;
+                        margin-top : -10px;
+                        margin-left: 15px;
+                    }
+
+                    .position {
+                        font-size  : 16px;
+                        color      : #808080;
+                        margin-left: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

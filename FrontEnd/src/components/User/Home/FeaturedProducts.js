@@ -8,7 +8,7 @@ const FeaturedProducts = (props) => {
       <main className="main">
         <div className="container">
           <div className="title">Featured Products</div>
-          <div className="row">
+          <div className="row list-pro">
             <div className="col product1">111111111</div>
             <div className="col product2">2222222222</div>
             <div className="col product3">333333333333</div>
