@@ -20,9 +20,9 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="col-4 content-center">
-          <div className="col"></div>
-          <div className="col cc ">
+        <div className="col-4 content-center ">
+          <div className="col rong"></div>
+          <div className=" cc  rong">
             <div>
               <b className="title">My Account</b>
             </div>

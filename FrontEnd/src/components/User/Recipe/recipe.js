@@ -108,6 +108,7 @@ function Recipes() {
               <div className="display_row">
                 <div className="display_item1">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -121,6 +122,7 @@ function Recipes() {
                 </div>
                 <div className="display_item2 ">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -136,6 +138,7 @@ function Recipes() {
               <div className="display_row">
                 <div className="display_item1">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -149,6 +152,7 @@ function Recipes() {
                 </div>
                 <div className="display_item2 ">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -164,6 +168,7 @@ function Recipes() {
               <div className="display_row">
                 <div className="display_item1">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -177,6 +182,7 @@ function Recipes() {
                 </div>
                 <div className="display_item2 ">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -192,6 +198,7 @@ function Recipes() {
               <div className="display_row">
                 <div className="display_item1">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}
@@ -205,6 +212,7 @@ function Recipes() {
                 </div>
                 <div className="display_item2 ">
                   <DisplayItem
+                    id={"1234"}
                     istrue={true}
                     ttime={140}
                     ttag={"Vietnamese Food"}

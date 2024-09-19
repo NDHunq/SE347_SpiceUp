@@ -58,7 +58,7 @@ function Account() {
         <div className="container">
           <div className="row">
             <div className="col-3 cot1a">
-              <p className="txtnavi">Navigation</p>
+              <p className="txtnaavi">Navigation</p>
               <Link
                 className={`Navi ${
                   location.pathname === "/account/settings" ? "active" : ""
@@ -69,7 +69,7 @@ function Account() {
                 }
               >
                 <IoMdSettings className="imgacc" />
-                <p className="txtna">Setting</p>
+                <p className="txtnaa">Setting</p>
               </Link>
               <Link
                 className={`Navi ${
@@ -81,7 +81,7 @@ function Account() {
                 }
               >
                 <MdDashboard className="imgacc" />
-                <p className="txtna">My Recipes</p>
+                <p className="txtnaa">My Recipes</p>
               </Link>
               <Link
                 className={`Navi ${
@@ -93,15 +93,15 @@ function Account() {
                 }
               >
                 <MdHistory className="imgacc" />
-                <p className="txtna">Order History</p>
+                <p className="txtnaa">Order History</p>
               </Link>
               <div className="Navi bot10px">
                 <LuLogOut className="imgacc" />
-                <p className="txtna">Log-out</p>
+                <p className="txtnaa">Log-out</p>
               </div>
             </div>
-            <div className="space"></div>
-            <div className="col cot2">
+
+            <div className="col cot2 cot22">
               <Routes>
                 <Route path="settings" element={<Settings />} />
                 <Route path="myrecipes" element={<MyRecipe />} />
