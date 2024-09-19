@@ -36,8 +36,14 @@ const Header1 = () => {
                   <div className="phone"></div>
                   <p className="phone-navi">033333333</p>
                 </div>
-                <div className="col SignUp-btn">Sign Up</div>
-                <div className="col SignIn-btn">Sign In</div>
+                <Link className="col SignUp-btn" to="/signup">
+                  {" "}
+                  <div>Sign Up</div>
+                </Link>
+                <Link className="col SignIn-btn" to="/signin">
+                  {" "}
+                  <div>Sign In</div>
+                </Link>
               </div>
             </div>
           </div>

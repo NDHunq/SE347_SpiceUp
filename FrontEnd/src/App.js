@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import "./App.css";
 import Header2 from "./components/User/Header/Header2";
 import Footer from "./components/User/Footer/footer";
+
 function App() {
   return (
     <div className="app-container">
@@ -12,7 +13,7 @@ function App() {
         <Outlet />
       </div>
       <div className="footer-container">
-        <Footer></Footer>
+        <Footer />
       </div>
     </div>
   );

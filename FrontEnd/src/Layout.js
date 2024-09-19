@@ -4,6 +4,8 @@ import Home from "./components/User/Home/Home";
 import About from "./components/User/About/About";
 import SignIn from "./components/Auth/signIn";
 import SignUp from "./components/Auth/signUp";
+import ForgetPassword from "./components/Auth/forgetPass";
+import NewPassword from "./components/Auth/newPass";
 import Shop from "./components/User/Shop/shop";
 import Recipe from "./components/User/Recipe/recipe";
 import { ToastContainer } from "react-toastify";
@@ -18,10 +20,13 @@ const Layout = (props) => {
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+
           <Route path="/recipes" element={<Recipe />} />
         </Route>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/new-password" element={<NewPassword />} />
       </Routes>
       <ToastContainer
         position="top-right"

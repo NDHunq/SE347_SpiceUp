@@ -1,35 +1,36 @@
 import React from "react";
-import "./signUp.scss";
+import "./newPass.scss";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
-function SignUp() {
-  const [userName, setUserName] = useState();
+function NewPass() {
+  const [otp, setOTP] = useState();
   const [password, setPassword] = useState();
   const [cf_password, setCFPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (event) => {
-    toast.success("Sign up successfully");
+    toast.success("Change Password successfully");
   };
   return (
     <>
       <Header1 />
-      <div className="center-su">
+      <div className="center-np">
         <div className="container">
           <h1 className="title">
-            <b>Sign Up</b>
+            <b>New Password</b>
           </h1>
+
           <div>
             <input
-              className="email"
-              type="email"
-              name="Username"
-              placeholder="Email"
-              value={userName}
-              onChange={(event) => setUserName(event.target.value)}
+              className="password"
+              type="text"
+              name="Otp"
+              placeholder="OTP Code"
+              value={otp}
+              onChange={(event) => setOTP(event.target.value)}
             />
           </div>
           <div>
@@ -52,20 +53,9 @@ function SignUp() {
               onChange={(event) => setCFPassword(event.target.value)}
             />
           </div>
-          <div>
-            <label class="custom-checkbox">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(event) => setRememberMe(event.target.checked)}
-              />
-              <span class="checkmark"></span>
-              Accept all terms & Conditions
-            </label>
-          </div>
 
           <button className="submit" onClick={handleSubmit}>
-            Sign Up
+            Change Password
           </button>
 
           <div className="sign-up">
@@ -82,4 +72,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default NewPass;
