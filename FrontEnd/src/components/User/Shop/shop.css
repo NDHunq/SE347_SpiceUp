@@ -15,3 +15,47 @@
 .search-bar{
     margin-top: 8px;
 }
+
+.filter{
+    background-color: white;
+    border-width: 3px;
+    border-color: #00b207;
+    color:#00b207;
+    display: inline-block;
+    border-radius: 8px;
+    border-style: solid;
+    padding: 4px 8px;
+    margin-top: 72px;
+    margin-bottom: 12px;
+}
+hr{
+    color:#959595;
+}
+
+.container-button{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+}
+.expand {
+    margin-left: auto;
+}
+
+.rate-container {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.rate-container .ant-rate {
+  margin-bottom: 8px; 
+}
+.form-check-input{
+    float:left;
+    color:#00b207;
+    margin-right: 8px;
+}
+.product-area{
+    margin-top: 8px;
+}
