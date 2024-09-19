@@ -17,6 +17,7 @@
 
       .content {
         .contact {
+          display: flex;
           margin-top: 10px;
           color: white;
           cursor: pointer;
@@ -25,6 +26,7 @@
           .or {
             cursor: auto;
             color: #808080;
+            margin: 0 7px;
           }
         }
 
@@ -111,4 +113,10 @@
 hr {
   color: white;
   margin: revert-layer;
+}
+u {
+  text-decoration: underline;
+  text-decoration-color: #00b207;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
 }

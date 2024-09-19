@@ -5,7 +5,7 @@ function Footer() {
       <div className="col-5 top">
         <div className="col-4 decor-left">
           <div className="col decor-image"></div>
-          <div className="col content">
+          <div className="col-8 content">
             <div className="display">
               <div className="logo"></div>
               <p className="app-navi">SpiceUp</p>
@@ -15,8 +15,8 @@ function Footer() {
               world.
             </div>
             <div className="contact">
-              <u>(034) 566-4024</u> <span className="or"> or </span>{" "}
-              <u>spiceup@gmail.com</u>
+              <u>(034) 566-4024 </u>
+              <span className="or"> or </span> <u> spiceup@gmail.com</u>
             </div>
           </div>
         </div>

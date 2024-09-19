@@ -166,9 +166,9 @@
   gap: 20px;
 }
 .step_icon {
-  min-width: 35px;
-  max-width: 35px;
-  height: 35px;
+  min-width: 30px;
+  max-width: 30px;
+  height: 30px;
   background-color: #4d4d4d;
   display: flex;
   justify-content: center;

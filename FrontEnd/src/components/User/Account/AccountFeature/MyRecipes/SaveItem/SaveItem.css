@@ -1,0 +1,73 @@
+.sbot {
+  display: flex;
+  border-radius: 0px 0px 8px 8px;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  height: 30%;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.txtbot {
+  position: relative;
+  transform: translateY(8px);
+  text-align: start;
+  max-width: 180px;
+
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis (...) for overflowed text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 25.5px */
+}
+
+.srecipe_container {
+  display: flex;
+  gap: 10px;
+
+  justify-content: center;
+  width: calc(100% - 40px);
+  margin: 20px;
+}
+.srecipe {
+  width: 33%;
+
+  height: 200px;
+}
+.srecipe:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 12px 0px rgba(69, 255, 75, 0.32);
+  border-radius: 8px;
+  border: 1px solid var(--Branding-Success-Dark, #1fb824);
+}
+.stop {
+  height: 70%;
+  width: 100%;
+  background-color: brown;
+  border-radius: 8px 8px 0px 0px;
+}
+.txtbot:hover::after {
+  content: attr(
+    data-tooltip
+  ); /* Use the data-tooltip attribute for the tooltip text */
+  position: absolute;
+  bottom: 100%; /* Position the tooltip above the element */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.txtbot:hover::after {
+  opacity: 1;
+}

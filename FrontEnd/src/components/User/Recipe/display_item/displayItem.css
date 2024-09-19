@@ -1,6 +1,7 @@
 .display_item {
   width: 100%;
   height: 400px;
+  max-width: 350px;
 }
 .display_item:hover {
   cursor: pointer;

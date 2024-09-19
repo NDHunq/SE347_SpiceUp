@@ -133,7 +133,7 @@ const Setting = () => {
             <Input
               status={status}
               placeholder="Email"
-              className="input22"
+              className="input"
               type="email"
               value={email}
               onChange={handleEmailChange}

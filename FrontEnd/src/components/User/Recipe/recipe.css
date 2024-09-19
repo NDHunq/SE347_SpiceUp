@@ -239,33 +239,3 @@
   align-items: center;
   margin: 20px 0;
 }
-
-.pagination .ant-pagination-item {
-  border-color: #00b207; /* Border color for pagination items */
-}
-
-.pagination .ant-pagination-item a {
-  color: #00b207; /* Text color for pagination items */
-}
-
-.pagination .ant-pagination-item-active {
-  background-color: #00b207; /* Background color for active pagination item */
-  border-color: #00b207; /* Border color for active pagination item */
-}
-
-.pagination .ant-pagination-item-active a {
-  color: #fff; /* Text color for active pagination item */
-}
-
-.pagination .ant-pagination-prev,
-.pagination .ant-pagination-next {
-  color: #00b207; /* Color for previous and next buttons */
-}
-
-.pagination .ant-pagination-prev:hover,
-.pagination .ant-pagination-next:hover {
-  color: #00b207; /* Hover color for previous and next buttons */
-}
-.pagination .filter_btn {
-  color: #00b207;
-}
