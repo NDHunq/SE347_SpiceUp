@@ -53,7 +53,7 @@ const Header2 = () => {
 
                   <div className="col icon">
                     {" "}
-                    <Link to="/account" className="link-acc">
+                    <Link to="/account/settings" className="link-acc">
                       <LiaUser className="icon-1" />
                     </Link>
                   </div>

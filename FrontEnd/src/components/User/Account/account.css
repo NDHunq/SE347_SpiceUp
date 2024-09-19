@@ -1,0 +1,62 @@
+.space {
+  width: 30px;
+}
+.Navi {
+  display: flex; /* Make each link and paragraph a block element */
+  color: inherit; /* Inherit the color from the parent element */
+  text-decoration: none; /* Remove underline */
+
+  user-select: none;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.Navi:hover {
+  /* Add underline on hover */
+  cursor: pointer;
+}
+.cot1a {
+  border-radius: 8px;
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  background: var(--Gray-Scale-White, #fff);
+  margin-top: 20px;
+  padding: 0;
+  height: fit-content;
+}
+.txtnavi {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+
+  /* Body XL/Body XL, 500 */
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.bot10px {
+  margin-bottom: 20px;
+}
+.imgacc {
+  margin-top: 3.5px;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+.cot2r {
+  margin-top: 20px;
+}
+
+.Navi.active {
+  background: var(--Gren-Gray-Scale-50, #edf2ee);
+  box-shadow: 3px 0px 0px 0px #20b526 inset;
+}
+.txtna {
+  transform: translateY(10px);
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+}

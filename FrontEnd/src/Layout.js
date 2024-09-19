@@ -8,6 +8,10 @@ import ForgetPassword from "./components/Auth/forgetPass";
 import NewPassword from "./components/Auth/newPass";
 import Shop from "./components/User/Shop/shop";
 import Recipe from "./components/User/Recipe/recipe";
+import Account from "./components/User/Account/account";
+import Setting from "./components/User/Account/AccountFeature/Setting/setting";
+import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecipe";
+import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,6 +26,11 @@ const Layout = (props) => {
           <Route path="/shop" element={<Shop />} />
 
           <Route path="/recipes" element={<Recipe />} />
+          <Route path="/account" element={<Account />}>
+            <Route path="/account/settings" element={<Setting />} />
+            <Route path="/account/myrecipes" element={<MyRecipe />} />
+            <Route path="/account/order" element={<OrderHistory />} />
+          </Route>
         </Route>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
