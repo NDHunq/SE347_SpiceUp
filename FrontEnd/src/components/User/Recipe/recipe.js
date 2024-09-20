@@ -1,5 +1,6 @@
 // Header.js
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./recipe.css";
 import Header from "../widget/top";
 import { ConfigProvider } from "antd";
@@ -12,6 +13,12 @@ const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
 function Recipes() {
+  const navigate = useNavigate();
+
+  const handleUploadClick = () => {
+    navigate("/newrecipe");
+  };
+
   const navItems = [{ link: "/recipes", text: "Recipes" }];
   const listCategory = [
     { name: "Cate1", number: 10 },
@@ -106,7 +113,9 @@ function Recipes() {
                       <p className="txt_search2">Search</p>
                     </div>
                   </div>
-                  <div className="upload_btn">Upload Recipe</div>
+                  <div className="upload_btn" onClick={handleUploadClick}>
+                    Upload Recipe
+                  </div>
                 </div>
                 <div className="div2">
                   <div className="flex">

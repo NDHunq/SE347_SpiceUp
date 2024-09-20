@@ -13,8 +13,11 @@ import Setting from "./components/User/Account/AccountFeature/Setting/setting";
 import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecipe";
 import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
 import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import SingleRecipe from "./components/User/SingleRecipe/singleRecipe";
+
+import NewRecipe from "./components/User/New Recipe/newRecipe";
 
 const Layout = (props) => {
   return (
@@ -26,6 +29,7 @@ const Layout = (props) => {
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/singlerecipe" element={<SingleRecipe />} />
+          <Route path="/newrecipe" element={<NewRecipe />} />
 
           <Route path="/recipes" element={<Recipe />}></Route>
           <Route path="/account" element={<Account />}>

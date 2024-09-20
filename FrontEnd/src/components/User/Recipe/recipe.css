@@ -103,6 +103,11 @@
   margin-left: 13px;
   min-width: 160px;
 }
+.upload_btn:hover {
+  cursor: pointer;
+  background: var(--Main-Green, #00b207);
+  color: var(--Gray-Scale-White, #fff);
+}
 
 .txt_Sortby {
   margin-top: 8px;
