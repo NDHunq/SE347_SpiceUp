@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Header2.scss";
-import { LiaShoppingCartSolid, LiaSearchSolid, LiaUser } from "react-icons/lia";
+import {
+  LiaHeadsetSolid,
+  LiaShoppingCartSolid,
+  LiaSearchSolid,
+  LiaUser,
+} from "react-icons/lia";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Space } from "antd";
+
 const Header2 = () => {
   return (
     <div className="header">
@@ -34,10 +40,15 @@ const Header2 = () => {
             </div>
             <div className="col">
               <div className="row display">
-                <div className="col display">
-                  <div className="phone"></div>
-                  <p className="phone-navi">033333333</p>
-                </div>
+                <Link to="/contact" className="col conta ">
+                  <div className="display">
+                    <LiaHeadsetSolid className="contact"></LiaHeadsetSolid>
+                    <p className="phone-navi" style={{ fontWeight: 500 }}>
+                      Contact Us
+                    </p>
+                    <Link to="/contact"></Link>
+                  </div>
+                </Link>
                 <div className="col icon-group">
                   <div className="col icon">
                     {" "}

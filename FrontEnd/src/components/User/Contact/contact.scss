@@ -1,0 +1,57 @@
+.CT-container {
+    height          : 570px;
+    background-color: white;
+    align-content   : center;
+
+    .container {
+        height   : 500px;
+        display  : flex;
+        //gap    : 20px;
+
+        .left {
+            height       : 500px;
+            margin-right : 20px;
+            border-radius: 10px;
+            box-shadow   : 0 4px 8px rgba(0, 0, 0, 0.1); // Add shadow
+            border       : 1px solid #e1e1e1;
+
+            hr {
+                color       : black;
+                margin-left : 20px;
+                margin-right: 20px;
+            }
+
+            .left-child {
+                align-content: center;
+                height       : 155px;
+                text-align   : center;
+
+                .icon {
+                    height       : 45px;
+                    width        : 45px;
+                    color        : #019406;
+                    margin-bottom: 7px;
+                }
+
+                .text {
+                    color    : #333333;
+                    font-size: 16px;
+                }
+
+            }
+        }
+
+        .right {
+            border-radius: 10px;
+            height       : 500px;
+            box-shadow   : 0 4px 8px rgba(0, 0, 0, 0.1);
+            border       : 1px solid #e1e1e1; // Add shadow
+        }
+    }
+
+
+}
+
+.map {
+    height: 400px;
+}
