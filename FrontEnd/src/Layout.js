@@ -17,7 +17,11 @@ import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecip
 import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
 
 import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+import SingleRecipe from "./components/User/SingleRecipe/singleRecipe";
+
+import NewRecipe from "./components/User/New Recipe/newRecipe";
 
 const Layout = (props) => {
   return (
@@ -28,9 +32,14 @@ const Layout = (props) => {
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+
           <Route path="/recipes" element={<Recipe />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Error />} />
+
+          <Route path="/singlerecipe" element={<SingleRecipe />} />
+          <Route path="/newrecipe" element={<NewRecipe />} />
+
           <Route path="/account" element={<Account />}>
             <Route path="/account/settings" element={<Setting />} />
             <Route path="/account/myrecipes" element={<MyRecipe />} />
