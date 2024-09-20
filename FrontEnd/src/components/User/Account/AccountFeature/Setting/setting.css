@@ -1,0 +1,18 @@
+.ccontainer {
+  border-radius: 8px;
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  background: var(--Gray-Scale-White, #fff);
+  width: 100%;
+}
+.line {
+  padding: 0;
+}
+.txtna {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body Medium/Body Medium, 400 */
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+}

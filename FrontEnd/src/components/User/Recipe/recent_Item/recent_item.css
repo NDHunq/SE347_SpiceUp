@@ -5,6 +5,15 @@
   width: calc(100% - 20px);
   height: 77px;
 }
+.recent:hover {
+  cursor: pointer;
+
+  box-shadow: 0px 0px 12px 0px rgba(69, 255, 75, 0.32);
+  border-radius: 8px;
+  border: 1px solid var(--Branding-Success-Dark, #1fb824);
+  padding: 5px;
+  height: 90px;
+}
 .recent_img {
   max-width: 110px;
   width: 110px;
