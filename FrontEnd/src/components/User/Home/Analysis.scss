@@ -1,0 +1,42 @@
+.A-container {
+    height: 280px;
+
+    .main {
+
+
+        background-image : url("../../../assets/images/Home/analysisBG.svg");
+        background-size  : cover;
+        background-repeat: no-repeat;
+        height           : 280px;
+
+        .container {
+            padding-top: 55px;
+
+
+            .row {
+                display: flex;
+
+                .product {
+                    background-color: rgba($color: #FFFFFF, $alpha: 0.07);
+                    height          : 170px;
+                    border-radius   : 8px;
+                    text-align      : -webkit-center;
+                    align-content   : center;
+
+                    .num {
+                        font-size: 50px;
+                        color    : #00B207;
+                    }
+
+                    .tex {
+                        font-size     : 20px;
+                        color         : #FFFFFF;
+                        padding-bottom: 20px;
+                    }
+
+                }
+
+            }
+        }
+    }
+}

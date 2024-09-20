@@ -2,6 +2,18 @@ import "./Home.scss";
 import React from "react";
 import { Carousel } from "antd";
 import { Link } from "react-router-dom";
+import FeaturedProducts from "./FeaturedProducts";
+import TopCategories from "./TopCategories";
+import Analysis from "./Analysis";
+import BestSeller from "./BestSeller";
+import LatestRecipe from "./LatestRecipe";
+import Review from "./Review";
+import {
+  LiaShippingFastSolid,
+  LiaShoppingBagSolid,
+  LiaHeadsetSolid,
+  LiaMoneyBillWaveSolid,
+} from "react-icons/lia";
 
 const Home = (props) => {
   return (
@@ -10,7 +22,7 @@ const Home = (props) => {
         className="banner"
         arrows
         arrowSize={50}
-        autoplay
+        //autoplay
         infinite={true}>
         <div className="banner1">
           <div className="col-2 banner1-1"></div>
@@ -35,6 +47,52 @@ const Home = (props) => {
         <div className="banner3"></div>
         <div className="banner4"></div>
       </Carousel>
+      <main>
+        <div className="container">
+          <div className="row">
+            <div className="business-info">
+              <div className="col info-1">
+                <div className="icon">
+                  <LiaShippingFastSolid className="inner-icon" />
+                </div>
+                <div className="title">Free Shipping</div>
+                <div className="description">Free shipping with discount</div>
+              </div>
+              <div className="col info-1">
+                {" "}
+                <div className="icon">
+                  <LiaHeadsetSolid className="inner-icon" />
+                </div>
+                <div className="title">Great Support 24/7</div>
+                <div className="description">Instant access to Contact</div>
+              </div>
+              <div className="col info-1">
+                {" "}
+                <div className="icon">
+                  <LiaShoppingBagSolid className="inner-icon" />
+                </div>
+                <div className="title">100% Secure Payment</div>
+                <div className="description">We ensure your money is save</div>
+              </div>
+              <div className="col info-1">
+                {" "}
+                <div className="icon">
+                  <LiaMoneyBillWaveSolid className="inner-icon" />
+                </div>
+                <div className="title">Money-Back Guarantee</div>
+                <div className="description">30 days money-back</div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </main>
+      <FeaturedProducts />
+      <TopCategories />
+      <Analysis />
+      <BestSeller />
+      <LatestRecipe />
+      <Review />
     </div>
   );
 };

@@ -1,0 +1,164 @@
+.ccontainer {
+  margin-top: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  background: var(--Gray-Scale-White, #fff);
+  width: 100%;
+}
+.linee {
+  height: 1px;
+  width: 100%;
+  background-color: #e6e6e6;
+}
+.t_newrecipe {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body XXL/Body XXL, 500 */
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 36px */
+  margin: 20px 0;
+}
+.coverImage {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  border: 1px dashed #4d4d4d;
+  align-items: center;
+  justify-content: center;
+}
+.coverImage:hover {
+  cursor: pointer;
+  border-color: #00b207;
+}
+.coverImage:hover .camerapicture {
+  color: #00b207;
+}
+.coverImage:hover .add {
+  color: #00b207;
+}
+.camerapicture {
+  height: 60px;
+  width: 60px;
+  color: #4d4d4d;
+}
+.add {
+  height: 40px;
+  width: 40px;
+  color: #4d4d4d;
+}
+.newtxt {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body Small/Body Small, 400 */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+.flex3 {
+  display: flex;
+  gap: 10px;
+}
+.flex4 {
+  display: flex;
+  width: 50%;
+
+  gap: 10px;
+}
+
+.div11 {
+  width: 50%;
+}
+.div13 {
+  width: 40%;
+  min-width: 40%;
+}
+.div12 {
+  width: 30%;
+  min-width: 30%;
+}
+.addStep {
+  border-radius: 10px;
+  border: 1.2px dashed #4d4d4d;
+
+  background: #fff;
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+}
+.addStep:hover {
+  cursor: pointer;
+  border-color: #00b207;
+}
+
+.add3 {
+  height: 40px;
+  width: 40px;
+  color: #4d4d4d;
+}
+
+.addStep:hover .add3 {
+  color: #00b207; /* Change the color on hover */
+}
+.topbotm {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.margini {
+  margin-left: 10px;
+  margin-top: 30px;
+  height: fit-content !important;
+  padding: 0 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.width100 {
+  width: 100% !important;
+}
+.addd {
+  height: 35px;
+  width: 35px;
+  border: #4d4d4d dashed 2.4px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: 15px;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+.add5 {
+  width: 30px;
+  height: 30px;
+}
+.addd:hover {
+  cursor: pointer;
+  border-color: #00b207;
+}
+.addd:hover .add5 {
+  color: #00b207;
+}
+.topbotm2 {
+  margin-top: 20px;
+}
+.gap {
+  margin-top: 15px;
+}
+.gapp {
+  gap: 10px;
+  display: flex;
+}

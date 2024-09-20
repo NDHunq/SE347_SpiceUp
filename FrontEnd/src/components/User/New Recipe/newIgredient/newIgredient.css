@@ -1,0 +1,87 @@
+.igre_name {
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
+  /* Body Small/Body Small, 400 */
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 21px */
+}
+.padding10 {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  background: var(--Gray-Scale-White, #fff);
+  margin-bottom: 20px;
+}
+.tru {
+  height: 2px;
+  width: 12px;
+  background-color: #302f2f;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.alcen {
+  display: flex;
+  align-items: center;
+}
+.tru_con {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+
+  transform: translateX(10px);
+}
+.tru_con:hover {
+  cursor: pointer;
+}
+.tru_con:hover .tru {
+  background-color: #00b207;
+}
+.addlink {
+  color: #00b207;
+  margin-left: 20px;
+  transform: translateY(-10px);
+}
+.addlink:hover {
+  cursor: pointer;
+}
+
+.link {
+  display: flex;
+  width: 100%;
+  height: 35px;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #00b207;
+}
+
+.cancell {
+  color: #00b207;
+  font-size: 19px;
+}
+.saveee {
+  color: #00b207;
+  font-size: 16px;
+}
+.saveee:hover,
+.cancell:hover {
+  cursor: pointer;
+}
+.inputlink {
+  border: none;
+  width: 72%;
+  color: #00b207;
+}
+.inputlink:focus {
+  outline: none;
+}
+.linkicon {
+  color: #00b207;
+
+  margin-left: 10px;
+}

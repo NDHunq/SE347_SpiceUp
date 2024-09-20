@@ -8,12 +8,20 @@ import ForgetPassword from "./components/Auth/forgetPass";
 import NewPassword from "./components/Auth/newPass";
 import Shop from "./components/User/Shop/shop";
 import Recipe from "./components/User/Recipe/recipe";
+
+import Contact from "./components/User/Contact/contact";
+import Error from "./components/User/Error/error";
 import Account from "./components/User/Account/account";
 import Setting from "./components/User/Account/AccountFeature/Setting/setting";
 import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecipe";
 import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
+
 import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+import SingleRecipe from "./components/User/SingleRecipe/singleRecipe";
+
+import NewRecipe from "./components/User/New Recipe/newRecipe";
 
 const Layout = (props) => {
   return (
@@ -26,6 +34,12 @@ const Layout = (props) => {
           <Route path="/shop" element={<Shop />} />
 
           <Route path="/recipes" element={<Recipe />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Error />} />
+
+          <Route path="/singlerecipe" element={<SingleRecipe />} />
+          <Route path="/newrecipe" element={<NewRecipe />} />
+
           <Route path="/account" element={<Account />}>
             <Route path="/account/settings" element={<Setting />} />
             <Route path="/account/myrecipes" element={<MyRecipe />} />

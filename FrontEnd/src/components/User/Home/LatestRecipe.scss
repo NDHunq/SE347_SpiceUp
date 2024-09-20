@@ -1,0 +1,42 @@
+.LR-container {
+    height: 600px;
+
+    .main {
+
+        align-content    : space-around;
+        background-image : url("../../../assets/images/Home/latestRecipeBG.svg");
+        background-size  : cover;
+        background-repeat: no-repeat;
+        height           : 600px;
+
+        .container {
+
+            .sub-title {
+                padding-top: 30;
+                color      : #00B207;
+                font-weight: 500;
+                text-align : center;
+            }
+
+            .title {
+                text-align   : center;
+                font-size    : 25px;
+                font-weight  : 650;
+                margin-bottom: 20px;
+            }
+
+            .row {
+                display: flex;
+
+                .product {
+                    padding-left: 10px;
+                    height      : 400px;
+
+                }
+
+
+
+            }
+        }
+    }
+}

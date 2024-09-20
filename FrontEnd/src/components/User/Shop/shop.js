@@ -6,10 +6,11 @@ import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
 import FilterCategory from "../Recipe/filter_drop_category/filter_category";
 import '../Recipe/filter_drop_category/filter_category.css'
-import { Slider , RadioGroup,Radio, Rate} from 'antd';
+import { Slider , RadioGroup,Radio, Rate,Pagination} from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterRate from "./filter_rate/filter_rate";
 import Product from "./product/product";
+import ProductSale from "./product/productsale";
 
 function Shop() {
   const navItems=[{link:"/shop",text:"Shop"}];
@@ -19,8 +20,13 @@ function Shop() {
   const [openPrice, setOpenPrice] = useState(true);
   const [openRate, setOpenRate] = useState(true);
   const [selectedRating, setSelectedRating] = useState(null);
+  const [current, setCurrent] = useState(1);
 
   const ratings = [1, 2, 3, 4, 5];
+  const onChangePage = (page) => {
+    console.log(page);
+    setCurrent(page);
+  };
 
   const handleRadioChange = (e) => {
     setSelectedRating(e.target.value);
@@ -54,6 +60,30 @@ function Shop() {
       name:'Cabage',
       price:100
     },
+    { 
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100
+    },
+    { 
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100
+    },
+    { 
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100
+    },
+    { 
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100
+    },
     {
       id:"1234567890",
       url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
@@ -65,6 +95,30 @@ function Shop() {
       url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
       name:'Cabage',
       price:100}
+  ]
+
+  const listProductSale=[
+    { 
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100,
+      percentSale:10
+    },
+    {
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100,
+      percentSale:15
+    },
+    {
+      id:"1234567890",
+      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      name:'Cabage',
+      price:100,
+      percentSale:20
+    }
   ]
   return (
     <div className="shop">
@@ -104,7 +158,6 @@ function Shop() {
                               )}
                               </span>
                             </div>
-
                         </button>
                       </h2>
                       <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
@@ -164,6 +217,21 @@ function Shop() {
                       </div>
                     </div>
                   </div>
+                  <img class="sale-pic"src="https://img.freepik.com/free-vector/flat-design-food-sale-banner_23-2149138014.jpg"/>
+                  <div>
+                    <b >Sales Products</b>
+                    {listProductSale.map(product => (
+                      <div className="product-sale-container" key={product.id}>
+                        <ProductSale
+                          id={product.id}
+                          url_img={product.url_img}
+                          price={product.price}
+                          name={product.name}
+                          percentSale={product.percentSale}
+                        />
+                      </div>
+                    ))}
+                  </div>
               </div>
             </div>
             <div className="col">
@@ -208,6 +276,9 @@ function Shop() {
                   />
                 </div>
               ))}
+            </div >
+            <div className="pagination-container">
+              <Pagination onChange={onChangePage} total={50} />
             </div>
             </div>
           </div>

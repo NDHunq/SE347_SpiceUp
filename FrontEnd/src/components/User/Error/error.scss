@@ -1,0 +1,30 @@
+.ERR-container {
+    align-content: center;
+    height       : 520px;
+    text-align   : -webkit-center;
+
+    .err {
+        background-image : url("../../../assets/images/error.svg");
+        background-size  : contain;
+        background-repeat: no-repeat;
+        height           : 400px;
+        align-self       : center;
+        width            : 600px;
+        margin-left      : 100px;
+    }
+
+    .home {
+        border-radius  : 43px;
+        border         : 2px solid var(--Main-Green, #00b207);
+        background     : var(--Main-Green, #00b207);
+        text-align     : center;
+        padding        : 7px 12px;
+        text-decoration: none;
+        color          : white;
+        min-width      : fit-content;
+        font-size      : 14px;
+        width          : 50px;
+        font-weight    : 500;
+        margin-top     : 17px;
+    }
+}

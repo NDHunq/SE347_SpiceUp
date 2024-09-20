@@ -1,0 +1,26 @@
+.margin0{
+    margin: 0px 0px;
+}
+.container-sale-product{
+    flex-direction: column;
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+    flex: 1; 
+
+}
+
+.product_image_sale {
+    width: 80px;
+    height: auto; 
+    margin-right: 20px; 
+}
+
+.card-content {
+    display: flex; 
+    align-items: center; 
+}
+
+.card-product-sale{
+    padding: 0px 0px;
+}

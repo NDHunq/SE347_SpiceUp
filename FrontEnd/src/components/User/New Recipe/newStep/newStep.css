@@ -1,0 +1,136 @@
+.new_stepp {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+
+  gap: 20px;
+}
+.step_icon {
+  min-width: 30px;
+  max-width: 30px;
+  height: 30px;
+  background-color: #4d4d4d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  color: #fff;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.step_input {
+  width: 100%;
+  gap: 10px;
+}
+.new_image {
+  display: flex;
+  height: 80px;
+  width: 100px;
+  background-color: #4d4d4d;
+  border-radius: 10px;
+  border: 1.2px dashed #4d4d4d;
+
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+}
+.selectedImage {
+  margin-top: 10px;
+  display: flex;
+  height: 80px;
+  width: 100px;
+  border-radius: 10px;
+  background-size: cover;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #c6c6c6;
+}
+.new_image:hover {
+  cursor: pointer;
+  border-color: #00b207;
+}
+.new_image:hover .add2 {
+  color: #00b207;
+}
+.new_image:hover .camerapicture2 {
+  color: #00b207;
+}
+.step_img {
+  margin-top: 10px;
+  display: flex;
+
+  align-items: center;
+}
+.img_add {
+  height: 80px;
+  width: 100px;
+  background-color: #4d4d4d;
+  border-radius: 10px;
+
+  background: #ac2323;
+  margin-right: 10px;
+}
+.camerapicture2 {
+  height: 35px;
+  width: 35px;
+  margin-left: 15px;
+  color: #4d4d4d;
+}
+.add2 {
+  color: #4d4d4d;
+  height: 30px;
+  width: 30px;
+}
+.xoa {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: gray;
+  color: white;
+  border: 1px solid gray;
+  margin-left: 2px;
+}
+
+.xoa:hover {
+  cursor: pointer;
+  background: #ff423e;
+  color: #fff;
+  border: 1px solid #ff423e;
+}
+.step_containerr {
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  background: var(--Gray-Scale-White, #fff);
+  margin-bottom: 20px;
+}
+.deleteIcon {
+  color: #fff;
+  background-color: #1e1b1bc1;
+  height: 25px;
+  width: 20px;
+  border-radius: 5px;
+  display: flex;
+  margin-top: 5px;
+  margin-left: 75%;
+}
+.deleteIcon:hover {
+  cursor: pointer;
+}
+.x {
+  margin-left: 4px;
+}
+.fleximg {
+  display: flex;
+}

@@ -1,0 +1,83 @@
+.RV-container {
+    height: 420px;
+
+    .main {
+
+
+        background-image : url("../../../assets/images/Home/reviewBG.svg");
+        background-size  : cover;
+        background-repeat: no-repeat;
+        height           : 420px;
+        align-content    : space-around;
+
+        .container {
+            .subtitle {
+                color      : #00B207;
+                font-weight: 500;
+            }
+
+            .title {
+                font-size    : 25px;
+                font-weight  : 650;
+                margin-bottom: 20px;
+                margin-top   : 20px;
+            }
+
+            .row {
+                display: flex;
+
+                .product {
+                    background-color: rgb(255, 255, 255);
+                    padding-left    : 10px;
+                    height          : 250px;
+                    padding         : 20px;
+
+                    .icon {
+                        color    : rgba($color: #00B207, $alpha: 0.3);
+                        height   : 40px;
+                        width    : 40px;
+                        font-size: large;
+                    }
+
+                    .content {
+                        font-size: 14px;
+                        color    : #4D4D4D;
+                    }
+
+                    .user {
+                        display: flex;
+
+                        .avatar {
+                            height       : 50px;
+                            width        : 50px;
+                            border-radius: 50%;
+                        }
+
+                        .name {
+                            font-size  : 16px;
+                            font-weight: 600;
+                            margin-left: 10px;
+                        }
+
+                        .role {
+                            font-size    : 16px;
+                            margin-left  : 10px;
+                            margin-bottom: 5px;
+                            color        : #808080;
+                        }
+
+                        .rate {
+                            align-self  : center;
+                            padding-left: 20px;
+                            margin-left : auto;
+                        }
+                    }
+
+                }
+
+
+
+            }
+        }
+    }
+}

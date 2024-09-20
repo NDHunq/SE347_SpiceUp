@@ -1,4 +1,6 @@
 .home-container {
+
+
     .banner {
         height: 400px;
         width : 100%;
@@ -34,7 +36,7 @@
                     background     : var(--Main-Green, #00b207);
                     text-align     : center;
                     padding        : 10px 20px;
-                    text-decoration: white;
+                    text-decoration: none;
                     color          : white;
                     min-width      : fit-content;
                     width          : 50px;
@@ -110,26 +112,70 @@
             height             : 400px;
         }
 
+        /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
+        .ant-carousel .slick-prev,
+        .ant-carousel .slick-next {
+            color    : #00B207;
+            font-size: 50px;
+            z-index  : 1;
+
+        }
+
+        .ant-carousel .slick-dots li button {
+            background-color: #6c7c6c;
+            /* Màu sắc của dấu chấm */
+        }
+
+        .ant-carousel .slick-dots li.slick-active button {
+            background-color: #00B207;
+            /* Màu sắc của dấu chấm khi active */
+        }
     }
 
-    /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
-    .ant-carousel .slick-prev,
-    .ant-carousel .slick-next {
-        color    : #00B207;
-        font-size: 50px;
-        z-index  : 1;
+    .business-info {
+        height : 170px;
+        display: flex;
+
+        .inner-icon {
+            color : #00B207;
+            width : 25px;
+            height: 25px;
+        }
+
+        .title {
+            font-weight: 650;
+            font-size  : 18px;
+        }
+
+        .description {
+            font-size: 14px;
+            color    : #999999;
+        }
+
+        .info-1 {
+            text-align   : -webkit-center;
+            align-content: space-around;
+
+            .icon {
+                background-image : url("../../../assets/images/icon_bg.svg");
+                height           : 50px;
+                width            : 50px;
+                background-size  : contain;
+                background-repeat: no-repeat;
+                text-align       : -webkit-center;
+                align-content    : space-around;
+            }
+
+
+        }
+
 
     }
 
-    .ant-carousel .slick-dots li button {
-        background-color: #6c7c6c;
-        /* Màu sắc của dấu chấm */
+
+    hr {
+        height: 1px;
+        width : 100%;
+        color : #999999;
     }
-
-    .ant-carousel .slick-dots li.slick-active button {
-        background-color: #00B207;
-        /* Màu sắc của dấu chấm khi active */
-    }
-
-
 }

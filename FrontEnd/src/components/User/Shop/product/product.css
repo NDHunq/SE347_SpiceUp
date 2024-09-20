@@ -2,6 +2,7 @@
     flex-direction: column;
     display: flex;
     width: 70%;
+    justify-content: space-around;
 }
 
 .rate .ant-rate-star{
@@ -47,7 +48,8 @@
     position: absolute;
     top: 12px; 
     left: 12px; 
-    background-color: red;
+    background-color:#EA4B48;
+    ;
     color: white;
     padding: 4px 8px;
     font-size: 12px;
@@ -76,4 +78,46 @@
 
 .grey{
     color:#d2d2d2;
+}
+
+.margin0{
+    margin: 0px 0px;
+}
+
+.modal-content {
+  display: flex;        
+  height: 100%;    
+  flex-direction: row;      
+}
+  
+.im-area {
+  flex: 1;              
+  background-color: red;
+  display: flex;
+  flex-direction: row;      
+}
+
+.img-list{
+    flex:1;
+    background-color: red;
+}
+.img-product{
+    flex:5;
+    background-color: green;
+}
+.info-area {
+  flex: 1;              
+  display: flex;
+  flex-direction: column;      
+
+}
+
+.info-1{
+    flex:6;
+    background-color: pink;
+}
+
+.info-2{
+    flex:1.5;
+    background-color: blue;
 }
