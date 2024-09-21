@@ -35,6 +35,7 @@ const MyRecipe = () => {
               issave={true}
               istrue={true}
               name={"Xoài chuối kiwwi táo ổi cóc xoài"}
+              id={"1234"}
             />
             <SaveItem
               imagelink={
@@ -43,6 +44,7 @@ const MyRecipe = () => {
               issave={true}
               istrue={true}
               name={"Xoài chuối kiwwi táo ổi cóc xoài"}
+              id={"1234"}
             />
             <SaveItem
               imagelink={
@@ -51,6 +53,7 @@ const MyRecipe = () => {
               issave={true}
               istrue={true}
               name={"Xoài chuối kiwwi táo ổi cóc xoài"}
+              id={"1234"}
             />
           </div>
           <Pagination align="center" defaultCurrent={1} total={50} />

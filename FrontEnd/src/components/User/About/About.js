@@ -45,7 +45,7 @@ function About() {
         <div className="container">
           <div className="col"></div>
           <div className="col content">
-            <div className="text-2">100% Trusted</div>
+            <div className="text-2  text-2-2">100% Trusted</div>
             <div className="text-2 text-2-1">Organic Food Store</div>
             <div className="des">
               Enjoy our wide range of fresh, high-quality ingredients! From
@@ -57,7 +57,7 @@ function About() {
                 <div className="detail-info">
                   <LiaLeafSolid className="icon" />
                   <div>
-                    <div className="title">100% Organic food</div>
+                    <div className="title ">100% Organic food</div>
                     <div className="dess"> 100% healthy & Fresh food.</div>
                   </div>
                 </div>
@@ -106,7 +106,7 @@ function About() {
       <main className=" content-3">
         <div className="container ">
           <div className="col content">
-            <div className="text-2">We Delivered, You </div>
+            <div className="text-2 text-2-2">We Delivered, You </div>
             <div className="text-2 text-2-1">Enjoy Your Order.</div>
             <div className="des">
               At{" "}

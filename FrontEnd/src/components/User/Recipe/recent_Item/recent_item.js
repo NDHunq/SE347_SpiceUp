@@ -1,13 +1,18 @@
 import React from "react";
 import "./recent_item.css";
 import { CiCalendar } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
-const RecentItem = ({ tname, ttime, tlink }) => {
+const RecentItem = ({ tname, ttime, tlink, id }) => {
   const RecentName = tname;
   const RecentTime = ttime;
   const RecentLink = tlink;
+  const navigate = useNavigate();
+  const handleItemClick = () => {
+    navigate(`/singlerecipe?id=${id}`);
+  };
   return (
-    <div className="recent">
+    <div className="recent" onClick={handleItemClick}>
       <div
         className="recent_img"
         style={{

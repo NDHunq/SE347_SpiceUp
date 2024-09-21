@@ -23,7 +23,8 @@ const Home = (props) => {
         arrows
         arrowSize={50}
         //autoplay
-        infinite={true}>
+        infinite={true}
+      >
         <div className="banner1">
           <div className="col-2 banner1-1"></div>
           <div className="col-4 banner1-2"></div>
@@ -56,7 +57,9 @@ const Home = (props) => {
                   <LiaShippingFastSolid className="inner-icon" />
                 </div>
                 <div className="title">Free Shipping</div>
-                <div className="description">Free shipping with discount</div>
+                <div className="description_home">
+                  Free shipping with discount
+                </div>
               </div>
               <div className="col info-1">
                 {" "}
@@ -64,7 +67,9 @@ const Home = (props) => {
                   <LiaHeadsetSolid className="inner-icon" />
                 </div>
                 <div className="title">Great Support 24/7</div>
-                <div className="description">Instant access to Contact</div>
+                <div className="description_home">
+                  Instant access to Contact
+                </div>
               </div>
               <div className="col info-1">
                 {" "}
@@ -72,7 +77,9 @@ const Home = (props) => {
                   <LiaShoppingBagSolid className="inner-icon" />
                 </div>
                 <div className="title">100% Secure Payment</div>
-                <div className="description">We ensure your money is save</div>
+                <div className="description_home">
+                  We ensure your money is save
+                </div>
               </div>
               <div className="col info-1">
                 {" "}
@@ -80,7 +87,7 @@ const Home = (props) => {
                   <LiaMoneyBillWaveSolid className="inner-icon" />
                 </div>
                 <div className="title">Money-Back Guarantee</div>
-                <div className="description">30 days money-back</div>
+                <div className="description_home">30 days money-back</div>
               </div>
             </div>
           </div>

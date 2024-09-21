@@ -44,7 +44,7 @@ function SingleRecipe() {
   };
   const [steps, setSteps] = useState([]);
   const [value, setValue] = useState("");
-  const [selectedType, setSelectedType] = useState("Type");
+  const [selectedType, setSelectedType] = useState("");
 
   const addNewStep = () => {
     setSteps([
