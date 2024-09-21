@@ -1,5 +1,5 @@
 .AB-container {
-    .text-2 {
+    .text-2-AB {
         font-weight: 700;
         font-size  : 34px;
 
@@ -7,8 +7,22 @@
 
     }
 
-    .text-2-1 {
-        transform: translateY(-8px);
+    .text-2-1-AB {
+        transform    : translateY(19px);
+        margin-bottom: 35px;
+    }
+
+    .text-2-A {
+        font-weight: 700;
+        font-size  : 37px;
+
+
+
+    }
+
+    .text-2-1-A {
+        transform    : translateY(-8px);
+        margin-bottom: 35px;
     }
 
     .content-1 {
@@ -46,7 +60,7 @@
     }
 
     .content-2 {
-        height           : 450px;
+        height           : 470px;
         background-image : url("../../../assets/images/About/aboutBG.svg");
         background-size  : contain;
         background-repeat: no-repeat;
@@ -154,6 +168,7 @@
                 background-image : url("../../../assets/images/About/about2.svg");
                 background-size  : contain;
                 background-repeat: no-repeat;
+                height           : 430px;
             }
         }
     }
@@ -172,7 +187,10 @@
             }
 
             .content {
-                color: #555555;
+                color        : #555555;
+                text-align   : center;
+                margin-top   : 15px;
+                margin-bottom: 30px;
             }
 
             .team {
