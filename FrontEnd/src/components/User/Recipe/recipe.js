@@ -1,5 +1,5 @@
 // Header.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./recipe.css";
 import Header from "../widget/top";
@@ -32,18 +32,261 @@ function Recipes({ search }) {
 
   const navItems = [{ link: "/recipes", text: "Recipes" }];
   const listCategory = [
-    { name: "Cate1", number: 10 },
-    { name: "Cate2", number: 20 },
-    { name: "Cate3", number: 30 },
-    { name: "Cate4", number: 40 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
-    { name: "Cate5", number: 50 },
+    { name: "Cate1", number: 10, id: 1 },
+    { name: "Cate2", number: 20, id: 2 },
+    { name: "Cate3", number: 30, id: 3 },
+    { name: "Cate4", number: 40, id: 4 },
+    { name: "Cate5", number: 50, id: 5 },
+    { name: "Cate6", number: 60, id: 6 },
+    { name: "Cate7", number: 70, id: 7 },
+    { name: "Cate8", number: 80, id: 8 },
+    { name: "Cate9", number: 90, id: 9 },
+    { name: "Cate10", number: 100, id: 10 },
   ];
+  const listDisplay_pending = [
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn hàn quốc1",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc2",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc3",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc4",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc5",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc6",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc7",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc8",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc9",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc10",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc11",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc12",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc13",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc14",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc15",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc16",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc17",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc18",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+
+    {
+      id: "1234",
+      istrue: true,
+      ttime: 140,
+      ttag: "Vietnamese Food",
+      tby: "Admin",
+      tcomments: 65,
+      tname: "Trứng cuộn Hàn Quốc19",
+      tlink:
+        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    },
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total_pages, setTotalPages] = useState(1);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    renderDisplayItems(page, 1);
+  };
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(listDisplay_pending.length / 8) * 10);
+  }, [listDisplay_pending]);
+  const renderDisplayItems = (page, row) => {
+    const startIndex = (page - 1) * 8 + (row - 1) * 2;
+    let itemsToRender = listDisplay_pending.slice(startIndex, startIndex + 2);
+    return (
+      <div style={{ display: "flex", gap: "20px" }}>
+        {itemsToRender.map((item, index) => (
+          <DisplayItem
+            key={index}
+            id={item.id}
+            istrue={item.istrue}
+            ttime={item.ttime}
+            ttag={item.ttag}
+            tby={item.tby}
+            tcomments={item.tcomments}
+            tname={item.tname}
+            tlink={item.tlink}
+          />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <ConfigProvider
@@ -147,131 +390,25 @@ function Recipes({ search }) {
                   </p>
                 </div>
                 <div className="display_row">
-                  <div className="display_item1">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
-                  <div className="display_item2 ">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
+                  {renderDisplayItems(currentPage, 1)}
                 </div>
                 <div className="display_row">
-                  <div className="display_item1">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
-                  <div className="display_item2 ">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
+                  {renderDisplayItems(currentPage, 2)}
                 </div>
                 <div className="display_row">
-                  <div className="display_item1">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
-                  <div className="display_item2 ">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
+                  {renderDisplayItems(currentPage, 3)}
                 </div>
                 <div className="display_row">
-                  <div className="display_item1">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
-                  <div className="display_item2 ">
-                    <DisplayItem
-                      id={"1234"}
-                      istrue={true}
-                      ttime={140}
-                      ttag={"Vietnamese Food"}
-                      tby={"Admin"}
-                      tcomments={65}
-                      tname={"Trứng cuộn Hàn Quốc"}
-                      tlink={
-                        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                      }
-                    ></DisplayItem>
-                  </div>
+                  {renderDisplayItems(currentPage, 4)}
                 </div>
+
                 <br />
                 <Pagination
                   align="center"
                   defaultCurrent={1}
-                  total={600}
+                  total={total_pages}
                   className="pagination"
+                  onChange={handlePageChange}
                 />
                 <br />
                 <br />

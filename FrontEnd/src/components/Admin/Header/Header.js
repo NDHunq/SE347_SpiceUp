@@ -45,13 +45,6 @@ const Header = () => {
                     {" "}
                     <LiaSearchSolid className="icon-1" />
                   </div>
-
-                  <div className="col icon">
-                    {" "}
-                    <Link to="/account/settings" className="link-acc">
-                      <LiaUser className="icon-1" />
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>

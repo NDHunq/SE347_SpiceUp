@@ -101,8 +101,5 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-left: 10px;
-}
-.search_i2:hover {
-  cursor: pointer;
+  margin-left: 20px;
 }
