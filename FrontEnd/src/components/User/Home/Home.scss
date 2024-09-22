@@ -1,181 +1,166 @@
 .home-container {
+  .banner {
+    height: 400px;
+    width: 100%;
 
+    .banner1 {
+      background-color: hsl(132, 16%, 94%);
+      display: flex !important;
+      height: 400px;
 
-    .banner {
-        height: 400px;
-        width : 100%;
+      .banner1-1 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_vector_left.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
+      .banner1-2 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_fruit.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
-        .banner1 {
-            background-color: hsl(132, 16%, 94%);
-            display         : flex !important;
-            height          : 400px;
+      .banner1-3 {
+        align-content: space-evenly;
+        padding-left: 30px;
 
-            .banner1-1 {
-                background-image   : url("../../../assets/images/Home_banner/Banner1_vector_left.svg");
-                background-size    : contain;
-                background-repeat  : no-repeat;
-                background-position: center;
-
-            }
-
-            .banner1-2 {
-                background-image   : url("../../../assets/images/Home_banner/Banner1_fruit.svg");
-                background-size    : contain;
-                background-repeat  : no-repeat;
-                background-position: center;
-            }
-
-            .banner1-3 {
-                align-content: space-evenly;
-                padding-left : 30px;
-
-                .shop-now {
-                    border-radius  : 43px;
-                    border         : 2px solid var(--Main-Green, #00b207);
-                    background     : var(--Main-Green, #00b207);
-                    text-align     : center;
-                    padding        : 10px 20px;
-                    text-decoration: none;
-                    color          : white;
-                    min-width      : fit-content;
-                    width          : 50px;
-                    font-weight    : 500;
-                }
-
-                .text-1 {
-                    color      : #00B207;
-                    font-weight: 500;
-                }
-
-                .text-2 {
-                    font-weight: 700;
-                    font-size  : 40px;
-
-
-
-                }
-
-                .text-2-1 {
-                    transform: translateY(-8px);
-                }
-
-                .text-3 {
-                    font-weight   : 500;
-                    font-size     : 23px;
-                    padding-bottom: 5px;
-                }
-
-                .text-4 {
-                    font-weight: 600;
-                    font-size  : 23px;
-                    color      : #FF8A00;
-
-                }
-
-                .text-5 {
-                    color         : #808080;
-                    padding-bottom: 15px;
-                }
-            }
-
-            .banner1-4 {
-                background-image   : url("../../../assets/images/Home_banner/Banner1_vector_right.svg");
-                background-size    : contain;
-                background-repeat  : no-repeat;
-                background-position: right;
-            }
+        .shop-now {
+          border-radius: 43px;
+          border: 2px solid var(--Main-Green, #00b207);
+          background: var(--Main-Green, #00b207);
+          text-align: center;
+          padding: 10px 20px;
+          text-decoration: none;
+          color: white;
+          min-width: fit-content;
+          width: 50px;
+          font-weight: 500;
         }
 
-        .banner2 {
-            background-image   : url("../../../assets/images/Home_banner/jack1.jpg");
-            background-size    : contain;
-            background-position: center;
-            display            : flex !important;
-            height             : 400px;
-
+        .text-1 {
+          color: #00b207;
+          font-weight: 500;
         }
 
-        .banner3 {
-            background-image   : url("../../../assets/images/Home_banner/jack2.jpg");
-            background-size    : contain;
-            background-position: center;
-            display            : flex !important;
-            height             : 400px;
+        .text-2 {
+          font-weight: 700;
+          font-size: 40px;
         }
 
-        .banner4 {
-            background-image   : url("../../../assets/images/Home_banner/jack3.jpg");
-            background-size    : contain;
-            background-position: center;
-            display            : flex !important;
-            height             : 400px;
+        .text-2-1 {
+          transform: translateY(-8px);
         }
 
-        /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
-        .ant-carousel .slick-prev,
-        .ant-carousel .slick-next {
-            color    : #00B207;
-            font-size: 50px;
-            z-index  : 1;
-
+        .text-3 {
+          font-weight: 500;
+          font-size: 23px;
+          padding-bottom: 5px;
         }
 
-        .ant-carousel .slick-dots li button {
-            background-color: #6c7c6c;
-            /* Màu sắc của dấu chấm */
+        .text-4 {
+          font-weight: 600;
+          font-size: 23px;
+          color: #ff8a00;
         }
 
-        .ant-carousel .slick-dots li.slick-active button {
-            background-color: #00B207;
-            /* Màu sắc của dấu chấm khi active */
+        .text-5 {
+          color: #808080;
+          padding-bottom: 15px;
         }
+      }
+
+      .banner1-4 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_vector_right.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+      }
     }
 
-    .business-info {
-        height : 170px;
-        display: flex;
-
-        .inner-icon {
-            color : #00B207;
-            width : 25px;
-            height: 25px;
-        }
-
-        .title {
-            font-weight: 650;
-            font-size  : 18px;
-        }
-
-        .description {
-            font-size: 14px;
-            color    : #999999;
-        }
-
-        .info-1 {
-            text-align   : -webkit-center;
-            align-content: space-around;
-
-            .icon {
-                background-image : url("../../../assets/images/icon_bg.svg");
-                height           : 50px;
-                width            : 50px;
-                background-size  : contain;
-                background-repeat: no-repeat;
-                text-align       : -webkit-center;
-                align-content    : space-around;
-            }
-
-
-        }
-
-
+    .banner2 {
+      background-image: url("../../../assets/images/Home_banner/jack1.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
     }
 
-
-    hr {
-        height: 1px;
-        width : 100%;
-        color : #999999;
+    .banner3 {
+      background-image: url("../../../assets/images/Home_banner/jack2.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
     }
+
+    .banner4 {
+      background-image: url("../../../assets/images/Home_banner/jack3.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
+    }
+
+    /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
+    .ant-carousel .slick-prev,
+    .ant-carousel .slick-next {
+      color: #00b207;
+      font-size: 50px;
+      z-index: 1;
+    }
+
+    .ant-carousel .slick-dots li button {
+      background-color: #6c7c6c;
+      /* Màu sắc của dấu chấm */
+    }
+
+    .ant-carousel .slick-dots li.slick-active button {
+      background-color: #00b207;
+      /* Màu sắc của dấu chấm khi active */
+    }
+  }
+
+  .business-info {
+    height: 170px;
+    display: flex;
+
+    .inner-icon {
+      color: #00b207;
+      width: 25px;
+      height: 25px;
+    }
+
+    .title {
+      font-weight: 650;
+      font-size: 18px;
+    }
+
+    .description_home_home_home_home {
+      font-size: 14px;
+      color: var(--Gray-Scale-Gray-400, #999) !important;
+    }
+
+    .info-1 {
+      text-align: -webkit-center;
+      align-content: space-around;
+
+      .icon {
+        background-image: url("../../../assets/images/icon_bg.svg");
+        height: 50px;
+        width: 50px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        text-align: -webkit-center;
+        align-content: space-around;
+      }
+    }
+  }
+
+  hr {
+    height: 1px;
+    width: 100%;
+    color: #999999;
+  }
 }

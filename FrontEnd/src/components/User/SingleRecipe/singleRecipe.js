@@ -134,9 +134,9 @@ function SingleRecipe() {
     { igredient: "Chuối", quantity: "1 trái", link: "" },
   ]);
 
-  const openLink = (link) => {
+  const openLink = (link, ingredient) => {
     if (link === "") {
-      navigate("/recipes");
+      navigate(`/shop?search=${ingredient}`);
     } else {
       window.open(link, "_blank");
     }
@@ -345,7 +345,9 @@ function SingleRecipe() {
                       <div className="ingredient-item" key={index}>
                         <div
                           className="flex clickable"
-                          onClick={() => openLink(ingredient.link)}
+                          onClick={() =>
+                            openLink(ingredient.link, ingredient.igredient)
+                          }
                         >
                           <div className="ingredient-name">
                             {ingredient.igredient}

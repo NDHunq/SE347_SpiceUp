@@ -47,7 +47,7 @@ const TopCategories = (props) => {
       <main className="main">
         <div className="container">
           <div className="title"> Shop by Top Categories</div>
-          <div className="row-1">
+          <div className="row-1 displaytop">
             {topCategories.map((item, index) => {
               return (
                 <div className="col product">

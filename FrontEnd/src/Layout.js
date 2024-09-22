@@ -22,6 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 import SingleRecipe from "./components/User/SingleRecipe/singleRecipe";
 
 import NewRecipe from "./components/User/New Recipe/newRecipe";
+import AppAdmin from "./AppAdmin";
+import HomeAdmin from "./components/Admin/Home/Home";
 
 const Layout = (props) => {
   return (
@@ -32,19 +34,19 @@ const Layout = (props) => {
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-
           <Route path="/recipes" element={<Recipe />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Error />} />
-
           <Route path="/singlerecipe" element={<SingleRecipe />} />
           <Route path="/newrecipe" element={<NewRecipe />} />
-
           <Route path="/account" element={<Account />}>
             <Route path="/account/settings" element={<Setting />} />
             <Route path="/account/myrecipes" element={<MyRecipe />} />
             <Route path="/account/order" element={<OrderHistory />} />
           </Route>
+        </Route>
+        <Route path="/admin" element={<AppAdmin />}>
+          <Route path="home" element={<HomeAdmin />} />
         </Route>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

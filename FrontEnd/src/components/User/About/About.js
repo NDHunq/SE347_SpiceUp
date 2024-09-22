@@ -24,8 +24,8 @@ function About() {
           <div className="row ">
             <div className="about1">
               <div className="col about1-content">
-                <div className="text-2">Fresh & Healthy</div>
-                <div className="text-2 text-2-1">Organic Food</div>
+                <div className="text-2-A">Fresh & Healthy</div>
+                <div className="text-2-A text-2-1-A">Organic Food</div>
                 <div className="content">
                   Discover a world of flavors with our collection of delicious
                   and high-quality recipes! Whether you're a seasoned chef or a
@@ -45,8 +45,8 @@ function About() {
         <div className="container">
           <div className="col"></div>
           <div className="col content">
-            <div className="text-2">100% Trusted</div>
-            <div className="text-2 text-2-1">Organic Food Store</div>
+            <div className="text-2-AB">100% Trusted</div>
+            <div className="text-2-AB text-2-1-AB">Organic Food Store</div>
             <div className="des">
               Enjoy our wide range of fresh, high-quality ingredients! From
               crisp vegetables to juicy fruits, we provide the freshness you
@@ -106,8 +106,8 @@ function About() {
       <main className=" content-3">
         <div className="container ">
           <div className="col content">
-            <div className="text-2">We Delivered, You </div>
-            <div className="text-2 text-2-1">Enjoy Your Order.</div>
+            <div className="text-2-AB">We Delivered, You </div>
+            <div className="text-2-AB text-2-1-AB">Enjoy Your Order.</div>
             <div className="des">
               At{" "}
               <span style={{ color: "#009F06", fontWeight: 500 }}>SpiceUp</span>{" "}

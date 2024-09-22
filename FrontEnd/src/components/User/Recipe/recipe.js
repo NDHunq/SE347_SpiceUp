@@ -1,5 +1,5 @@
 // Header.js
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./recipe.css";
 import Header from "../widget/top";
@@ -12,7 +12,18 @@ import RecentItem from "./recent_Item/recent_item";
 const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
-function Recipes() {
+function Recipes({ search }) {
+  const [searchInput, setSearchInput] = React.useState("");
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+    if (searchQuery) {
+      setSearchInput(searchQuery);
+      handleSearch(searchQuery);
+    }
+  }, []);
+  const handleSearch = (searchQuery) => {};
+
   const navigate = useNavigate();
 
   const handleUploadClick = () => {
@@ -33,6 +44,7 @@ function Recipes() {
     { name: "Cate5", number: 50 },
     { name: "Cate5", number: 50 },
   ];
+
   return (
     <ConfigProvider
       theme={{
@@ -78,6 +90,7 @@ function Recipes() {
                       tlink={
                         "https://file.hstatic.net/1000361915/article/sinh-to-chuoi-xoai-giam-can_9ad409cb707d438689515eeb643275ea.jpg"
                       }
+                      id={"1234"}
                     />
                     <br />
                     <RecentItem
@@ -86,6 +99,7 @@ function Recipes() {
                       }
                       tname={"Smoothie xoài chuối kiwi trộn dâu tây Đà Lạt"}
                       ttime={"Apr 25, 2024"}
+                      id={"1234"}
                     />
                     <br />
                     <RecentItem
@@ -94,6 +108,7 @@ function Recipes() {
                       }
                       tname={"Smoothie xoài chuối kiwi"}
                       ttime={"Apr 25, 2024"}
+                      id={"1234"}
                     />
                   </div>
                 </div>
@@ -107,6 +122,8 @@ function Recipes() {
                       type="text"
                       className="txt_search"
                       placeholder="Search"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
                     ></input>
 
                     <div className="search_i2">
