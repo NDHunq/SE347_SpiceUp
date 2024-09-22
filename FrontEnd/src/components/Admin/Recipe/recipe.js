@@ -191,7 +191,7 @@ function Recipes({ search }) {
     navigate("/admin/newrecipe");
   };
 
-  const navItems = [{ link: "/recipes", text: "Recipes" }];
+  const navItems = [{ link: "/admin/recipes", text: "Recipes" }];
   const listCategory = [
     { name: "Cate1", number: 10, id: 1 },
     { name: "Cate2", number: 20, id: 2 },
@@ -256,10 +256,10 @@ function Recipes({ search }) {
                       className="radio_div"
                     >
                       <Radio className={"pentxt"} value={1}>
-                        Approved
+                        Pending
                       </Radio>
                       <Radio className={"pentxt"} value={2}>
-                        Pending
+                        Approved
                       </Radio>
                     </Radio.Group>
                   </div>

@@ -19,10 +19,10 @@ function Recipes({ search }) {
     const searchQuery = params.get("search");
     if (searchQuery) {
       setSearchInput(searchQuery);
-      handleSearch(searchQuery);
+      handleSearch();
     }
   }, []);
-  const handleSearch = (searchQuery) => {};
+  const handleSearch = () => {};
 
   const navigate = useNavigate();
 
@@ -369,7 +369,7 @@ function Recipes({ search }) {
                       onChange={(e) => setSearchInput(e.target.value)}
                     ></input>
 
-                    <div className="search_i2">
+                    <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
                     </div>
                   </div>

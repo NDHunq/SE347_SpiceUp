@@ -46,7 +46,11 @@ function SingleRecipe() {
     "https://staticg.sportskeeda.com/editor/2024/09/57ffe-17256814729148-1920.jpg"
   );
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
+
+  const onSearch = (value) => {
+    navigate("/admin/recipes?search=" + value); // Điều hướng đến trang kết quả tìm kiếm với query parameter
+  };
 
   const toggleBookmark = () => {
     setIsBookmarked(!isBookmarked);
@@ -141,6 +145,22 @@ function SingleRecipe() {
       window.open(link, "_blank");
     }
   };
+  const [isApp, setApp] = useState(false);
+  const handelAccept = () => {
+    setApp(true);
+    setApptxt("Recipe Approved");
+  };
+  const [Apptxt, setApptxt] = useState("Recipe");
+  useEffect(() => {
+    if (isApp !== true) {
+      setApptxt("Pending Recipe");
+    }
+  }, [isApp, Apptxt]);
+  const handleRefuse = () => {
+    if (window.confirm("Are you sure you want to refuse this recipe?")) {
+      navigate("/admin/recipes");
+    }
+  };
   {
     return (
       <ConfigProvider
@@ -217,13 +237,7 @@ function SingleRecipe() {
                               toggleBookmark();
                             }}
                             className="bookmarksingle"
-                          >
-                            {isBookmarked ? (
-                              <FaBookmark className="bookmark-icon-single active" />
-                            ) : (
-                              <FaRegBookmark className="bookmark-icon-single" />
-                            )}
-                          </div>
+                          ></div>
                         </div>
                       </div>
                       <div className="description">
@@ -330,6 +344,24 @@ function SingleRecipe() {
                 </div>
 
                 <div className="col scot2 ">
+                  <div className="ccontainer newcon">
+                    {" "}
+                    <div className="rcapp">{Apptxt}</div>
+                    {isApp === false ? (
+                      <div className="flex bot30px">
+                        <div className="upload_btn " onClick={handelAccept}>
+                          Accept
+                        </div>
+                        <div
+                          className="refuse_btn newbtn"
+                          onClick={handleRefuse}
+                        >
+                          Refuse
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+
                   <Search
                     placeholder="Find more recipes..."
                     onSearch={onSearch}

@@ -309,3 +309,47 @@
   margin-left: 2px;
   color: #009f06;
 }
+.refuse_btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: fit-content;
+  height: 45px;
+  padding: 10px 24px;
+  font-weight: 600;
+  user-select: none;
+  border-radius: 43px;
+  border: 2px solid var(--Main-Green, #e00b0b);
+  background: var(--Gray-Scale-White, #fff);
+  text-align: center;
+  color: var(--Main-Green, #e00b0b);
+  max-lines: 1;
+  margin-left: 13px;
+  min-width: 160px;
+}
+.refuse_btn:hover {
+  cursor: pointer;
+  background: var(--Main-Green, #e00b0b);
+  color: var(--Gray-Scale-White, #fff);
+}
+.bot30px {
+  margin-top: 20px;
+}
+.rcapp {
+  color: var(--Gray-Scale-Gray-500, #808080);
+  /* Body Small/Body Small, 400 */
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  text-align: center;
+}
+.newbtn {
+  transform: translateX(-10px);
+  width: 100px;
+}
+.newcon {
+  padding-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 30px !important;
+  padding-bottom: 20px;
+}
