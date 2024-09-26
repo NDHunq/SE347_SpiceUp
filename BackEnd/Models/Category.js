@@ -8,15 +8,15 @@ const categorySchema = new Schema({
         required: true,
         unique: true
     },
-    categoryName: {
+    category_name: {
         type: String,
         required: true
     },
-    productNumber: {
+    product_number: {
         type: Number,
         required: true,
         default: 0
     }
 });
-
-module.exports = mongoose.model('Category', categorySchema);
+const Category = mongoose.models.Category || mongoose.model('Category', categorySchema);
+module.exports = {Category, categorySchema};

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const categorySchema = require('./Category.js');
+const {categorySchema} = require('./Category.js');
 
 const productSchema = new Schema({
     product_name: {
@@ -41,7 +41,7 @@ const productSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        required: false,
         default: ''
     },
     //Array of images URL
@@ -52,5 +52,5 @@ const productSchema = new Schema({
     }],
 });
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.models.Product || mongoose.model('Product', productSchema);
 
