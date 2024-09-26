@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Define the schema for the category collection
 const categorySchema = new Schema({
-    _id : {
+    category_id : {
         type: String,
         required: true,
         unique: true

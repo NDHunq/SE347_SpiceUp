@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const categorySchema = require('./Category.js');
 
 const productSchema = new Schema({
-    productName: {
+    product_name: {
         type: String,
         required: true,
         default: ''
@@ -45,9 +45,9 @@ const productSchema = new Schema({
         default: ''
     },
     //Array of images URL
-    productImage: [{
+    product_images: [{
         type: String,
-        required: true,
+        required: false,
         default: ''
     }],
 });
