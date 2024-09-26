@@ -1,15 +1,18 @@
 const express = require('express')
 const morgan = require('morgan')
+const api = require('./apis/index')
 const app = express()
 const port = 3000
 
 app.use(morgan('combined'))
 
-app.get('/home',(req,res) => {
+api(app)
 
-    console.log(req.headers)
-    res.send('Hello world')
-})
+// async function connect() {
+//     await connectToDb()
+// }
+
+// connect()
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
