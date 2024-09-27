@@ -10,7 +10,8 @@ const orderItemSchema = new Schema({
     order_id: {
         type: String,
         required: true,
-        default: ''
+        default: '',
+        ref: 'Order'
     },
     quantities: {
         type: Number,

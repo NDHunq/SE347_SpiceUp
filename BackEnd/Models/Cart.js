@@ -5,11 +5,13 @@ const Schema = mongoose.Schema;
 const cartSchema = new Schema({
     user_id: {
         type: String,
-        required: true
+        required: true,
+        ref: 'User'
     },
     product: [{
         product_ID: {
             type: String,
+            required: true,
             ref: 'Product'
         },
         quantities: {

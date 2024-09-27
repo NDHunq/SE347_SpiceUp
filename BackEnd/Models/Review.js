@@ -2,14 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-    review_id: {
-        type: String,
-        required: true,
-        unique: true
-    },
     user_id: {
         type: String,
-        required: true
+        required: true,
+        ref: 'User'
     },
     content: {
         type: String,
@@ -23,7 +19,8 @@ const reviewSchema = new Schema({
     },
     product_id: {
         type: String,
-        required: true
+        required: true,
+        ref: 'Product'
     },
     review_image: [{
         type: String,
