@@ -1,5 +1,4 @@
 import React from "react";
-import { Collapse } from "bootstrap";
 import Header from "../widget/top";
 import { useState } from "react";
 import { LiaFilterSolid } from "react-icons/lia";
@@ -10,7 +9,7 @@ import { Slider , RadioGroup,Radio, Rate,Pagination} from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterRate from "./filter_rate/filter_rate";
 import Product from "./product/product";
-import ProductSale from "./product/productsale";
+import HorizontalProduct from "./product/HorizontalProduct";
 
 function Shop() {
   const navItems=[{link:"/shop",text:"Shop"}];
@@ -100,24 +99,21 @@ function Shop() {
   const listProductSale=[
     { 
       id:"1234567890",
-      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
       name:'Cabage',
-      price:100,
-      percentSale:10
+      price:100
     },
     {
       id:"1234567890",
-      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
       name:'Cabage',
-      price:100,
-      percentSale:15
+      price:100
     },
     {
       id:"1234567890",
-      url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
+      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
       name:'Cabage',
-      price:100,
-      percentSale:20
+      price:100
     }
   ]
   return (
@@ -222,12 +218,11 @@ function Shop() {
                     <b >Sales Products</b>
                     {listProductSale.map(product => (
                       <div className="product-sale-container" key={product.id}>
-                        <ProductSale
+                        <HorizontalProduct
                           id={product.id}
-                          url_img={product.url_img}
+                          urls_img={product.urls_img}
                           price={product.price}
                           name={product.name}
-                          percentSale={product.percentSale}
                         />
                       </div>
                     ))}

@@ -6,8 +6,11 @@ import {
     LinkOutlined
   } from '@ant-design/icons';
 import './product.css'
+import { useSelector, useDispatch } from 'react-redux';
 
 function Product({id, urls_img, price, name}){
+    const qtyInCart = useSelector(state=>state.qtyInCart.count);
+    const dispatch=useDispatch();
     const [star, setStar] = useState(1);
     const [percentSale, setPercentSale] = useState(10);
     const [soldCount, setSoldCount] = useState(0);
@@ -96,7 +99,13 @@ function Product({id, urls_img, price, name}){
                 <div class="container-right">
                     <Button        
                     onMouseEnter={() => setHoveredButton(true)}   
-                    onMouseLeave={() => setHoveredButton(false)}  >
+                    onMouseLeave={() => setHoveredButton(false)}  
+                    onClick={(event) => {
+                        event.stopPropagation(); 
+                        dispatch({ type: 'plus', payload: 1 })
+                        //add 1 to cart 
+                    }}
+                    >
                         <img width="24" height="24" src={hoveredButton?"https://img.icons8.com/?size=100&id=21821&format=png&color=00b207":"https://img.icons8.com/ios/50/bag-front-view.png"} alt="bag-front-view"/>
                     </Button>
                     <p>{soldCount} sold</p>
@@ -246,7 +255,11 @@ function Product({id, urls_img, price, name}){
                                 <p className="qty-display">{currentQty}</p>
                                 <Button onClick={increaseQty} type="primary" className="qty-btn" shape="circle">+</Button>
                             </div>
-                            <Button type="primary" className="add-to-cart-btn"><b>Add to Cart</b></Button>
+                            <Button type="primary" className="add-to-cart-btn"
+                                onClick={()=>{
+                                    dispatch({ type: 'plus', payload: currentQty })
+                                    //add currentQty to cart 
+                                }}><b>Add to Cart</b></Button>
                         </div>
                         <hr/>
                         <p class="cate"><b>Category: </b>{category}</p>
