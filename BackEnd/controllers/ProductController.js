@@ -15,7 +15,7 @@ const getAllProducts = async (req, res) => {
 //GET a product by ID
 const getProductByID = async (req, res) => {
     const { id } = req.params;
-
+    console.log(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({Error: 'Product not found'});
     }
@@ -76,4 +76,25 @@ const deleteProduct = async (req, res) => {
         console.log(err);
     }
 }
-module.exports = {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct};
+
+//GET a product(s) by name
+const getProductByName = async (req, res) => {
+    console.log(req.params.product_name)
+    const product_name = decodeURIComponent(req.params.product_name);
+    console.log(product_name);
+    try {
+        const products = await Product.find({product_name: {$regex: product_name, $options: 'i'}});
+
+        if (!products || products.length <= 0){
+            return res.status(404).json({Error: 'Product not found'});
+        }
+
+        res.status(200).json(products);
+    }
+    catch (err) {
+        res.status(400).json({Error: err.message});
+        console.log(err);
+    }
+}
+
+module.exports = {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct, getProductByName};
