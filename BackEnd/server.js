@@ -8,11 +8,6 @@ app.use(morgan('combined'))
 
 api(app)
 
-// async function connect() {
-//     await connectToDb()
-// }
-
-// connect()
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)

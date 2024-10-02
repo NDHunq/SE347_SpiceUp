@@ -2,9 +2,9 @@ const User = require('../../models/user')
 const connectToDb = require('../../config/db/db')
 
 const validate = (req, res, next) => {
-
-    
-    const [email, password, phone] = req.body
+    console.log(req)
+    const [email, password] = req.body
+    console.log(email)
     const errors = [];
 
     // Email validation

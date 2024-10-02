@@ -1,5 +1,6 @@
-const User = require('../models/user')
+const User = require('../../models/user')
 const mongoose = require('mongoose')
+const { setBillingAddres } = require('../user/UserController')
 mongoose.set('debug',true)
 
 class RegisterController {
@@ -10,16 +11,7 @@ class RegisterController {
 
 
         try {
-            const [emailObj, passwordObj, phoneObj, firstNameObj, lastNameObj, roleObj, billingAddressObj, avatarObj] = req.body
-
-            const email = emailObj.value;
-            const password = passwordObj.value;
-            const phone = phoneObj.value;
-            const firstName = firstNameObj.value;
-            const lastName = lastNameObj.value;
-            const role = roleObj.value;
-            const billingAddress = billingAddressObj.value;
-            const avatar = avatarObj.value;
+            const [{value: email}, {value: password}, {value: phone}, {value: firstName}, {value: lastName}, {value: role}, {value: avatar}] = req.body
 
             const newUser = User({
                 email: email,
@@ -27,9 +19,9 @@ class RegisterController {
                 phone: phone,
                 firstname: firstName,
                 lastname: lastName,
+                billingAddress: null,
                 role: role,
-                billingAddress: billingAddress,
-                avatar: avatar
+                avatar: avatar,                
             })
 
             console.log(newUser)
