@@ -5,7 +5,8 @@ import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
 import FilterCategory from "../Recipe/filter_drop_category/filter_category";
 import '../Recipe/filter_drop_category/filter_category.css'
-import { Slider , RadioGroup,Radio, Rate,Pagination} from 'antd';
+import { Slider , Dropdown, Menu ,Radio, Button,Pagination} from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterRate from "./filter_rate/filter_rate";
 import Product from "./product/product";
@@ -27,6 +28,20 @@ function Shop() {
     setCurrent(page);
   };
 
+  const handleMenuClick = (e) => {
+    setSort(e.key);
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="Lastest">
+        Lastest
+      </Menu.Item>
+      <Menu.Item key="Oldest">
+        Oldest
+      </Menu.Item>
+    </Menu>
+  );
   const handleRadioChange = (e) => {
     setSelectedRating(e.target.value);
   }; 
@@ -134,84 +149,82 @@ function Shop() {
                   ></FilterCategory>
                    <hr/> 
                   <div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button" 
-                          onClick={()=>{setOpenPrice(!openPrice)}}
-                          type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
-                          >
-                            <div class="container-button">
-                              <b >Price</b>
-                              <span class="expand">
-                              {openPrice ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
-                              </svg>
-                              ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                              )}
-                              </span>
-                            </div>
-                        </button>
-                      </h2>
-                      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
-                          <Slider
-                            range={{
-                              draggableTrack:true,
-                            }}
-                            class="custome0slider"
-                            min={0}
-                            max={250}
-                            defaultValue={range}
-                            onChange={onChangeRangePrice}
-                            />  
-                            <p>Price: {range[0]}-{range[1]}</p>
+                  <div className="accordion-item">
+                    <h2 className="accordion-header" id="panelsStayOpen-headingPrice">
+                      <button
+                        className="accordion-button"
+                        onClick={() => setOpenPrice(!openPrice)}
+                        type="button"
+                        aria-expanded={openPrice}
+                        aria-controls="panelsStayOpen-collapsePrice"
+                      >
+                        <div className="container-button">
+                          <b>Price</b>
+                          <span className="expand">
+                            {openPrice ?  <UpOutlined /> : <DownOutlined />}
+                          </span>
                         </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="panelsStayOpen-collapsePrice"
+                      className={`accordion-collapse collapse ${openPrice ? "show" : ""}`}
+                      aria-labelledby="panelsStayOpen-headingPrice"
+                    >
+                      <div className="accordion-body">
+                        <Slider
+                          range={{
+                            draggableTrack: true,
+                          }}
+                          className="custom-slider"
+                          min={0}
+                          max={250}
+                          defaultValue={range}
+                          onChange={onChangeRangePrice}
+                        />
+                        <p>Price: {range[0]} - {range[1]}</p>
                       </div>
                     </div>
+                  </div>
                     <hr/>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button" 
-                          onClick={()=>{setOpenRate(!openRate)}}
-                          type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
-                          >
-                            <div class="container-button">
-                              <b >Rating</b>
-                              <span class="expand">
-                              {openRate ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
-                              </svg>
-                              ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                              )}
-                              </span>
-                            </div>
-
+                    <div className="accordion-item">
+                      <h2 className="accordion-header" id="panelsStayOpen-headingOne">
+                        <button
+                          className="accordion-button"
+                          onClick={() => setOpenRate(!openRate)}
+                          type="button"
+                          aria-expanded={openRate}
+                          aria-controls="panelsStayOpen-collapseTwo"
+                        >
+                          <div className="container-button">
+                            <b>Rating</b>
+                            <span className="expand">
+                            {openRate ?  <UpOutlined /> : <DownOutlined />}
+                            </span>
+                          </div>
                         </button>
                       </h2>
-                      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
+                      <div
+                        id="panelsStayOpen-collapseTwo"
+                        className={`accordion-collapse collapse ${openRate ? "show" : ""}`}
+                        aria-labelledby="panelsStayOpen-headingOne"
+                      >
+                        <div className="accordion-body">
                           <div className="rate-container">
-                              <Radio.Group onChange={handleRadioChange} value={selectedRating}>
-                                  {ratings.map(star => (
-                                    <div key={star} className="rate-radio-item">
-                                      <Radio value={star}>
-                                        <FilterRate star={star} />
-                                      </Radio>
-                                    </div>
-                                  ))}
-                              </Radio.Group>
-                            </div>
+                            <Radio.Group onChange={handleRadioChange} value={selectedRating}>
+                              {ratings.map((star) => (
+                                <div key={star} className="rate-radio-item">
+                                  <Radio value={star}>
+                                    <FilterRate star={star} />
+                                  </Radio>
+                                </div>
+                              ))}
+                            </Radio.Group>
+                          </div>
                         </div>
                       </div>
                     </div>
+
                   </div>
                   <img class="sale-pic"src="https://img.freepik.com/free-vector/flat-design-food-sale-banner_23-2149138014.jpg"/>
                   <div>
@@ -244,19 +257,15 @@ function Shop() {
                 </div>
               </div>
               <div className="search-bar d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center"> 
-                  <p className="textSort">Sort by:</p>
-                  <div class="btn-group">
-                    <button type="button" class="sort btn btn-outline-secondary-sm dropdown-toggle" id="ddbSort" data-bs-toggle="dropdown" aria-expanded="false">
-                      {sort}
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#" onClick={()=>onClickSort("Lastest")} >Lastest</a></li>
-                      <li><a class="dropdown-item" href="#" onClick={()=>onClickSort("Oldest")} >Oldest</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="numberFound ">
+              <div className="d-flex align-items-center"> 
+                <p className="textSort">Sort by:</p>
+                <Dropdown overlay={menu} className="marginL8px">
+                  <Button>
+                    {sort} <span className="anticon anticon-down" /><DownOutlined />
+                  </Button>
+                </Dropdown>
+              </div>
+                <div className="numberFound ">
                   <b>{numFound}</b> <span>Result Found</span>
                 </div>
               </div>

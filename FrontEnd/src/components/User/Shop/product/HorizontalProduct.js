@@ -1,10 +1,13 @@
 import React from "react";
 import { Rate ,Card, Button, Modal, Carousel,Avatar, Divider, List, Skeleton } from 'antd';
 import { useState, useEffect } from "react";
+
 import './HorizontalProduct.css'
 import {
-    LinkOutlined
-  } from '@ant-design/icons';
+    LinkOutlined,
+    DownOutlined,
+     UpOutlined } from '@ant-design/icons';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -147,76 +150,75 @@ function HorizontalProduct({id, urls_img, price, name}){
                                 <h2 class="product-name">{name}</h2>
                                 {qty>0?<div class="status in-stock">In Stock</div>:<div class="status out-stock">Out of Stock</div>}
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                    <button class="accordion-button" 
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseRate" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
-                                    onClick={()=>{setOpenRate(!openRate)}}
+                            <div className="accordion-item">
+                            <h2 className="accordion-header" id="panelsStayOpen-headingOne">
+                                <button
+                                className="accordion-button"
+                                type="button"
+                                onClick={() => setOpenRate(!openRate)}
+                                aria-expanded={openRate}
+                                aria-controls="panelsStayOpen-collapseRate"
                                 >
-                                        <div class="container-review">
-                                            <Rate disabled defaultValue={star} class="rv-rate" /> 
-                                            <p class="marginl8px">{amountRate} Review</p>
-                                            <span class="marginl8px">
-                                {openRate ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
-                                </svg>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                                    </svg>
-                                )}
-                                </span>
-                                        </div>
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseRate" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                                    <div class="accordion-body">
-                                        <div className="rate-cmt-container">
-                                            <div
-                                                id="scrollableDiv"
-                                                style={{
-                                                    height: 220,
-                                                    overflow: 'auto',
-                                                    padding: '0 16px',
-                                                    border: '1px solid rgba(140, 140, 140, 0.35)',
-                                                }}
-                                                >
-                                                <InfiniteScroll
-                                                    dataLength={rateContent.length}
-                                                    next={loadMoreRateContent}
-                                                    hasMore={rateContent.length < 10}
-                                                    loader={
-                                                    <Skeleton
-                                                        avatar
-                                                        paragraph={{
-                                                        rows: 1,
-                                                        }}
-                                                        active
-                                                    />
-                                                    }
-                                                    endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                                                    scrollableTarget="scrollableDiv"
-                                                    >
-                                                        <List
-                                                        dataSource={rateContent}
-                                                        renderItem={(item) => (
-                                                            <List.Item key={item.email}>
-                                                            <List.Item.Meta
-                                                                avatar={<Avatar src={item.picture.large} />}
-                                                                title={<a href="https://ant.design">{item.name.last}</a>}
-                                                                description={"content review"}
-                                                            />
-                                                                <Rate disabled defaultValue={3}  /> 
-                                                                {/* content rate */}
-                                                            </List.Item>
-                                                        )}
-                                                        />
-                                                    </InfiniteScroll>
-                                                </div>
-                                        </div>
+                                <div className="container-review">
+                                    <Rate disabled defaultValue={star} className="rv-rate" />
+                                    <p className="marginl8px">{amountRate} Review</p>
+                                    <span className="marginl8px">
+                                    {openRate ? <UpOutlined /> : <DownOutlined />}
+                                    </span>
+                                </div>
+                                </button>
+                            </h2>
+                            <div
+                                id="panelsStayOpen-collapseRate"
+                                className={`accordion-collapse collapse ${openRate ? 'show' : ''}`}
+                                aria-labelledby="panelsStayOpen-headingOne"
+                            >
+                                <div className="accordion-body">
+                                <div className="rate-cmt-container">
+                                    <div
+                                    id="scrollableDiv"
+                                    style={{
+                                        height: 220,
+                                        overflow: 'auto',
+                                        padding: '0 16px',
+                                        border: '1px solid rgba(140, 140, 140, 0.35)',
+                                    }}
+                                    >
+                                    <InfiniteScroll
+                                        dataLength={rateContent.length}
+                                        next={loadMoreRateContent}
+                                        hasMore={rateContent.length < 10}
+                                        loader={
+                                        <Skeleton
+                                            avatar
+                                            paragraph={{
+                                            rows: 1,
+                                            }}
+                                            active
+                                        />
+                                        }
+                                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                                        scrollableTarget="scrollableDiv"
+                                    >
+                                        <List
+                                        dataSource={rateContent}
+                                        renderItem={(item) => (
+                                            <List.Item key={item.email}>
+                                            <List.Item.Meta
+                                                avatar={<Avatar src={item.picture.large} />}
+                                                title={<a href="https://ant.design">{item.name.last}</a>}
+                                                description={"content review"}
+                                            />
+                                            <Rate disabled defaultValue={3} />
+                                            {/* content rate */}
+                                            </List.Item>
+                                        )}
+                                        />
+                                    </InfiniteScroll>
                                     </div>
                                 </div>
+                                </div>
+                            </div>
                             </div>
                             <div class="price-line">
                                 {percentSale>0?

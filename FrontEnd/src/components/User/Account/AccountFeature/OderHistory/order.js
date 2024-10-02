@@ -67,7 +67,7 @@ const OrderHistory = () => {
       <Table
         columns={columns}
         dataSource={orders}
-        className="margint8px"
+        className="margint20px"
         size="small"
         bordered
         title={() => <h4>Order History</h4>}
