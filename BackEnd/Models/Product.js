@@ -26,12 +26,17 @@ const productSchema = new Schema({
         required: true,
         default: 0
     },
-    averageRatings: {
+    average_ratings: {
         type: Number,
         required: true,
         default: 0
     },
-    productStatus: {
+    review_count: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    product_status: {
         type: String,
         required: true,
         default: 'active'

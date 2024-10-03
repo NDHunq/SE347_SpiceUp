@@ -11,7 +11,7 @@ const getAllCartItems = async (req, res) => {
         res.status(400).json({Error: err.message});
         console.log(err);
     }
-}
+};
 
 //GET an item by ID
 const getCartItemByID = async (req, res) => {
@@ -28,7 +28,20 @@ const getCartItemByID = async (req, res) => {
         res.status(400).json({Error: err.message});
         console.log(err);
     }
-}
+};
+
+//Get all user's items
+const getAllUserItems = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const cartItem = await CartItem.find({user_id: id}).sort({createdAt: -1}).populate({path: 'product_id', select: 'product_name price stock product_images', populate: {path: 'category', select: 'category_name'}});
+        res.status(200).json(cartItem);
+    }
+    catch (err) {
+        res.status(400).json({Error: err.message});
+        console.log(err);
+    }
+};
 
 //Create an item
 const createCartItem = async (req, res) => {
@@ -42,7 +55,7 @@ const createCartItem = async (req, res) => {
         res.status(400).json({Error: err.message});
         console.log(err);
     }
-}
+};
 
 //DELETE an item
 const deleteCartItem = async (req, res) => {
@@ -59,12 +72,12 @@ const deleteCartItem = async (req, res) => {
         res.status(400).json({Error: err.message});
         console.log(err);
     }
-}
+};
 
 //DELETE all user's items
 const deleteALlUserItems = async (req, res) => {
 
-}
+};
 
 //UPDATE an item
 const updateCartItem = async (req, res) => {
@@ -84,6 +97,6 @@ const updateCartItem = async (req, res) => {
     }
 
     res.status(200).json(cartItem);
-}
+};
 
-module.exports = {createCartItem, getCartItemByID, getAllCartItems, deleteCartItem, updateCartItem};
+module.exports = {createCartItem, getCartItemByID, getAllUserItems, getAllCartItems, deleteCartItem, updateCartItem};
