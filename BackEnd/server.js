@@ -27,7 +27,3 @@ async function Connect() {
 
 // Call the function to connect to the database
 Connect();
-
-//insert test data
-
-

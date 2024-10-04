@@ -1,13 +1,29 @@
 const Order = require('../Models/Order');
 const mongoose = require('mongoose');
 
-//Get all orders by user_id
+//Get all orders by user_id with pagination
 const getAllOrdersByUserID = async (req, res) => {
-    const { user_id } = req.params;
+    const { user_id } = req.query;
     try
     {
-        const orders = await Order.find({user_id: user_id}).sort({createdAt: -1}).populate({path: 'order_items', select: 'quantities subTotal', populate: {path: 'product_id', select: 'product_name price stock', populate: {path: 'category', select: 'category_name'}}});
-        res.status(200).json(orders);
+        const page = req.query.page * 1 || 1;
+        const limit = req.query.limit * 1 || 10;
+        const skip = ( page - 1 ) * limit;
+
+        const orders = await Order.find({user_id: user_id}).sort({date_ordered: 'desc'}).skip(skip).limit(limit).populate({path: 'order_items', select: 'quantities subTotal', populate: {path: 'product_id', select: 'product_name price stock', populate: {path: 'category', select: 'category_name'}}});
+
+        const order_counts = orders.length;
+        const total_orders = await Order.countDocuments({user_id: user_id});
+
+        res.status(200).json(
+            {
+                page,
+                limit,
+                order_counts,
+                total_orders,
+                total_pages: Math.ceil(order_counts / limit),
+                orders
+            });
     }
     catch (err){
         res.status(400).json({Error: err.message});

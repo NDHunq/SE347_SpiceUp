@@ -8,7 +8,7 @@ const { getReviewsByProductId, getUserReview, createReview} = require('../contro
 Router.get('/:id', getReviewsByProductId);
 
 // Get user review about a specific product
-Router.get('', getUserReview);
+Router.get('/', getUserReview);
 
 // Create a new review
 Router.post('/', createReview);

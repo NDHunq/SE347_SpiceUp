@@ -57,7 +57,11 @@ const productSchema = new Schema({
         required: false,
         default: ''
     }],
-});
+    created_at: {
+        type: Date,
+        default: Date.now
+    }
+},);
 
 module.exports = mongoose.models.Product || mongoose.model('Product', productSchema);
 
