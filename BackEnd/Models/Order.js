@@ -72,15 +72,16 @@ orderSchema.post('save', async function (doc, next){
         // Update product stock after an order is saved
         for (const item of doc.order_items){
             const cartItem = await CartItem.findById(item);
-            console.log(cartItem);
+            console.log("Cart item:\n", cartItem);
 
             const product = await Product.findById(cartItem.product_id);
-            console.log(product);
+            console.log("Product:\n", product);
 
             if (product){
-                product.stock -= item.quantities;
-                await Product.findByIdAndUpdate(item.product_id, {$set: {stock: product.stock}});
-                console.log(product.stock);
+                console.log("Initial stock: ",product.stock,"\nCartItem quantities:", cartItem.quantities);
+                product.stock -= cartItem.quantities;
+                console.log("Remaining stock:",product.stock);
+                await Product.findByIdAndUpdate(cartItem.product_id, {$set: {stock: product.stock}});
             }
         }
 
