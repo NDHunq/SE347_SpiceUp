@@ -33,9 +33,9 @@ const getAllOrdersByUserID = async (req, res) => {
 
 // Create a new order
 const createOrder = async (req, res) => {
-    const { user_id, date_ordered, order_items, total_cost, payment_method, status } = req.body;
+    const { user_id, date_ordered, order_items, total_cost, payment_method, status, order_notes, billing_address } = req.body;
     try {
-        const order = await Order.create({user_id, date_ordered, order_items, total_cost, payment_method, status});
+        const order = await Order.create({user_id, date_ordered, order_items, total_cost, payment_method, status, order_notes, billing_address});
         res.status(200).json(order);
     }
     catch (err) {
@@ -48,19 +48,23 @@ const createOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     const { id } = req.params;
     try {
-        const order = Order.findById(id);
+        const order = await Order.findById(id);
+        console.log(order);
+
         if(order) {
             Object.assign(order, req.body);
+            console.log(order);
             await order.save();
         }
         else{
             res.status(404).json({Error: 'Order not found'});
         }
 
-        res.status(200).json({Message: 'Order updated successfully'});
+
+        res.status(200).json(order);
     }
     catch (err){
-        res.json(400).message({Error: err.message});
+        res.status(400).json({Error: err.message});
         console.log(err);
     }
 }

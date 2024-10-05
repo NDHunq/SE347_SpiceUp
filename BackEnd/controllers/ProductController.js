@@ -1,43 +1,6 @@
 const Product = require('../Models/Product');
 const mongoose = require('mongoose');
 
-// // Get all products
-// const getAllProducts = async (req, res) => {
-//     try{
-//         const products = await Product.find({}).sort({createdAt: -1});
-//         res.status(200).json(products);
-//     }
-//     catch (err) {
-//         res.status(400).json({Error: err.message});
-//         console.log(err);
-//     }
-// };
-//
-// // Get all products with pagination
-// const getAllProductsWithPagination = async (req, res) => {
-//     try {
-//         const page = req.query.page * 1 || 1;
-//         const limit = req.query.limit * 1 || 10;
-//         const skip = (page - 1) * limit;
-//
-//         const products = await Product.find({}).sort({createdAt: -1}).skip(skip).limit(limit);
-//
-//         const total_products = await Product.countDocuments();
-//         res.status(200).json(
-//             {
-//                 page,
-//                 limit,
-//                 total_products,
-//                 total_pages: Math.ceil(total_products / limit),
-//                 products
-//             });
-//     }
-//     catch (err) {
-//         res.status(400).json({Error: err.message});
-//         console.log(err);
-//     }
-// }
-
 // Get a product by ID
 const getProductByID = async (req, res) => {
     const { id } = req.params;

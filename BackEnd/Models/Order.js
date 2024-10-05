@@ -2,15 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const CartItem = require('./CartItem.js');
 const Product = require('./Product.js');
-const {json} = require("express");
-
+const { billingAddressSchema } = require('./BillingAddress.js');
 // Define the schema for the order collection
 const orderSchema = new Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User',
-        default: ''
     },
     date_ordered: {
         type: Date,
@@ -42,7 +40,13 @@ const orderSchema = new Schema({
         type: String,
         required: true,
         default: 'Pending'
-    }
+    },
+    order_notes: {
+        type: String,
+        required: false,
+        default: ''
+    },
+    billing_address: billingAddressSchema
 });
 
 // Middleware to calculate the total cost of an order
@@ -72,15 +76,11 @@ orderSchema.post('save', async function (doc, next){
         // Update product stock after an order is saved
         for (const item of doc.order_items){
             const cartItem = await CartItem.findById(item);
-            console.log("Cart item:\n", cartItem);
 
             const product = await Product.findById(cartItem.product_id);
-            console.log("Product:\n", product);
 
             if (product){
-                console.log("Initial stock: ",product.stock,"\nCartItem quantities:", cartItem.quantities);
                 product.stock -= cartItem.quantities;
-                console.log("Remaining stock:",product.stock);
                 await Product.findByIdAndUpdate(cartItem.product_id, {$set: {stock: product.stock}});
             }
         }
