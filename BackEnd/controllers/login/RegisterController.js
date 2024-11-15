@@ -21,7 +21,8 @@ class RegisterController {
                 lastname: lastName,
                 billingAddress: null,
                 role: role,
-                avatar: avatar,                
+                avatar: avatar,
+                createdAt: new Date()                
             })
 
             console.log(newUser)

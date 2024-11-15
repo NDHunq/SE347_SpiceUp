@@ -1,19 +1,12 @@
 const mongoose = require('mongoose')
+const Feedback = require('./feedBack')
+
 //console.log(orderId)
 mongoose.set('debug', true)
 
 const SpiceUp = mongoose.connection.useDb('SpiceUp');
 
-const ReviewSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        require: true,
-        unique: true
-    },
-    content: {
-        type: String,
-        require: true,
-    },
+const ReviewSchema = new mongoose.Schema({ 
     star: {
         type: Number,
         require: true,
@@ -22,14 +15,10 @@ const ReviewSchema = new mongoose.Schema({
         type: Number,
         ref: 'Product',
         require: true,
-    },
-    image: {
-        type: String,
-        require: true,
     }
 })
 
-const Review = SpiceUp.model('Review', ReviewSchema)
+const Review = Feedback.discriminator('Review', ReviewSchema)
 
 module.exports = Review
 

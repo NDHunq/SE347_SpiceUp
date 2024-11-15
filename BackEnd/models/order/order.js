@@ -7,35 +7,13 @@ const SpiceUp = mongoose.connection.useDb('SpiceUp');
 
 
 const OrderSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        require: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        require: true,
-        unique: true
-    },
-    date: {
+    date_ordered: {
         type: Date,
         require: true,
     },
-    totalCost: {
+    total_cost: {
         type: Number,
         require: true,
-    },
-    paymentMethod: {
-        type: String,
-        require: true,
-    },
-    shippingFee: {
-        type: Number,
-        require: true,
-    },
-    productItemId : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrderItem'
     }
 })
 

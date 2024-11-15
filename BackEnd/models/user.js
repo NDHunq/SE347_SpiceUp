@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    resetPasswordToken: {
+        type: String,
+        default: undefined
+    },
     billingAddress: {
         type: {
             firstName: {
@@ -71,6 +75,9 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
         require: true,
+    },
+    createdAt: {
+        type: Date
     }
 })
 

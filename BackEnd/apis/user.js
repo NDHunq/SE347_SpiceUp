@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const authenticate = require('../middlewares/auth/auth')
 
 const userController = require('../controllers/user/UserController')
 
@@ -8,6 +7,10 @@ const userController = require('../controllers/user/UserController')
 
 router.use(express.json())
 router.use('/info',userController.getInfo)
+router.use('/info/update',userController.updateInfo)
+router.use('/reset_password/send', userController.sendResetLink)
+router.use('/reset_password/:token', userController.resetPassword)
+
 
 router.post('/billingAddress', userController.setBillingAddress)
 router.get('/billingAddress', userController.getBillingAddress)
