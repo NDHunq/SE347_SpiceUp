@@ -5,7 +5,9 @@ const connectToDb = require('../BackEnd/config/db/db.js')
 const { initGridFS } = require('../BackEnd/config/gridfs/gridfs.js')
 const app = express()
 const port = 3000
+const cors = require('cors');
 
+app.use(cors());
 app.use(morgan('combined'))
 app.use(express.json());
 api(app)
