@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Product = require('../Models/Product.js');
+const Product = require('.//Product.js');
 
 // Define the schema for the cart collection
 const cartItemSchema = new Schema({
@@ -20,7 +20,7 @@ const cartItemSchema = new Schema({
         required: true,
         default: 1
     },
-    subTotal: {
+    sub_total: {
         type: Number,
         required: true,
         default: 0
@@ -36,7 +36,7 @@ cartItemSchema.pre('save', async function (next) {
             return next(new Error('Product not found'));
         }
 
-        this.subTotal = product.price * this.quantities;
+        this.sub_total = product.price * this.quantities;
         next();
     }
     catch (err) {

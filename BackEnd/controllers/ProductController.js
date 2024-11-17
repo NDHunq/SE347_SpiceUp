@@ -1,4 +1,4 @@
-const Product = require('../Models/Product');
+const Product = require('../models/Product');
 const mongoose = require('mongoose');
 
 // Get a product by ID
@@ -6,12 +6,28 @@ const getProductByID = async (req, res) => {
     const { id } = req.params;
     console.log(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({Error: 'Product not found'});
+        return res.status(404).json(
+            {
+                status: 'error',
+                code: 404,
+                message: 'Product not found',
+                data: null,
+                errors: 'Invalid product_id'
+            }
+        );
     }
 
     try{
         const product = await Product.findById(id);
-        res.status(200).json(product);
+        res.status(200).json(
+            {
+                status: 'success',
+                code: 200,
+                message: 'Product retrieved successfully',
+                data: product,
+                errors: null
+            }
+        );
     }
     catch (err) {
         res.status(400).json({Error: err.message});
@@ -21,13 +37,43 @@ const getProductByID = async (req, res) => {
 
 //CREATE a product
 const createProduct = async (req, res) => {
-    const {product_name, category, price, stock, discount, averageRatings, productStatus, brand, description, product_images} = req.body;
+    const {product_name, category, price, stock, discount, brand, description, product_images} = req.body;
+    const productStatus = 'active';
+    const averageRatings = 0;
+
+    if (!product_name || !category || !price || !stock || !discount || !brand || !description || !product_images) {
+        return res.status(400).json(
+            {
+                status: 'error',
+                code: 400,
+                message: 'Missing required fields',
+                data: null,
+                errors: 'Bad request'
+            }
+        );
+    }
     try{
         const newProduct = await Product.create({product_name, category, price, stock, discount, averageRatings, productStatus, brand, description, product_images});
-        res.status(200).json(newProduct);
+        res.status(201).json(
+            {
+                status: 'success',
+                code: 201,
+                message: 'Product created successfully',
+                data: newProduct,
+                errors: null
+            }
+        );
     }
     catch (err) {
-        res.status(400).json({Error: err.message});
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
         console.log(err);
     }
 }
@@ -37,16 +83,42 @@ const updateProduct = async (req, res) => {
     const { id } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({Error: 'Product not found'});
+        return res.status(404).json(
+            {
+                status: 'error',
+                code: 404,
+                message: 'Product not found',
+                data: null,
+                errors: 'Invalid product_id'
+            }
+        );
     }
 
-    const product = await Product.findOneAndUpdate({_id: id}, {...req.body});
+    try {
+        const product = await Product.findOneAndUpdate({_id: id}, {...req.body}, {new: true});
 
-    if(!product) {
-        return res.status(404).json({Error: 'Product not found'});
+        res.status(200).json(
+            {
+                status: 'success',
+                code: 200,
+                message: 'Product updated successfully',
+                data: product,
+                errors: null
+            }
+        );
     }
-
-    res.status(200).json(product);
+    catch (err) {
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
+        console.log(err);
+    }
 }
 
 //DELETE a product
@@ -54,14 +126,38 @@ const deleteProduct = async (req, res) => {
     const { id } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({Error: 'Product not found'});
+        return res.status(404).json(
+            {
+                status: 'error',
+                code: 404,
+                message: 'Product not found',
+                data: null,
+                errors: 'Invalid product_id'
+            }
+        );
     }
     try {
         const product = await Product.findOneAndDelete({_id: id});
-        res.status(200).json(product);
+        res.status(200).json(
+            {
+                status: 'success',
+                code: 200,
+                message: 'Product deleted successfully',
+                data: product,
+                errors: null
+            }
+        );
     }
     catch(err) {
-        res.status(400).json({Error: err.message});
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
         console.log(err);
     }
 }
@@ -133,17 +229,104 @@ const getAllProducts = async (req, res) => {
 
         res.status(200).json(
             {
-                page,
-                limit,
-                product_counts,
-                total_products,
-                total_pages: Math.ceil(product_counts / limit),
-                products
-            });    }
+                status: 'success',
+                code: 200,
+                message: 'Products retrieved successfully',
+                data: {
+                    products,
+                    total: total_products
+                },
+                errors: null,
+                // page,
+                // limit,
+                // product_counts,
+                // total_products,
+                // total_pages: Math.ceil(product_counts / limit),
+            });
+    }
     catch (err) {
-        res.status(400).json({Error: err.message});
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
         console.log(err);
     }
 }
 
-module.exports = {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct, getProductByName };
+const findProductsWithFilter = async (req, res) => {
+    // filter = {
+    //   sort: {
+    //      field: 'created_at', [created_at, price, average_ratings, discount]
+    //      order: 'desc' [asc, desc]
+    //   } || null,
+    //   category: ['id1', 'id2'] || null,
+    //   price: [1000, 5000] || null,
+    //   average_ratings: 4 || null,
+    //   product_name: 'Samsung' || null}
+
+    // Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+
+    const { sort, category, price, average_ratings, product_name } = req.body;
+    let filter = {};
+
+    const sortField = sort?.field || 'created_at';
+    const sortOrder = sort?.order || 'desc';
+
+    if (category) {
+        filter.category = { $in: category };
+    }
+
+    if (price && price.length === 2) {
+        filter.price = {};
+        filter.price.$gte = price[0];
+        filter.price.$lte = price[1];
+    }
+
+    if (average_ratings) {
+        filter.average_ratings = average_ratings;
+    }
+
+    if (product_name) {
+        filter.product_name = { $regex: product_name, $options: 'i' };
+    }
+
+    //console.log(sortField, sortOrder, filter);
+
+    try {
+        const products = await Product.find(filter).sort({ [sortField]: sortOrder }).skip(skip).limit(limit);
+        res.status(200).json(
+            {
+                status: 'success',
+                code: 200,
+                message: 'Products retrieved successfully',
+                data: {
+                    products,
+                    total: products?.length
+                },
+                errors: null
+            }
+        )
+    }
+    catch (err) {
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
+        console.log(err);
+    }
+}
+
+module.exports = {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct, getProductByName, findProductsWithFilter };

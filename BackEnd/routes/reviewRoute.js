@@ -5,12 +5,12 @@ const Router = express.Router();
 const { getReviewsByProductId, getUserReview, createReview} = require('../controllers/ReviewController');
 
 // Get all reviews about a specific product
-Router.get('/:id', getReviewsByProductId);
+Router.get('/:product_id', getReviewsByProductId);
 
 // Get user review about a specific product
-Router.get('/', getUserReview);
+Router.get('', getUserReview);
 
 // Create a new review
-Router.post('/', createReview);
+Router.post('', createReview);
 
 module.exports = Router;

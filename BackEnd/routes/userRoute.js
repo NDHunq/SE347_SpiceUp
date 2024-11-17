@@ -5,7 +5,7 @@ const Router = express.Router();
 const { getAllUsers, updateUser } = require('../controllers/UserController');
 
 // Get all users
-Router.get('/', getAllUsers);
+Router.get('', getAllUsers);
 
 // Update a user information
 Router.patch('/:id', updateUser);

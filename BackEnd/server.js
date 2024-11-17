@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const api = require('./apis/index')
 const connectToDb = require('../BackEnd/config/db/db.js')
+const { initGridFS } = require('../BackEnd/config/gridfs/gridfs.js')
 const app = express()
 const port = 3000
 
@@ -17,7 +18,8 @@ api(app)
 
 async function Connect() {
     await connectToDb()
-        .then(() => {
+        .then((db) => {
+            initGridFS(db);
             app.listen(port, () => {
                 console.log(`Listening on port ${port}`)
             })

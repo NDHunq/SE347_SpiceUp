@@ -54,7 +54,16 @@ orderSchema.pre('save', async function (next){
     try {
         if (this.order_items.length !== 0){
             const cartItems = await CartItem.find({ _id: { $in: this.order_items}});
-            this.total_cost = cartItems.reduce((total, item) => total + item.subTotal, 0);
+            this.total_cost = cartItems.reduce((total, item) => total + item.sub_total, 0);
+
+            for (const item of cartItems) {
+                const product = await Product.findById(item.product_id);
+                if (product){
+                    if (item.quantities > product.stock){
+                        return next(new Error(`Product "${product.product_name}" is out of stock`));
+                    }
+                }
+            }
         }
         else{
             this.total_cost = 0;
@@ -88,6 +97,7 @@ orderSchema.post('save', async function (doc, next){
         // Delete the cart items after an order is saved
         await CartItem.deleteMany({ _id: { $in: doc.order_items}});
 
+        // Update the order with the order_items_post
         await this.model('Order').findByIdAndUpdate(doc._id, {$set: {order_items: [], status: 'Paid', order_items_post: cartItemsPost}}, {new: true});
 
         next();

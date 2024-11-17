@@ -5,6 +5,8 @@ const cartItemEndPoint = require('../routes/cartItemRoute');
 const orderEndPoint = require('../routes/orderRoute');
 const reviewEndPoint = require('../routes/reviewRoute');
 const userEndPoint = require('../routes/userRoute');
+const billingAddressEndPoint = require('../routes/billingAddressRoute');
+const imageEndPoint = require('../routes/imageRoute');
 
 function api(app) {
     app.use('/register',registerEndPoint)
@@ -14,6 +16,8 @@ function api(app) {
     app.use('/api/v1/order',orderEndPoint);
     app.use('/api/v1/review',reviewEndPoint);
     app.use('/api/v1/user',userEndPoint);
+    app.use('/api/v1/billingAddress',billingAddressEndPoint);
+    app.use('/api/v1/image',imageEndPoint);
 }
 
 module.exports = api

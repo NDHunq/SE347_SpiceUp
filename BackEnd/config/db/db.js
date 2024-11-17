@@ -6,16 +6,18 @@ async function connectToDb() {
 
     const uri = process.env.DB_URI
 
-        await mongoose.connect(uri, {
+    try {
+        const conn = await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        })
-        .then(()=> {
-            console.log("successfully connected")
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        });
+
+        console.log("successfully connected");
+        return conn.connection.db;
+    }
+    catch (err) {
+        console.log(err)
+    }
 }
 
 module.exports = connectToDb

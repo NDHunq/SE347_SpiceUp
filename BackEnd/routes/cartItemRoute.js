@@ -5,7 +5,7 @@ const router = express.Router();
 const {createCartItem, getCartItemByID, getAllUserItems, getAllCartItems, deleteCartItem, updateCartItem} = require('../controllers/CartItemController');
 
 //Get all items
-router.get('/', getAllCartItems);
+router.get('', getAllCartItems);
 
 //Get an item by ID
 router.get('/id/:id', getCartItemByID);
@@ -14,7 +14,7 @@ router.get('/id/:id', getCartItemByID);
 router.get('/user/:id', getAllUserItems);
 
 //Create an item
-router.post('/', createCartItem);
+router.post('', createCartItem);
 
 //Delete an item
 router.delete('/:id', deleteCartItem);
