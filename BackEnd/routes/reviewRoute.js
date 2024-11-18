@@ -3,14 +3,15 @@ const Router = express.Router();
 
 // Importing the Controller
 const { getReviewsByProductId, getUserReview, createReview} = require('../controllers/ReviewController');
+const authenticate = require("../middlewares/auth/auth");
 
 // Get all reviews about a specific product
-Router.get('/:product_id', getReviewsByProductId);
+Router.get('/:product_id', authenticate, getReviewsByProductId);
 
 // Get user review about a specific product
-Router.get('', getUserReview);
+Router.get('', authenticate, getUserReview);
 
 // Create a new review
-Router.post('', createReview);
+Router.post('', authenticate, createReview);
 
 module.exports = Router;

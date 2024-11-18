@@ -97,7 +97,7 @@ UserSchema.pre('save', async function () {
 
 
 
-const User = SpiceUp.model('User', UserSchema)
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 module.exports = User
 
