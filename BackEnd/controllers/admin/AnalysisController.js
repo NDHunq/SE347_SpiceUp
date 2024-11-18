@@ -3,7 +3,7 @@ const User = require('../../models/user')
 const OrderItem = require('../../models/order/orderItem')
 const Order = require('../../models/order/order')
 const Recipe = require('../../models/recipe/recipe')
-//const Product = require('../../models/product/product')
+const Product = require('../../models/Product')
 
 class AnalysisController {
     async getAnalysis(req, res) {

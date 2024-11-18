@@ -1,5 +1,6 @@
 const validate = (req, res, next) => {
-    const { email, password } = req.query
+    console.log(req.body)
+    const { email, password } = req.body
     const errors = [];
 
     // Email validation
@@ -24,8 +25,8 @@ const validate = (req, res, next) => {
 }
 
 const sanitizeInput = (req, res, next) => {
-    for (const key in req.query) {
-        req.query[key] = req.query[key].replace(/[\/"?$]/g, '')
+    for (const key in req.body) {
+        req.body[key] = req.body[key].replace(/[\/"?$]/g, '')
     }
     return next()
 }

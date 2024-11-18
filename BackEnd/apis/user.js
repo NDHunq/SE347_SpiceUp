@@ -6,14 +6,17 @@ const userController = require('../controllers/user/UserController')
 
 
 router.use(express.json())
+router.use('/info/update/:user_id',userController.updateInfo)
+router.use('/info/:user_id',userController.getInfo)
 router.use('/info',userController.getInfo)
-router.use('/info/update',userController.updateInfo)
+
 router.use('/reset_password/send', userController.sendResetLink)
 router.use('/reset_password/:token', userController.resetPassword)
 
 
-router.post('/billingAddress', userController.setBillingAddress)
-router.get('/billingAddress', userController.getBillingAddress)
+router.post('/billingAddress/:user_id', userController.setBillingAddress)
+//router.post('/billingAddress', userController.setBillingAddress)
+router.get('/billingAddress/:user_id', userController.getBillingAddress)
 
 // router.delete('/delete',UserController.delete)
 

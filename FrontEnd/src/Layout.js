@@ -15,7 +15,8 @@ import Account from "./components/User/Account/account";
 import Setting from "./components/User/Account/AccountFeature/Setting/setting";
 import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecipe";
 import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
-
+import Cart from "./components/User/Cart/Cart"
+import Checkout from "./components/User/Cart/Checkout/Checkout";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +25,7 @@ import SingleRecipe from "./components/User/SingleRecipe/singleRecipe";
 import NewRecipe from "./components/User/New Recipe/newRecipe";
 import AppAdmin from "./AppAdmin";
 import HomeAdmin from "./components/Admin/Home/Home";
+import DetailOrder from "./components/User/Account/AccountFeature/OderHistory/DetailOrder/DetailOrder";
 import RecipeAdmin from "./components/Admin/Recipe/recipe";
 import SingleRecipeAdmin from "./components/Admin/SingleRecipe/singleRecipe";
 
@@ -47,7 +49,13 @@ const Layout = (props) => {
             <Route path="/account/settings" element={<Setting />} />
             <Route path="/account/myrecipes" element={<MyRecipe />} />
             <Route path="/account/order" element={<OrderHistory />} />
+            <Route path="/account/order/:id" element={<DetailOrder />} />
           </Route>
+          <Route>
+            <Route path="/shopping-cart" element={<Cart />} />
+            <Route path="/shopping-cart/checkout" element={<Checkout />} />
+          </Route>
+
         </Route>
         <Route path="/admin" element={<AppAdmin />}>
           <Route path="home" element={<HomeAdmin />} />

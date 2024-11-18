@@ -56,11 +56,11 @@ class RecipeCommentController {
         try {
             await connectToDb()
 
-            const {id} = req.params
+            const {comment_id} = req.params
             const {content} = req.body
             const updateTime = new Date()
 
-            await Comment.updateOne({_id: id},{
+            await Comment.updateOne({_id: comment_id},{
                 content: content,
                 updatedAt: updateTime
             })

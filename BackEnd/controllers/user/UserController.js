@@ -1,5 +1,6 @@
 const User = require('../../models/user')
 const connectToDb = require('../../config/db/db')
+const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
@@ -9,13 +10,15 @@ class UserController {
     //[GET] user info
     async getInfo(req, res) {
         await connectToDb()
-        const { email } = req.query
+        const { user_id } = req.params
 
-        const userInfo = await User.find({ email }, { password: 0 })
-
+        const userInfo = user_id?await User.findOne({ _id: user_id }, { password: 0 }):await User.find()
+        
         try {
             if (userInfo) {
-                res.status(200).json(userInfo)
+                res.status(200).json({
+                    userInfo: userInfo
+                })
             } else {
                 res.status(404).send('email not found')
             }
@@ -24,24 +27,27 @@ class UserController {
         }
     }
 
-    async updateInfo(req,res) {
+    async updateInfo(req, res) {
         try {
             await connectToDb()
 
-            const {email} = req.query
-            const user = User.findOne({email: email})
-            
+            const { user_id } = req.params
+            const user = await User.findOne({ _id: user_id })
+
             for (const key in req.body) {
                 if (req.body.hasOwnProperty(key) && key !== 'password') {
-                    user[key] = req.body[key]  
+                    user[key] = req.body[key]
                 }
             }
 
             await user.save()
 
-            res.status(200).send("Update user info successfully")
+            res.status(200).json({
+                userInfo: user,
+                message: "Update user info successfully"
+            })
 
-        } catch(e) {
+        } catch (e) {
             res.status(500).send("Internal server error")
             console.log("Error", e)
         }
@@ -52,9 +58,9 @@ class UserController {
         try {
             await connectToDb()
 
-            const { email } = req.query
+            const { user_id } = req.params
 
-            const user = await User.findOne({ email: email })
+            const user = await User.findOne({ _id: user_id })
             if (user) {
                 res.status(200).json(user.billingAddress)
             } else {
@@ -67,60 +73,60 @@ class UserController {
 
 
     //[POST] setBillingAddress
-    async setBillingAddress(req, res) {
+    // async setBillingAddress(req, res) {
 
-        try {
-            await connectToDb()
+    //     try {
+    //         await connectToDb()
+    //         const 
+    //         const { firstName,
+    //             lastName,
+    //             companyName,
+    //             country,
+    //             province,
+    //             district,
+    //             commune,
+    //             detailAddress,
+    //             email } = req.body
 
-            const { firstName,
-                lastName,
-                companyName,
-                country,
-                province,
-                district,
-                commune,
-                detailAddress,
-                email } = req.body
 
+    //         const user = await User.findOne({ email: email })
 
-            const user = await User.findOne({ email: email })
+    //         const billingAddressUpdate = {
+    //             lastName: lastName,
+    //             firstName: firstName,
+    //             companyName: companyName,
+    //             country: country,
+    //             province: province,
+    //             district: district,
+    //             commune: commune,
+    //             detailAddress: detailAddress
+    //         }
 
-            const billingAddressUpdate = {
-                lastName: lastName,
-                firstName: firstName,
-                companyName: companyName,
-                country: country,
-                province: province,
-                district: district,
-                commune: commune,
-                detailAddress: detailAddress
-            }
+    //         user.billingAddress = {
+    //             ...billingAddressUpdate
+    //         };
 
-            user.billingAddress = {
-                ...billingAddressUpdate
-            };
+    //         console.log(user.billingAddress)
 
-            console.log(user.billingAddress)
+    //         await user.save()
 
-            await user.save()
+    //         if (!user) {
+    //             res.status(404).send('User not found')
+    //         } else {
+    //             res.status(200).send('Add address successfully')
+    //         }
+    //     } catch (e) {
+    //         console.log('Some errors happen', e)
+    //     }
 
-            if (!user) {
-                res.status(404).send('User not found')
-            } else {
-                res.status(200).send('Add address successfully')
-            }
-        } catch (e) {
-            console.log('Some errors happen', e)
-        }
-
-    }
+    // }
 
     async sendResetLink(req, res) {
         try {
             await connectToDb()
 
-            const { email } = req.query
-            const user = await User.findOne({ email: email })
+            const { user_id } = req.query
+            const user = await User.findOne({ _id: user_id })
 
             const transporter = nodemailer.createTransport({
                 service: "Gmail",
@@ -153,32 +159,90 @@ class UserController {
             res.status(400).send("Fail to send reset link")
             console.log("Error", e)
         }
-        
+
     }
 
-    async resetPassword(req,res) {
+    async resetPassword(req, res) {
         try {
             await connectToDb()
 
-            const {token} = req.param
-            const {newPassword} = req.body
+            const { token } = req.param
+            const { newPassword } = req.body
 
-            const user = await User.findOne({resetPasswordToken: token})
+            const user = await User.findOne({ resetPasswordToken: token })
 
-            if(!user) {
+            if (!user) {
                 res.status(400).send("Invalid token")
             }
 
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             user.password = hashedPassword;
             user.resetPasswordToken = undefined;
-        
+
             await user.save();
-            
+
             res.status(200).send("Reset password successfully")
-        } catch(e) {
+        } catch (e) {
             console.error("Error resetting password:", error);
-            res.status(500).json({ message: "Internal server error" }); 
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
+
+    async setBillingAddress(req, res) {
+        const { user_id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(user_id)) {
+            return res.status(404).json(
+                {
+                    status: 'error',
+                    code: 404,
+                    message: 'User not found',
+                    data: null,
+                    errors: 'Invalid user_id'
+                }
+            );
+        }
+
+        try {
+            const user = await User.findOne({ _id: user_id });
+            const newBillingAddress = req.body
+            if (user) {
+                user.billingAddress = newBillingAddress
+                await user.save();
+            }
+            else {
+                return res.status(404).json(
+                    {
+                        status: 'error',
+                        code: 404,
+                        message: 'user not found',
+                        data: null,
+                        errors: 'Invalid billing address'
+                    }
+                );
+            }
+
+            res.status(200).json(
+                {
+                    status: 'success',
+                    code: 200,
+                    message: 'Billing address updated successfully',
+                    data: user.billingAddress,
+                    errors: null
+                }
+            );
+        }
+        catch (err) {
+            res.status(500).json(
+                {
+                    status: 'error',
+                    code: 500,
+                    message: 'Internal server error',
+                    data: null,
+                    errors: err.message
+                }
+            );
+            console.log(err);
         }
     }
 

@@ -1,23 +1,19 @@
 const User = require('../../models/user')
-const connectToDb = require('../../config/db/db')
 
 const validate = (req, res, next) => {
-    console.log(req)
-    const [email, password] = req.body
-    console.log(email)
+    console.log(req.body)
+    const { email, phone, password } = req.body
+
     const errors = [];
 
     // Email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-    // console.log(email)
-    // console.log(password.value)
-    if (!email.value || !emailRegex.test(email.value)) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
         errors.push('Invalid email format.');
     }
 
     // Password validation
-    if (!password.value || password.value.length < 8) {
+    if (!password || password.length < 8) {
         errors.push('Password must be at least 8 characters long.');
     }
 
@@ -31,13 +27,12 @@ const validate = (req, res, next) => {
     if (errors.length > 0) {
         return res.status(400).json({ errors });
     }
-    return next()
+    next()
 }
 
-async function checkDuplicate(req, res, next) {
-    await connectToDb()
-    const [email] = req.body
-    const duplicateEmail = await User.findOne({ email: email.value })
+async function checkDuplicate(req, res,next) {
+    const {email} = req.body
+    const duplicateEmail = await User.findOne({ email: email })
 
     if(duplicateEmail) {
         return res.status(409).json({
@@ -45,7 +40,7 @@ async function checkDuplicate(req, res, next) {
         })
     }
 
-    return next()
+    next()
 }
 
 module.exports = {validate, checkDuplicate}

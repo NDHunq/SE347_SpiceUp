@@ -16,7 +16,11 @@ const RecipeStepSchema = new mongoose.Schema({
     image: [{
         type: String,
         require: true
-    }]
+    }],
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const RecipeStep = SpiceUp.model('RecipeStep', RecipeStepSchema)

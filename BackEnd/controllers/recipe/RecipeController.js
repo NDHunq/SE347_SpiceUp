@@ -9,6 +9,7 @@ class RecipeController {
     async createRecipe(req, res) {
         try {
             await connectToDb()
+
             const { recipeName, description, cookingTimeInSecond, email, recipeIds, tag, ingredients } = req.body
             const recipe = new Recipe({
                 recipeName: recipeName,
@@ -37,9 +38,9 @@ class RecipeController {
     async updateRecipe(req, res) {
         try {
             await connectToDb()
-            const { email } = req.query
-            const { id } = req.param
-            const recipe = Recipe.findOne({ email: email, _id: id, isDeleted: false })
+            //const { email } = req.query
+            const { recipe_id } = req.params
+            const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false })
 
             for (const key in req.body) {
                 if (req.body.hasOwnProperty(key)) {
@@ -49,10 +50,12 @@ class RecipeController {
 
             await recipe.save()
 
-            res.status(201).send("Update recipe successfully")
+            res.status(201).json({
+                "message": "Update recipe successfully"
+            })
 
         } catch (e) {
-            res.status(500).send('Some errors happen', e)
+            //res.status(500).send('Some errors happen', e)
             console.log(e)
         }
     }
@@ -60,9 +63,9 @@ class RecipeController {
     async deleteRecipe(req, res) {
         try {
             connectToDb()
-            const { id } = req.param
+            const { recipe_id } = req.params
 
-            const recipe = await Recipe.findOne({ _id: id })
+            const recipe = await Recipe.findOne({ _id: recipe_id })
             recipe.isDeleted = true
 
             recipe.save()
@@ -108,9 +111,10 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { id } = req.param
-
-            const recipeStep = await RecipeStep.findOne({ _id: id, isDeleted: false })
+            const { step_id } = req.params
+            console.log("step_id", step_id)
+            const recipeStep = await RecipeStep.findOne({ _id: step_id })
+            console.log("recipe step", recipeStep)
             for (const key in req.body) {
                 if (req.body.hasOwnProperty(key)) {
                     recipeStep[key] = req.body[key]
@@ -118,9 +122,11 @@ class RecipeController {
             }
 
             await recipeStep.save()
-            res.status(201).send("Update recipe successfully")
+            res.status(201).json({
+                "message": "Update step sucessfully"
+            })
         } catch (e) {
-            res.status(500).send("Internal server error")
+            //res.status(500).send("Internal server error")
             console.log("Error", e)
         }
     }
@@ -128,9 +134,9 @@ class RecipeController {
     async deleteStep(req, res) {
         try {
             connectToDb()
-            const { id } = req.param
+            const { step_id } = req.params
 
-            const recipe = await Recipe.findOne({ _id: id })
+            const recipe = await RecipeStep.findOne({ _id: step_id })
             recipe.isDeleted = true
 
             recipe.save()
@@ -146,10 +152,10 @@ class RecipeController {
 
         try {
             await connectToDb()
-            const { email } = req.query
-            if (email) {
+            const { user_id } = req.params
+            if (user_id) {
                 
-                const recipe = await Recipe.find({ email: email, isDeleted: false }).populate("step")
+                const recipe = await Recipe.find({ _id: user_id, isDeleted: false }).populate("step")
                 if (recipe) {
                     res.status(200).json(recipe)
                 } else {
@@ -175,8 +181,8 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { id } = req.query
-            const recipe = await Recipe.findOne({_id:id, isDeleted: false})
+            const { recipe_id } = req.params
+            const recipe = await Recipe.findOne({_id:recipe_id, isDeleted:false})
             recipe.views = recipe.views + 1
             console.log("recipe.views", recipe.views)
             await recipe.save()
@@ -199,9 +205,9 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { id } = req.query
+            const { recipe_id } = req.params
 
-            const recipe = await Recipe.findOne({ _id: id, isDeleted: false })
+            const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false })
 
             res.status(200).json({
                 views: recipe.views
@@ -216,14 +222,17 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { id, status } = req.query
+            const {status } = req.query
+            const {recipe_id} = req.params
 
-            const recipe = await Recipe.findOne({ _id: id, isDeleted: false })
+            const recipe = await Recipe.findOne({ _id: recipe_id })
 
             recipe.status = status
             recipe.save()
 
-            res.status(200).send("App")
+            res.status(200).json({
+                message: "Update status succesfully"
+            })
         } catch (e) {
             console.log('some errors happen', e)
         }

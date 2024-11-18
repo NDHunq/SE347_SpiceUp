@@ -7,11 +7,11 @@ class RegisterController {
 
     //[POST]
     async create(req, res) {
-        console.log('abc')
+        console.log(req.body)
 
 
         try {
-            const [{value: email}, {value: password}, {value: phone}, {value: firstName}, {value: lastName}, {value: role}, {value: avatar}] = req.body
+            const {email ,password ,phone ,firstName ,lastName ,role ,avatar} = req.body
 
             const newUser = User({
                 email: email,
@@ -19,7 +19,7 @@ class RegisterController {
                 phone: phone,
                 firstname: firstName,
                 lastname: lastName,
-                billingAddress: null,
+                //billingAddress: null,
                 role: role,
                 avatar: avatar,
                 createdAt: new Date()                

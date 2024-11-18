@@ -9,8 +9,12 @@ import {
 } from "react-icons/lia";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Space } from "antd";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
 const Header2 = () => {
+  const qtyInCart = useSelector(state => state.qtyInCart.count);
+  const dispatch = useDispatch();
+  //fetch qtyInCart [dispatch({ type: 'plus', payload: value })]
   return (
     <div className="header">
       <main className="content">
@@ -56,7 +60,7 @@ const Header2 = () => {
                   </div>
                   <div className="col icon">
                     <Link to="/shopping-cart">
-                      <Badge count={5} size="small">
+                      <Badge count={qtyInCart} size="small">
                         <LiaShoppingCartSolid className="icon-1" />
                       </Badge>
                     </Link>

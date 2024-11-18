@@ -8,8 +8,7 @@ const SpiceUp = mongoose.connection.useDb('SpiceUp');
 const FeedBackSchema = new mongoose.Schema({
     email: {
         type: String,
-        require: true,
-        unique: true
+        require: true,  
     },
     content: {
         type: String,

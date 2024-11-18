@@ -3,9 +3,16 @@ const bcrypt = require('bcrypt')
 mongoose.set('debug', true)
 
 const SpiceUp = mongoose.connection.useDb('SpiceUp');
+const { v4: uuidv4 } = require('uuid');
+
 
 const UserSchema = new mongoose.Schema({
-    email: {
+    // id : {
+    //     type: String,
+    //     default: uuidv4
+    // },
+
+    email : {
         type: String,
         require: true,
         unique: true
@@ -22,6 +29,7 @@ const UserSchema = new mongoose.Schema({
     firstname: {
         type: String,
         require: true,
+        default: ''
     },
     lastname: {
         type: String,
