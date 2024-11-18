@@ -21,11 +21,16 @@ class LoginController {
 
                 //if both match than you can do anything
                 if (data) {
-                    const token = jwt.sign({ id: user._id, email: user.email},JWT_SECRET, {expiresIn: '1h'})
+                    const token = jwt.sign({ id: user._id, email: user.email, role: user.role},JWT_SECRET, {expiresIn: '1h'})
                     return res.json({
-                        'jwt': token,
-                        'role': user.role,
-                        'message': 'login successfully'
+                        status: 'success',
+                        code: 200,
+                        message: 'Login successfully',
+                        data: {
+                            jwt: token,
+                            role: user.role,
+                        },
+                        errors: null
                     })
                 } else {
                     return res.status(401).json({ message: "wrong email or password" })
