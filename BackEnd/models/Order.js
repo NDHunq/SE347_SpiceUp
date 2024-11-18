@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const CartItem = require('./CartItem.js');
 const Product = require('./Product.js');
-const { billingAddressSchema } = require('./BillingAddress.js');
+
 // Define the schema for the order collection
 const orderSchema = new Schema({
     user_id: {
@@ -46,7 +46,6 @@ const orderSchema = new Schema({
         required: false,
         default: ''
     },
-    billing_address: billingAddressSchema
 });
 
 // Middleware to calculate the total cost of an order

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid');
-const { billingAddressSchema } = require('./billingAddress')
+//const { billingAddressSchema } = require('./billingAddress')
 
 const UserSchema = new mongoose.Schema({
     id : {
@@ -34,7 +34,40 @@ const UserSchema = new mongoose.Schema({
         require: true,
         default: ''
     },
-    billingAddress : billingAddressSchema,
+    billingAddress : {
+        firstName: {
+            type: String,
+            require: true,
+        },
+        lastName: {
+            type: String,
+            require: true,
+        },
+        companyName: {
+            type: String,
+            require: true,
+        },
+        country: {
+            type: String,
+            require: true,
+        },
+        province: {
+            type: String,
+            require: true,
+        },
+        district: {
+            type: String,
+            require: true,
+        },
+        commune: {
+            type: String,
+            require: true,
+        },
+        detailAddress: {
+            type: String,
+            require: true,
+        }
+    },
     role : {
         type: String,
         require: true,
