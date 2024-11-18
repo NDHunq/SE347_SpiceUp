@@ -1,0 +1,110 @@
+#ddbSort{
+    margin-left: 8px;
+}
+.textSort{
+    margin-bottom: 0;
+    line-height: 100%;
+    float: left;
+}
+.numberFound{
+    float: right;
+}
+.btn-group{
+    clear: both;
+}
+.search-bar{
+    margin-top: 8px;
+}
+
+.filter{
+    background-color: white;
+    border-width: 3px;
+    border-color: #00b207;
+    color:#00b207;
+    display: inline-block;
+    border-radius: 8px;
+    border-style: solid;
+    padding: 4px 8px;
+    margin-top: 72px;
+    margin-bottom: 12px;
+}
+hr{
+    color:#959595;
+}
+
+.container-button{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+}
+.expand {
+    margin-left: auto;
+}
+
+.rate-container {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.rate-container .ant-rate {
+  margin-bottom: 8px; 
+}
+.form-check-input{
+    float:left;
+    color:#00b207;
+    margin-right: 8px;
+}
+.product-area{
+    margin-top: 8px;
+}
+.sale-pic{
+    width: 100%;
+    margin: 12px 0px;
+}
+
+.product-sale-container{
+    margin-right: 2px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.ant-pagination-item {
+  background-color: white !important;
+  border-radius: 50% !important; 
+  border: 1px solid #d9d9d9 !important; 
+}
+  
+.ant-pagination-item a {
+   color: black !important; 
+}
+  
+.ant-pagination-item-active {
+   background-color: #00b207 !important; 
+   border-color: #00b207 !important;
+}
+  
+.ant-pagination-item-active a {
+   color: white !important; 
+}
+  
+.ant-pagination-item {
+   width: 32px !important;
+   height: 32px !important;
+   line-height: 32px !important; 
+   text-align: center !important;
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+}
+
+.pagination-container {
+   display: flex;
+   justify-content: center; 
+   margin-top: auto;
+   padding: 20px 0;
+}
+
+.marginL8px{
+    margin-left: 8px;
+}

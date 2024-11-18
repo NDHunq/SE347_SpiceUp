@@ -31,7 +31,7 @@ const validate = (req, res, next) => {
 }
 
 async function checkDuplicate(req, res,next) {
-    const email = req.body
+    const {email} = req.body
     const duplicateEmail = await User.findOne({ email: email })
 
     if(duplicateEmail) {

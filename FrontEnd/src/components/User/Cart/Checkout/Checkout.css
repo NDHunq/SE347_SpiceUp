@@ -1,0 +1,73 @@
+.margintop60px{
+    margin-top: 60px;
+}
+.input-line{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom: 16px;
+}
+.w333{
+    width: 33%;
+}
+
+.w100{
+    width: 100%;
+}
+
+.w50{
+    width: 48%;
+}
+
+.user-checkout h2{
+    margin-bottom: 28px;
+}
+
+.name-field{
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.grey{
+    color:darkgrey;
+}
+
+.order .container-info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.order-items{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.img-name{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    vertical-align:middle ;
+}
+
+.marginr8px{
+    margin-right: 8px;
+}
+
+.margint8px{
+    margin-top: 8px;
+}
+
+.marginbt160px{
+    margin-bottom: 160px;
+}
+
+.error {
+    color: red;
+    margin-top: 5px;
+    font-size: 12px;
+  }

@@ -12,11 +12,11 @@ app.use(morgan('combined'))
 app.use(express.json());
 api(app)
 
-// async function connect() {
-//     await connectToDb()
-// }
-
-// connect()
+// app.get('/home',(req,res) => {
+//
+//     console.log(req.headers)
+//     res.send('Hello world')
+// })
 
 async function Connect() {
     await connectToDb()

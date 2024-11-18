@@ -16,6 +16,9 @@ class RegisterController {
                 message: 'create user successfully'
             })
         } catch {
+            res.status(500).send({
+                message: "Some error in registration. Try again!!"
+            })
             console.log('Some error in registration. Try again!!')
         }
     }

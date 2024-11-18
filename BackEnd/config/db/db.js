@@ -12,6 +12,16 @@ async function connectToDb() {
             useUnifiedTopology: true,
         });
 
+        await mongoose.connect(uri, {
+        })
+            .then(() => {
+                console.log("successfully connected")
+            })
+        // .finally(async () => {
+        //     // Close the connection
+        //     await mongoose.disconnect();
+        //     console.log('Disconnected from MongoDB');
+        // });
         console.log("successfully connected");
         return conn.connection.db;
     }
@@ -19,5 +29,6 @@ async function connectToDb() {
         console.log(err)
     }
 }
+
 
 module.exports = connectToDb

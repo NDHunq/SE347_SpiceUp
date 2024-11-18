@@ -45,7 +45,7 @@ const orderSchema = new Schema({
         type: String,
         required: false,
         default: ''
-    },
+    }
 });
 
 // Middleware to calculate the total cost of an order

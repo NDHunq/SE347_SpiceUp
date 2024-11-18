@@ -1,40 +1,43 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const { v4: uuidv4 } = require('uuid');
-//const { billingAddressSchema } = require('./billingAddress')
+mongoose.set('debug', true)
 
+const SpiceUp = mongoose.connection.useDb('SpiceUp');
+const { v4: uuidv4 } = require('uuid');
 const UserSchema = new mongoose.Schema({
-    id : {
-        type: String,
-        default: uuidv4
-    },
+    // id : {
+    //     type: String,
+    //     default: uuidv4
+    // },
 
     email : {
         type: String,
         require: true,
-        unique: true 
+        unique: true
     },
-    password : {
+    password: {
         type: String,
         require: true,
-        unique: true 
     },
-    phone : {
+    phone: {
         type: String,
         require: true,
-        unique: true 
+        unique: true
     },
-    firstname : {
-        type: String,
-        require: true,
-        default: ''
-    },
-    lastname : {
+    firstname: {
         type: String,
         require: true,
         default: ''
     },
-    billingAddress : {
+    lastname: {
+        type: String,
+        require: true,
+    },
+    resetPasswordToken: {
+        type: String,
+        default: undefined
+    },
+    billingAddress: {
         firstName: {
             type: String,
             require: true,
@@ -68,27 +71,33 @@ const UserSchema = new mongoose.Schema({
             require: true,
         }
     },
-    role : {
+    role: {
         type: String,
         require: true,
     },
-    avatar : {
+    avatar: {
         type: String,
         require: true,
-        unique: true 
+    },
+    createdAt: {
+        type: Date
     }
 })
 
 UserSchema.pre('save', async function () {
     try {
-        const salt = await bcrypt.genSalt(10); 
-        this.password = await bcrypt.hash(this.password, salt); 
+        const salt = await bcrypt.genSalt(10);
+
+        this.password = await bcrypt.hash(this.password, salt);
+
     } catch (error) {
         return error;
     }
 })
 
-const User = mongoose.model('User', UserSchema)
+
+
+const User = SpiceUp.model('User', UserSchema)
 
 module.exports = User
 
