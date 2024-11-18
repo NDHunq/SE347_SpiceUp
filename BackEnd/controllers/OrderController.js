@@ -1,5 +1,4 @@
 const Order = require('../models/Order');
-const Product = require('../models/Product');
 const mongoose = require('mongoose');
 
 //Get all orders by user_id with pagination
