@@ -23,7 +23,7 @@ router.use('/view', recipeController.getView)
 
 router.use('/status/update', recipeController.updateStatus)
 
-router.use('/comment/edit/:id', recipeCommentController.editComment)
+router.use('/comment/update/:id', recipeCommentController.editComment)
 router.use('/comment/delete/:id', recipeCommentController.deleteComment)
 router.use('/comment/get', recipeCommentController.getComment)
 router.use('/comment', recipeCommentController.postComment)

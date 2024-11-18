@@ -6,8 +6,9 @@ const userController = require('../controllers/user/UserController')
 
 
 router.use(express.json())
-router.use('/info',userController.getInfo)
 router.use('/info/update',userController.updateInfo)
+router.use('/info',userController.getInfo)
+
 router.use('/reset_password/send', userController.sendResetLink)
 router.use('/reset_password/:token', userController.resetPassword)
 
