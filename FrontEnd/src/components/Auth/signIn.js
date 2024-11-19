@@ -2,16 +2,18 @@ import React from "react";
 import "./signIn.scss";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
 function SignIn() {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     toast.success("Sign in successfully");
+    navigate("/home");
   };
   return (
     <>
@@ -67,9 +69,9 @@ function SignIn() {
               <div className="fb"></div>
             </Link>
           </div>
-          <div className="sign-up">
+          <div className="sign-upp">
             Do you have any account?{" "}
-            <Link className="link" to="/signup">
+            <Link className="linkk" to="/signup">
               {" "}
               Sign Up
             </Link>

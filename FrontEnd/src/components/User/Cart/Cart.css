@@ -1,0 +1,68 @@
+.user-cart h2{
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 24px;
+}
+
+.user-cart .cart-product{
+    display: 1;
+}
+
+.user-cart .fee{
+    display: 1;
+}
+
+.cart-content{
+    display: flex;
+    flex-direction: row;
+}
+
+.jtf-ct-fs{
+    justify-content: flex-start;
+}
+
+.align-vertical{
+    align-items: center;
+}
+
+.mgr-8{
+    margin-right: 8px;
+}
+
+.container-qty{
+    border-radius: 20px;
+    border-style: solid;
+    border-color: gainsboro;
+    padding: 4px 4px;
+    border-width: 1px;
+    width:fit-content;
+}
+
+.cart-product footer{
+    align-items: center;
+}
+.full-width-btn {
+    width: 100%;
+}
+.fee .container-info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.align-right {
+    text-align: right;
+    width: 100%;
+}
+
+.marginbt8px{
+    margin-bottom: 8px;
+}
+
+.margint8px{
+    margin-top: 8px;
+}
+.size24{
+    font-size: 24px;
+}

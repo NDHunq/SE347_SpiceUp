@@ -102,3 +102,8 @@
   color           : var(--Gren-Gray-Scale-900, #002603);
   height          : 333px;
 }
+
+.LogoLink {
+  text-decoration: none;
+
+}

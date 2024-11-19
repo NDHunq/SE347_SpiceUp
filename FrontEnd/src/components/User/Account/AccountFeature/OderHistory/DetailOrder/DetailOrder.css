@@ -1,0 +1,39 @@
+.margint20px{
+    margin-top: 20px;
+}
+
+.normal{
+    font-weight: normal;
+}
+
+.gray{
+    color:rgb(128, 127, 127)
+}
+
+.margin4{
+    margin: 4px 0px;
+}
+
+.align-right {
+    text-align: right;
+    width: 100%;
+}
+.container-info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.total{
+    font-size: 20px;
+    color:#00b207
+}
+
+.row-product{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+

@@ -1,52 +1,52 @@
 .TC-container {
-  height: 840px;
+  height: 730px;
 
   .main {
     background-image: url("../../../assets/images/Home/cateBG.svg");
-    height: 840px;
+    height          : 730px;
 
-    background-size: cover;
+    background-size  : cover;
     background-repeat: no-repeat;
-    align-content: space-around;
+    align-content    : space-around;
 
     .container {
       padding-top: 05px;
 
       .title {
-        font-size: 30px;
-        font-weight: 650;
+        font-size    : 30px;
+        font-weight  : 650;
         margin-bottom: 20px;
-        margin-top: 20px;
+        margin-top   : 20px;
       }
 
       .row-1 {
         display: flex;
-        gap: 10px;
+        gap    : 10px;
 
         .productt {
-          height: 190px;
-          width: 180px;
-          border: 1px solid #ededed;
-          border-radius: 10px;
-          align-content: center;
-          text-align: -webkit-center;
+          height          : 190px;
+          width           : 180px;
+          border          : 1px solid #ededed;
+          border-radius   : 10px;
+          align-content   : center;
+          text-align      : -webkit-center;
           background-color: white;
 
           .img {
             height: 150px;
-            width: 150px;
+            width : 150px;
           }
 
           .name {
-            font-size: 17px;
+            font-size  : 17px;
             font-weight: 600;
             padding-top: 10px;
           }
 
           .count {
             padding-top: 5px;
-            font-size: 15px;
-            color: #808080;
+            font-size  : 15px;
+            color      : #808080;
           }
         }
       }
@@ -62,42 +62,43 @@
           display: flex;
 
           .product1 {
-            background-image: url("../../../assets/images/Home/cate1.png");
-            background-size: contain;
+            background-image : url("../../../assets/images/Home/cate1.png");
+            background-size  : contain;
             background-repeat: no-repeat;
-
-            height: 350px;
+            padding-right    : 15px;
+            height           : 310px;
           }
 
           .product2 {
-            background-image: url("../../../assets/images/Home/cate2.png");
-            background-size: contain;
+            background-image : url("../../../assets/images/Home/cate2.png");
+            background-size  : contain;
+            padding-left     : 15px;
             background-repeat: no-repeat;
-            height: 470px;
+            height           : 450px;
           }
         }
 
         .product3 {
           padding-left: 25px;
-          height: 270px;
+          height      : 270px;
 
           .shop-now {
-            border-radius: 43px;
-            border: 2px solid var(--Main-Green, #00b207);
-            background: var(--Main-Green, #00b207);
-            text-align: center;
-            padding: 10px 20px;
+            border-radius  : 43px;
+            border         : 2px solid var(--Main-Green, #00b207);
+            background     : var(--Main-Green, #00b207);
+            text-align     : center;
+            padding        : 10px 20px;
             text-decoration: none;
-            color: white;
-            min-width: fit-content;
-            width: 50px;
-            font-weight: 500;
-            margin-top: 15px;
+            color          : white;
+            min-width      : fit-content;
+            width          : 50px;
+            font-weight    : 500;
+            margin-top     : 15px;
           }
 
           .text-2 {
             font-weight: 700;
-            font-size: 30px;
+            font-size  : 27px;
           }
 
           .text-2-1 {
@@ -106,21 +107,21 @@
 
           .title1 {
             font-weight: 600;
-            font-size: 20px;
-            padding-top: 10px;
+            font-size  : 18px;
+            padding-top: 5px;
 
             .check {
-              color: #00b207;
+              color       : #00b207;
               margin-right: 10px;
-              font-size: 20px;
-              transform: translateY(-3px);
+              font-size   : 20px;
+              transform   : translateY(-3px);
             }
           }
 
           .content {
             padding-top: 5px;
-            font-size: 16px;
-            color: #808080;
+            font-size  : 14px;
+            color      : #808080;
           }
         }
       }

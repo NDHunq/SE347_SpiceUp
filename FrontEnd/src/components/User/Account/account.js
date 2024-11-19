@@ -16,7 +16,7 @@ import {
 import Settings from "./AccountFeature/Setting/setting";
 import MyRecipe from "./AccountFeature/MyRecipes/myrecipe";
 import OrderHistory from "./AccountFeature/OderHistory/order";
-
+import DetailOrder from "./AccountFeature/OderHistory/DetailOrder/DetailOrder";
 function Account() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,14 +32,28 @@ function Account() {
 
     if (currentPath.includes("myrecipes")) {
       currentText = "My Recipes";
-    } else if (currentPath.includes("order")) {
+    }else if (currentPath.includes("order")) {
       currentText = "Order History";
     }
+    
+    const isDetailOrder = /\/account\/order\/\d+/.test(currentPath); 
+    console.log(navItems)
 
-    setNavItems((prevItems) => [
-      ...prevItems.slice(0, -1),
-      { link: currentPath, text: currentText },
-    ]);
+    if (isDetailOrder) {
+      setNavItems((prevItems) => {
+        const updatedItems = prevItems.filter(item => !item.link.includes('/account/order/'));
+        return [
+          ...updatedItems,
+          { link: currentPath, text: 'Detail Order' },
+        ];
+      });
+    }
+    else
+      setNavItems((prevItems) => {
+        return [
+          prevItems[0],
+        { link: currentPath, text: currentText },
+      ]});
   }, [location.pathname]);
 
   const handleNavItemClick = (text, path) => {
@@ -85,7 +99,7 @@ function Account() {
               </Link>
               <Link
                 className={`Navi ${
-                  location.pathname === "/account/order" ? "active" : ""
+                  location.pathname.includes("/account/order")  ? "active" : ""
                 }`}
                 to="order"
                 onClick={() =>
@@ -106,6 +120,7 @@ function Account() {
                 <Route path="settings" element={<Settings />} />
                 <Route path="myrecipes" element={<MyRecipe />} />
                 <Route path="order" element={<OrderHistory />} />
+                <Route path="order/:id" element={<DetailOrder />} /> 
               </Routes>
             </div>
           </div>

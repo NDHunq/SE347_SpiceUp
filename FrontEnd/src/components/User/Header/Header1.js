@@ -25,10 +25,12 @@ const Header1 = () => {
               </div>
             </div>
             <div className="col">
-              <div className="display">
-                <div className="logo"></div>
-                <p className="app-navi">SpiceUp</p>
-              </div>
+              <Link to="/home" className="LogoLink">
+                <div className="display">
+                  <div className="logo"></div>
+                  <p className="app-navi">SpiceUp</p>
+                </div>
+              </Link>
             </div>
             <div className="col">
               <div className="row display">

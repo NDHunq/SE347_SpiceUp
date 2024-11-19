@@ -7,6 +7,7 @@ import { Button, Input, Space } from "antd";
 import "./myrecipe.css";
 import SaveItem from "./SaveItem/SaveItem";
 import DisplayItem from "../../../Recipe/display_item/displayItem";
+import { Link } from "react-router-dom";
 const MyRecipe = () => {
   return (
     <ConfigProvider
@@ -21,10 +22,9 @@ const MyRecipe = () => {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="ccontainer">
-        <p className="txtnacc txtna2">Saved Recipess</p>
+        <p className="txtnacc txtna2">Saved Recipes</p>
         <div className="linee"> </div>
         <div>
           <div className="srecipe_container">
@@ -64,7 +64,10 @@ const MyRecipe = () => {
         <div className="flex cao1ti">
           {" "}
           <p className="txtnacc txtna2">My Recipes</p>
-          <div className=" tinhchinh">Upload</div>
+          <Link to="/newrecipe">
+            {" "}
+            <div className=" tinhchinh">Upload</div>
+          </Link>
         </div>
 
         <div className="linee"> </div>

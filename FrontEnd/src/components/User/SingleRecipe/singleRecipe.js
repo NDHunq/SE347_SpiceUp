@@ -22,9 +22,13 @@ import {
 
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
-const onSearch = (value, _e, info) => console.log(info?.source, value);
-
 function SingleRecipe() {
+  const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
+
+  const onSearch = (value) => {
+    navigate("/recipes?search=" + value); // Điều hướng đến trang kết quả tìm kiếm với query parameter
+  };
+
   const [value, setValue] = useState("");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -45,8 +49,6 @@ function SingleRecipe() {
   const [userAvatar, setUserAvatar] = useState(
     "https://staticg.sportskeeda.com/editor/2024/09/57ffe-17256814729148-1920.jpg"
   );
-
-  const navigate = useNavigate();
 
   const toggleBookmark = () => {
     setIsBookmarked(!isBookmarked);
