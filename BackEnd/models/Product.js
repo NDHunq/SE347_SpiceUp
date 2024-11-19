@@ -22,6 +22,10 @@ const productSchema = new Schema({
         required: true,
         default: 0
     },
+    sold: {
+        type: Number,
+        default: 0
+    },
     discount: {
         type: Number,
         required: true,
@@ -52,7 +56,7 @@ const productSchema = new Schema({
         required: false,
         default: ''
     },
-    //Array of images URL
+    //Array of file_id
     product_images: [{
         type: String,
         required: false,
