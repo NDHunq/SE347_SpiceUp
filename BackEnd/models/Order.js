@@ -89,7 +89,8 @@ orderSchema.post('save', async function (doc, next){
 
             if (product){
                 product.stock -= cartItem.quantities;
-                await Product.findByIdAndUpdate(cartItem.product_id, {$set: {stock: product.stock}});
+                product.sold += cartItem.quantities;
+                await Product.findByIdAndUpdate(cartItem.product_id, {$set: {stock: product.stock, sold: product.sold}});
             }
         }
 
