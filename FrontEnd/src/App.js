@@ -1,21 +1,19 @@
 import { Outlet } from "react-router";
 import "./App.css";
-import Header2 from "./components/User/Header/Header2";
+import Header1 from "./components/User/Header/Header1";
 import Footer from "./components/User/Footer/footer";
 import { ConfigProvider } from "antd";
 function App() {
   return (
     <ConfigProvider
-    theme={{
-      token: {
-        colorPrimary: '#00b207',
-
-      },
-    }}
-  >
+      theme={{
+        token: {
+          colorPrimary: "#00b207",
+        },
+      }}>
       <div className="app-container">
         <div className="header-container">
-          <Header2 />
+          <Header1 />
         </div>
         <div className="main-container">
           <Outlet />
@@ -25,7 +23,6 @@ function App() {
         </div>
       </div>
     </ConfigProvider>
-
   );
 }
 
