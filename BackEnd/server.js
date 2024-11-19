@@ -3,9 +3,9 @@ const morgan = require('morgan')
 const api = require('./apis/index')
 const connectToDb = require('../BackEnd/config/db/db.js')
 const { initGridFS } = require('../BackEnd/config/gridfs/gridfs.js')
-const app = express()
-const port = 3000
+const app = express();
 const cors = require('cors');
+require('dotenv').config();
 
 app.use(cors());
 app.use(morgan('combined'))
@@ -17,7 +17,7 @@ api(app)
 //     console.log(req.headers)
 //     res.send('Hello world')
 // })
-
+const port = process.env.PORT || 5000;
 async function Connect() {
     await connectToDb()
         .then((db) => {
