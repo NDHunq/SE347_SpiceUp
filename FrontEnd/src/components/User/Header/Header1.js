@@ -25,7 +25,7 @@ const Header1 = () => {
               </div>
             </div>
             <div className="col">
-              <Link to="/home">
+              <Link to="/home" className="LogoLink">
                 <div className="display">
                   <div className="logo"></div>
                   <p className="app-navi">SpiceUp</p>

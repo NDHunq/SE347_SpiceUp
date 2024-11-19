@@ -9,10 +9,10 @@ import {
 } from "react-icons/lia";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Space } from "antd";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 const Header2 = () => {
-  const qtyInCart = useSelector(state => state.qtyInCart.count);
+  const qtyInCart = useSelector((state) => state.qtyInCart.count);
   const dispatch = useDispatch();
   //fetch qtyInCart [dispatch({ type: 'plus', payload: value })]
   return (
@@ -37,10 +37,12 @@ const Header2 = () => {
               </div>
             </div>
             <div className="col">
-              <div className="display">
-                <div className="logo"></div>
-                <p className="app-navi">SpiceUp</p>
-              </div>
+              <Link to="/home" className="LogoLink">
+                <div className="display">
+                  <div className="logo"></div>
+                  <p className="app-navi">SpiceUp</p>
+                </div>
+              </Link>
             </div>
             <div className="col">
               <div className="row display">

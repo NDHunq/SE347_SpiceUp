@@ -2,7 +2,7 @@ import React from "react";
 import "./signUp.scss";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
 function SignUp() {
@@ -10,9 +10,10 @@ function SignUp() {
   const [password, setPassword] = useState();
   const [cf_password, setCFPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     toast.success("Sign up successfully");
+    navigate("/home");
   };
   return (
     <>
@@ -68,9 +69,9 @@ function SignUp() {
             Sign Up
           </button>
 
-          <div className="sign-up">
+          <div className="sign-upp">
             Already have account{" "}
-            <Link className="link" to="/signin">
+            <Link className="linkk" to="/signin">
               {" "}
               Sign In
             </Link>

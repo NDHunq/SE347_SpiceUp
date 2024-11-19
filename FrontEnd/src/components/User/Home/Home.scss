@@ -1,52 +1,53 @@
 .home-container {
   .banner {
     height: 400px;
-    width: 100%;
+    width : 100%;
 
     .banner1 {
       background-color: hsl(132, 16%, 94%);
-      display: flex !important;
-      height: 400px;
+      display         : flex !important;
+      height          : 400px;
 
       .banner1-1 {
-        background-image: url("../../../assets/images/Home_banner/Banner1_vector_left.svg");
-        background-size: contain;
-        background-repeat: no-repeat;
+        background-image   : url("../../../assets/images/Home_banner/Banner1_vector_left.svg");
+        background-size    : contain;
+        background-repeat  : no-repeat;
         background-position: center;
       }
 
       .banner1-2 {
-        background-image: url("../../../assets/images/Home_banner/Banner1_fruit.svg");
-        background-size: contain;
-        background-repeat: no-repeat;
+        background-image   : url("../../../assets/images/Home_banner/Banner1_fruit.svg");
+        background-size    : contain;
+        background-repeat  : no-repeat;
         background-position: center;
       }
 
       .banner1-3 {
         align-content: space-evenly;
-        padding-left: 30px;
+        padding-left : 30px;
 
         .shop-now {
-          border-radius: 43px;
-          border: 2px solid var(--Main-Green, #00b207);
-          background: var(--Main-Green, #00b207);
-          text-align: center;
-          padding: 10px 20px;
+          border-radius  : 43px;
+          border         : 2px solid var(--Main-Green, #00b207);
+          background     : var(--Main-Green, #00b207);
+          text-align     : center;
+          padding        : 10px 20px;
           text-decoration: none;
-          color: white;
-          min-width: fit-content;
-          width: 50px;
-          font-weight: 500;
+          color          : white;
+          min-width      : fit-content;
+          text-decoration: none;
+          width          : 50px;
+          font-weight    : 500;
         }
 
         .text-1 {
-          color: #00b207;
+          color      : #00b207;
           font-weight: 500;
         }
 
         .text-2 {
           font-weight: 700;
-          font-size: 40px;
+          font-size  : 40px;
         }
 
         .text-2-1 {
@@ -54,61 +55,61 @@
         }
 
         .text-3 {
-          font-weight: 500;
-          font-size: 23px;
+          font-weight   : 500;
+          font-size     : 23px;
           padding-bottom: 5px;
         }
 
         .text-4 {
           font-weight: 600;
-          font-size: 23px;
-          color: #ff8a00;
+          font-size  : 23px;
+          color      : #ff8a00;
         }
 
         .text-5 {
-          color: #808080;
+          color         : #808080;
           padding-bottom: 15px;
         }
       }
 
       .banner1-4 {
-        background-image: url("../../../assets/images/Home_banner/Banner1_vector_right.svg");
-        background-size: contain;
-        background-repeat: no-repeat;
+        background-image   : url("../../../assets/images/Home_banner/Banner1_vector_right.svg");
+        background-size    : contain;
+        background-repeat  : no-repeat;
         background-position: right;
       }
     }
 
     .banner2 {
-      background-image: url("../../../assets/images/Home_banner/jack1.jpg");
-      background-size: contain;
+      background-image   : url("../../../assets/images/Home_banner/jack1.jpg");
+      background-size    : contain;
       background-position: center;
-      display: flex !important;
-      height: 400px;
+      display            : flex !important;
+      height             : 400px;
     }
 
     .banner3 {
-      background-image: url("../../../assets/images/Home_banner/jack2.jpg");
-      background-size: contain;
+      background-image   : url("../../../assets/images/Home_banner/jack2.jpg");
+      background-size    : contain;
       background-position: center;
-      display: flex !important;
-      height: 400px;
+      display            : flex !important;
+      height             : 400px;
     }
 
     .banner4 {
-      background-image: url("../../../assets/images/Home_banner/jack3.jpg");
-      background-size: contain;
+      background-image   : url("../../../assets/images/Home_banner/jack3.jpg");
+      background-size    : contain;
       background-position: center;
-      display: flex !important;
-      height: 400px;
+      display            : flex !important;
+      height             : 400px;
     }
 
     /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
     .ant-carousel .slick-prev,
     .ant-carousel .slick-next {
-      color: #00b207;
+      color    : #00b207;
       font-size: 50px;
-      z-index: 1;
+      z-index  : 1;
     }
 
     .ant-carousel .slick-dots li button {
@@ -123,44 +124,44 @@
   }
 
   .business-info {
-    height: 170px;
+    height : 170px;
     display: flex;
 
     .inner-icon {
-      color: #00b207;
-      width: 25px;
+      color : #00b207;
+      width : 25px;
       height: 25px;
     }
 
     .title {
       font-weight: 650;
-      font-size: 18px;
+      font-size  : 18px;
     }
 
     .description_home_home_home_home {
       font-size: 14px;
-      color: var(--Gray-Scale-Gray-400, #999) !important;
+      color    : var(--Gray-Scale-Gray-400, #999) !important;
     }
 
     .info-1 {
-      text-align: -webkit-center;
+      text-align   : -webkit-center;
       align-content: space-around;
 
       .icon {
-        background-image: url("../../../assets/images/icon_bg.svg");
-        height: 50px;
-        width: 50px;
-        background-size: contain;
+        background-image : url("../../../assets/images/icon_bg.svg");
+        height           : 50px;
+        width            : 50px;
+        background-size  : contain;
         background-repeat: no-repeat;
-        text-align: -webkit-center;
-        align-content: space-around;
+        text-align       : -webkit-center;
+        align-content    : space-around;
       }
     }
   }
 
   hr {
     height: 1px;
-    width: 100%;
-    color: #999999;
+    width : 100%;
+    color : #999999;
   }
 }
