@@ -136,17 +136,34 @@ const createCartItem = async (req, res) => {
     }
 
     try {
-        const cartItem = new CartItem({user_id, product_id, quantities});
-        await cartItem.save();
-        res.status(201).json(
-            {
-                status: 'success',
-                code: 201,
-                message: 'Cart item created successfully',
-                data: cartItem,
-                errors: null
-            }
-        );
+        const cartItemExist = await CartItem.findOne({user_id, product_id});
+
+        if (cartItemExist) {
+            cartItemExist.quantities += quantities;
+            await cartItemExist.save();
+            return res.status(200).json(
+                {
+                    status: 'success',
+                    code: 200,
+                    message: 'Cart item update successfully',
+                    data: cartItemExist,
+                    errors: null
+                }
+            );
+        }
+        else {
+            const cartItem = new CartItem({user_id, product_id, quantities});
+            await cartItem.save();
+            return res.status(201).json(
+                {
+                    status: 'success',
+                    code: 201,
+                    message: 'Cart item created successfully',
+                    data: cartItem,
+                    errors: null
+                }
+            );
+        }
     }
     catch (err) {
         res.status(500).json(
