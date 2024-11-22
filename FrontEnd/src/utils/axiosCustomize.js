@@ -6,13 +6,14 @@ const instance = axios.create({
     headers: {
         "Content-Type": "application/json; charset=utf-8",
     }
+
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-      // Temporary solution for token
+      // Temporary solution for token (Neu chua lam login thi vao postman call API login de lay token roi quang no vao localStorage voi key la: 'token')
       const token = localStorage.getItem('token');
       if (token) {
           config.headers['Authorization'] = `Bearer ${token}`;
@@ -30,12 +31,15 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    return response;
+    return response && response.data ? response.data : response;
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    return Promise.reject(error);
+    console.log("API error", error);
+    return error && error.response && error.response.data
+      ? error.response.data
+      : Promise.reject(error);
   }
 );
 export default instance;
