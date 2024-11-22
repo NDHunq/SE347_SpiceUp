@@ -9,58 +9,141 @@ import {
   } from '@ant-design/icons';
 import './product.css'
 import { useSelector, useDispatch } from 'react-redux';
+import {jwtDecode} from "jwt-decode";
+import instance from "../../../../utils/axiosCustomize";
+import {toast} from "react-toastify";
 
-function Product({id, urls_img, price, name}){
+function Product(props){
+    // format number with dots
+    const formatNumberWithDots = (number) => {
+        // Convert the number to a string
+        let numberStr = number?.toString();
+
+        // Use a regular expression to add dots every three digits from the end
+        let formattedStr = numberStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        return formattedStr;
+    }
+
+    const token = localStorage.getItem('token');
+    const decodedData = jwtDecode(token);
+    const user_id = decodedData.id;
+
+    const [soldCount, setSoldCount] = useState(props.sold);
+    const [soldOut, setSoldOut] = useState(props.stock === 0);
     const qtyInCart = useSelector(state=>state.qtyInCart.count);
     const dispatch=useDispatch();
-    const [star, setStar] = useState(1);
-    const [percentSale, setPercentSale] = useState(10);
-    const [soldCount, setSoldCount] = useState(0);
-    const [qty, setQty]=useState(1);
-    const [hovered, setHovered] = useState(false); 
+    const [star, setStar] = useState(props.average_rating);
+    const [hovered, setHovered] = useState(false);
     const [hoveredButton, setHoveredButton]=useState(false);
+    const [percentSale, serPercentSale]=useState(props.discount);
+    const [qty, setQty]=useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [soldOut, setSoldOut] = useState(false);
     // for modal
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [currentImage, setCurrentImage] = useState(urls_img[0]);
-    const [currentQty, setCurrentQty] = useState(1); 
-    const [category, setCategory]=useState("Vegetable");
-    const [url_brand, setUrlBrand]=useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYjsaa3QzrzHD0hKprv48RIOsfluOX-Sc7lQ&s");
-    const [amountRate,setAmountRate]=useState(8);
-    const [openRate, setOpenRate]=useState(true);
+    const [currentQty, setCurrentQty] = useState(1);
+    const [category, setCategory]=useState("");
+    const [amountRate,setAmountRate]=useState(props.review_count);
+    const [openRate, setOpenRate]=useState(false);
     const [loading, setLoading] = useState(false);
     const [rateContent, setRateContent] = useState([]);
-    const [discription, setDiscripstion]= useState("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+    const [description, setDescription]= useState(props.description);
+    const [images, setImages] = useState([]);
+    const [currentImage, setCurrentImage] = useState(images[0]);
     const copyUrlPage=()=>{
 
     }
-    const loadMoreRateContent = () => {
-      if (loading) {
-        return;
-      }
-      setLoading(true);
-      fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-        .then((res) => res.json())
-        .then((body) => {
-          setRateContent([...rateContent, ...body.results]);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
+
+    const [userAvatar, setUserAvatar] = useState([]);
+    const loadMoreRateContent = async () => {
+        if (loading) {
+            return;
+        }
+
+        // Call API to get all reviews
+        try {
+            setLoading(true);
+            const response = await instance.get(`api/v1/review/${props.id}`);
+            setRateContent(response.data.data.reviews);
+            for (let i = 0; i < response.data.data.reviews.length; i++) {
+                const res = await instance.get(`api/v1/image/${response.data.data.reviews[i]?.user_id.avatar}`, {
+                    responseType: 'arraybuffer'
+                })
+                const blob = new Blob([res.data], { type: `${res.headers["content-type"]}` });
+                const url = URL.createObjectURL(blob);
+                setUserAvatar((prevAvatar) => [...prevAvatar, url]);
+            }
+        }
+        catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+        finally {
+            setLoading(false);
+        }
+
+        return () => {
+            // Revoke image URL
+            for (let avatar of userAvatar) {
+                URL.revokeObjectURL(avatar);
+            }
+        }
     };
+
     useEffect(() => {
-      loadMoreRateContent();
-    }, []);
+        loadMoreRateContent();
+    }, [props.review_count]);
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const promises = props.urls_img.map((image) =>
+                    instance.get(`api/v1/image/${image}`, { responseType: 'arraybuffer' })
+                );
+                const responses = await Promise.all(promises); // Call API song song
+                const tempImages = responses.map((response) => {
+                    const blob = new Blob([response.data], { type: `${response.headers["content-type"]}` });
+                    return URL.createObjectURL(blob);
+                });
+                setImages(tempImages); // Cập nhật state một lần
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchImage();
+
+        return () => {
+            // Revoke tất cả URL
+            images.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [props.urls_img]);
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            try {
+                const response = await instance.get(`api/v1/category/${props.category}`);
+                setCategory(response.data.data.category_name);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchCategory();
+    }, [props.category]);
+
+    useEffect(() => {
+        setCurrentImage(images[0]);
+    }, [images]);
 
     const handleBeforeChange = (from, to) => {
         setCurrentSlide(to);
-        setCurrentImage(urls_img[to]);
+        setCurrentImage(images[to]);
 
     };
     const increaseQty = () => {
-        setCurrentQty(prevQty => prevQty + 1);
+        setCurrentQty(currentQty >= props.stock ? props.stock : currentQty + 1);
       };
     
       const decreaseQty = () => {
@@ -79,10 +162,33 @@ function Product({id, urls_img, price, name}){
     const handleCancel = () => {
         setIsModalOpen(false);
       };
+
+    const handleAddToCart = async () => {
+        dispatch({ type: 'plus', payload: currentQty });
+
+        // Call API to add product to cart
+        try {
+            let body = {
+                user_id: user_id,
+                product_id: props.id,
+                quantities: currentQty
+            }
+            await instance.post('api/v1/cartItem', body);
+        }
+        catch (error) {
+            console.log(error);
+        }
+        finally {
+            toast.success("Add to cart successfully");
+            setCurrentQty(1);
+            setIsModalOpen(false);
+        }
+    }
+
     return (
         <Card
         hoverable
-        style={{ width: 320 }}
+        style={{ width: 320, height: 400 }}
         className="card-product"
         cover={null}
         onMouseEnter={() => setHovered(true)}   
@@ -90,25 +196,30 @@ function Product({id, urls_img, price, name}){
       >
         <div onClick={showModal}>
             <div style={{ position: 'relative' }}>
-                    <img alt="product_image" src={urls_img[0]} className="product_image" />
+                { images[0]
+                    ?
+                    <img alt="product_image" src={images[0]} className="product_image"/>
+                    :
+                    <Skeleton.Image active={true} style={{ width: 270, height: 270}}/>}
+
                     {soldOut ? (
                         <div className="sold-out-label">
                             Sold Out
                         </div>
                     ) : (
-                        percentSale > 0 && (
+                        (percentSale * 100) > 0 && (
                             <div className="sale-label">
-                                Sale {percentSale}%
+                                Sale {(percentSale*100).toFixed(0)}%
                             </div>
                         )
                     )}
                 </div>
             <div class="container-product" >
                 <div class="container-info">
-                    {hovered?<p class="primary-color margin0">{name}</p>:<p class="margin0">{name}</p>}
-                    {percentSale>0?
-                        <div><p><b>${(1-percentSale/100)*price}</b> <span class="strikethrough grey">${price}</span></p></div>
-                        :<b >${price}</b>}
+                    {hovered?<p class="primary-color margin0">{props.name}</p>:<p class="margin0">{props.name}</p>}
+                    {(percentSale * 100)>0?
+                        <div><p><b>đ {formatNumberWithDots((1 - percentSale).toFixed(2) * props.price)}</b> <span class="strikethrough grey">đ {formatNumberWithDots(props.price)}</span></p></div>
+                        :<b >đ {formatNumberWithDots(props.price)}</b>}
                     <Rate class="rate" disabled defaultValue={star} fontSize   />
                 </div>
                 <div class="container-right">
@@ -150,22 +261,26 @@ function Product({id, urls_img, price, name}){
                         beforeChange={handleBeforeChange}
                         
                         >
-                    {urls_img.map((_, index) => (
-                        <div key={index} className="carousel-item">
-                        <img
-                            src={urls_img[index]}
-                            className={index === currentSlide ? 'active-slide' : ''}
-                            alt={`Slide ${index + 1}`}
-                            onClick={
-                                ()=>{
-                                    setCurrentSlide(index)
-                                    setCurrentImage(urls_img[index]);
+                    { images.length > 0 ?
+                        props.urls_img.map((_, index) => (
+                            <div key={index} className="carousel-item">
+                            <img
+                                src={images[index]}
+                                className={index === currentSlide ? 'active-slide' : ''}
+                                alt={`Slide ${index + 1}`}
+                                onClick={
+                                    ()=>{
+                                        setCurrentSlide(index)
+                                        setCurrentImage(images[index]);
+                                    }
                                 }
-                            }
-                        />
-                        </div>
-                    ))}
+                            />
+                            </div>
+                    ))
+                        :
+                        <Skeleton.Image active={true} style={{width: 96, height: 96}}/>}
                     </Carousel>
+
                     </div>
                     <div class="img-product">
                         <img class="current-img"src={currentImage}/>
@@ -174,8 +289,8 @@ function Product({id, urls_img, price, name}){
                 <div className="info-area">
                     <div class="info-1">
                         <div class="product-info">
-                            <h2 class="product-name">{name}</h2>
-                            {qty>0?<div class="status in-stock">In Stock</div>:<div class="status out-stock">Out of Stock</div>}
+                            <h2 class="product-name">{props.name}</h2>
+                            {props.product_status === "In Stock" ? <div class="status in-stock">In Stock</div>:<div class="status out-stock">Out of Stock</div>}
                         </div>
                         <div className="accordion-item">
                             <h2 className="accordion-header" id="panelsStayOpen-headingOne">
@@ -215,7 +330,7 @@ function Product({id, urls_img, price, name}){
                                         dataLength={rateContent.length}
                                         next={loadMoreRateContent}
                                         hasMore={rateContent.length < 10}
-                                        loader={
+                                        loader={amountRate < 0 &&
                                         <Skeleton
                                             avatar
                                             paragraph={{
@@ -229,15 +344,15 @@ function Product({id, urls_img, price, name}){
                                     >
                                         <List
                                         dataSource={rateContent}
-                                        renderItem={(item) => (
-                                            <List.Item key={item.email}>
-                                            <List.Item.Meta
-                                                avatar={<Avatar src={item.picture.large} />}
-                                                title={<a href="https://ant.design">{item.name.last}</a>}
-                                                description={"content review"}
-                                            />
-                                            <Rate disabled defaultValue={3} />
-                                            {/* content rate */}
+                                        renderItem={(item, index) => (
+                                            <List.Item key={item._id}>
+                                                <List.Item.Meta
+                                                    avatar={<Avatar src={userAvatar[index]} />}
+                                                    title={item.user_id.email}
+                                                    description={item.content}
+                                                />
+                                                <Rate disabled defaultValue={item.rating} />
+                                                {/* content rate */}
                                             </List.Item>
                                         )}
                                         />
@@ -249,18 +364,19 @@ function Product({id, urls_img, price, name}){
                             </div>
 
                         <div class="price-line">
-                            {percentSale>0?
-                            <div><p><span class="strikethrough grey">${price}</span><span class="marginl4px sell-price">${(1-percentSale/100)*price}</span></p></div>
-                            :<span class="sell-price " >${price}</span>}
-                            <div class="percentSale marginl4px">{percentSale}% Off</div>
+                            {(percentSale * 100)>0?
+                            <div><p><span class="strikethrough grey">đ {formatNumberWithDots(props.price)}</span><span class="marginl4px sell-price">đ {formatNumberWithDots((1-percentSale).toFixed(2)*props.price)}</span></p></div>
+                            :<span class="sell-price " >đ {formatNumberWithDots(props.price)}</span>}
+                            <div class="percentSale marginl4px">{(percentSale*100).toFixed(0)}% Off</div>
                         </div>
                         <div class="brand-line">
-                            <div class="sub-line">
-                                <span>Brand: </span> <img class="marginl4px"src={url_brand} width={40} height={40}/>
+                            <div className="sub-line">
+                                <span>Brand:</span>
+                                <span className="brand-text">&nbsp; {props.brand}</span>
                             </div>
                             <LinkOutlined onClick={copyUrlPage}/>
                         </div>
-                        <p class="grey discription">{discription}</p>
+                        <p class="grey discription">{description}</p>
                     </div>
                     <div class="info-2">
                         <hr/>
@@ -271,10 +387,7 @@ function Product({id, urls_img, price, name}){
                                 <Button onClick={increaseQty} type="primary" className="qty-btn" shape="circle">+</Button>
                             </div>
                             <Button type="primary" className="add-to-cart-btn"
-                                onClick={()=>{
-                                    dispatch({ type: 'plus', payload: currentQty })
-                                    //add currentQty to cart 
-                                }}><b>Add to Cart</b></Button>
+                                onClick={handleAddToCart}><b>Add to Cart</b></Button>
                         </div>
                         <hr/>
                         <p class="cate"><b>Category: </b>{category}</p>

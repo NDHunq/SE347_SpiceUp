@@ -2,12 +2,23 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:5000/",
+    timeout: 10000,
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+    }
+
 });
+
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    return config;
+      // Temporary solution for token (Neu chua lam login thi vao postman call API login de lay token roi quang no vao localStorage voi key la: 'token')
+      const token = localStorage.getItem('token');
+      if (token) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return config;
   },
   function (error) {
     // Do something with request error

@@ -1,41 +1,93 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../widget/top";
 import { useState } from "react";
 import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
-import FilterCategory from "../Recipe/filter_drop_category/filter_category";
+import FilterCategoryShop from "./filter_category_shop/filter_category_shop";
 import '../Recipe/filter_drop_category/filter_category.css'
-import { Slider , Dropdown, Menu ,Radio, Button,Pagination} from 'antd';
+import { Slider , Dropdown, Menu ,Radio, Button, Pagination } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterRate from "./filter_rate/filter_rate";
 import Product from "./product/product";
 import HorizontalProduct from "./product/HorizontalProduct";
+import instance from "../../../utils/axiosCustomize";
 
 function Shop() {
+  const [applyButtonColor, setApplyButtonColor] = useState("#00b207");
   const navItems=[{link:"/shop",text:"Shop"}];
   const [numFound, setNumFound]=useState(0);
-  const [sort, setSort]=useState("Lastest");
-  const [range, setRange] = useState([20, 50]); 
+  const [sort, setSort]=useState("Latest");
+  const [range, setRange] = useState([0, 1000000]);
   const [openPrice, setOpenPrice] = useState(true);
   const [openRate, setOpenRate] = useState(true);
-  const [selectedRating, setSelectedRating] = useState(null);
-  const [current, setCurrent] = useState(1);
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [productsFilter, setProductsFilter] = useState({
+    sort: {
+        field: "created_at",
+        order: "desc"
+    },
+    category: null,
+    price: null,
+    average_ratings: null,
+    product_name: null
+  });
+  const [search, setSearch] = useState("");
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  }
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setProductsFilter(prev => ({...prev, product_name: search}));
+    }
+  }
+  const handleSearch = (e) => {
+    setProductsFilter(prev => ({...prev, product_name: search}));
+  }
 
-  const ratings = [1, 2, 3, 4, 5];
+  // State for sale products
+  const [saleProducts, setSaleProducts] = useState([]);
+
+  // State for products
+  const [products, setProducts] = useState([]);
+
+  // State for pagination
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(9);
+  const [totalPages, setTotalPages] = useState(0);
   const onChangePage = (page) => {
-    console.log(page);
-    setCurrent(page);
+    setPage(page);
+
+    const fetchData = async () => {
+      try {
+        const response = await instance.post(`api/v1/product/filter?page=${page}&limit=${limit}`);
+        setProducts(response.data.data.products);
+      }
+      catch (error){
+        console.log(error);
+      }
+    }
+
+    fetchData();
   };
+
+
+  const ratings = [0, 1, 2, 3, 4, 5];
 
   const handleMenuClick = (e) => {
     setSort(e.key);
+    if (e.key === "Latest") {
+      setProductsFilter(prev => ({...prev, sort: {field: "created_at", order: "desc"}}));
+    }
+    else {
+      setProductsFilter(prev => ({...prev, sort: {field: "created_at", order: "asc"}}));
+    }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="Lastest">
-        Lastest
+      <Menu.Item key="Latest">
+        Latest
       </Menu.Item>
       <Menu.Item key="Oldest">
         Oldest
@@ -44,93 +96,100 @@ function Shop() {
   );
   const handleRadioChange = (e) => {
     setSelectedRating(e.target.value);
-  }; 
+    setProductsFilter(prev => ({...prev, average_ratings: e.target.value}));
+  };
   const onChangeRangePrice = (newRange) => {
     setRange(newRange);
   };
+
+  useEffect(() => {
+    console.log(productsFilter);
+    const fetchData = async () => {
+      try {
+        setPage(1);
+        setLimit(9);
+        const response = await instance.post(`api/v1/product/filter?page=${page}&limit=${limit}`, productsFilter);
+        setProducts(response.data.data.products);
+        setTotalPages(response.data.data.total);
+        setNumFound(response.data.data.total);
+      }
+      catch (error){
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [productsFilter]);
 
   const onClickSort = (condition) =>{
     if(condition===sort)
       return;
     // call api
     switch(condition){
-      case "Lastest":
+      case "Latest":
         break;
       case "Oldest":
         break;  
     };
     setSort(condition);
   }
-  const listCategory = [
-    { name: "All", number: 30 },
-    { name: "Vegetable", number: 20 },
-    { name: "Meat", number: 10 },
-  ];
+  const [listCategory, setListCategory] = useState([{
+    name: "All",
+    id: "all",
+    number: 0
+  }]);
 
-  const listProduct=[
-    { 
-      id:"1234567890",
-      url_img:['https://img.icons8.com/ios-filled/50/bag-front-view.png','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    { 
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    { 
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    { 
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    { 
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    {
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    {
-      id:"1234567890",
-      url_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100}
-  ]
+  useEffect(() => {
+    // Call API to get products and sale products
+    const fetchData = async () => {
+      try {
+        setPage(1);
+        setLimit(9);
+        let filter = {
+          sort: {
+            field: "discount",
+            order: "desc"
+          }
+        };
+        const saleResponse = await instance.post(`api/v1/product/filter?page=1&limit=3`, filter);
+        setSaleProducts(saleResponse.data.data.products);
 
-  const listProductSale=[
-    { 
-      id:"1234567890",
-      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    {
-      id:"1234567890",
-      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
-    },
-    {
-      id:"1234567890",
-      urls_img:['https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg','https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg'],
-      name:'Cabage',
-      price:100
+        const response = await instance.post(`api/v1/product/filter?page=${page}&limit=${limit}`);
+        setProducts(response.data.data.products);
+        setTotalPages(response.data.data.total);
+        setNumFound(response.data.data.total);
+
+        const categoryResponse = await instance.get(`api/v1/category`);
+        setListCategory([{
+            name: "All",
+            id: "all",
+            number: `${categoryResponse.data.data.reduce((acc, category) => acc + category.product_count, 0)}`
+        }])
+        setListCategory(prevState => [
+          ...prevState,
+          ...categoryResponse.data.data.map(category => ({
+            name: category.category_name,
+            id: category._id,
+            number: category.product_count
+          }))
+        ]);
+      }
+      catch (error){
+        console.log(error);
+      }
     }
-  ]
+
+    fetchData();
+  }, []);
+
+  const handleCategoryChange = (category_id) => {
+    setProductsFilter(prev => ({...prev, category: category_id}));
+  }
+
+  const handlePriceClick = () => {
+    setProductsFilter(prev => ({...prev, price: range}));
+  }
+
   return (
     <div className="shop">
       <Header navItems={navItems}/>
@@ -143,10 +202,11 @@ function Shop() {
                     <b>Filter</b>
                     <LiaFilterSolid className="img"></LiaFilterSolid>
                   </div>
-                  <FilterCategory
+                  <FilterCategoryShop
                     listname={"All Categories"}
                     listCategory={listCategory}
-                  ></FilterCategory>
+                    onCategoryChange={handleCategoryChange}
+                  ></FilterCategoryShop>
                    <hr/> 
                   <div>
                   <div className="accordion-item">
@@ -178,11 +238,19 @@ function Shop() {
                           }}
                           className="custom-slider"
                           min={0}
-                          max={250}
+                          max={1000000}
+                          step={1000}
                           defaultValue={range}
                           onChange={onChangeRangePrice}
                         />
-                        <p>Price: {range[0]} - {range[1]}</p>
+                        <p>Price: đ {range[0]} - đ {range[1]}</p>
+                        <Button type="primary"
+                                style={{backgroundColor: `${applyButtonColor}`, width: 100}}
+                                onMouseOver={() => setApplyButtonColor("#33c934")}
+                                onMouseLeave={() => setApplyButtonColor("#00b207")}
+                                onClick={handlePriceClick}>
+                          Apply
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -229,13 +297,22 @@ function Shop() {
                   <img class="sale-pic"src="https://img.freepik.com/free-vector/flat-design-food-sale-banner_23-2149138014.jpg"/>
                   <div>
                     <b >Sales Products</b>
-                    {listProductSale.map(product => (
-                      <div className="product-sale-container" key={product.id}>
+                    {saleProducts.map(product => (
+                      <div className="product-sale-container" key={product._id}>
                         <HorizontalProduct
-                          id={product.id}
-                          urls_img={product.urls_img}
+                          id={product._id}
+                          urls_img={product.product_images}
                           price={product.price}
-                          name={product.name}
+                          name={product.product_name}
+                          discount={product.discount}
+                          average_rating={product.average_ratings}
+                          review_count={product.review_count}
+                          product_status={product.product_status}
+                          description={product.description}
+                          value={product.value}
+                          category={product.category}
+                          stock={product.stock}
+                          brand={product.brand}
                         />
                       </div>
                     ))}
@@ -249,9 +326,12 @@ function Shop() {
                     type="text"
                     className="txt_search"
                     placeholder="Search"
+                    value={search}
+                    onChange={handleSearchChange}
+                    onKeyDown={handleKeyDown}
                   ></input>
 
-                  <div className="search_i2">
+                  <div className="search_i2" onClick={handleSearch}>
                     <p className="txt_search2">Search</p>
                   </div>
                 </div>
@@ -270,19 +350,30 @@ function Shop() {
                 </div>
               </div>
               <div className="row product-area">
-              {listProduct.map(product => (
-                <div className="col-md-4 mb-4" key={product.id}>
+
+              { products.map(product => (
+                <div className="col-md-4 mb-4" key={product._id}>
                   <Product
-                    id={product.id}
-                    urls_img={product.url_img}
-                    price={product.price}
-                    name={product.name}
+                      id={product._id}
+                      urls_img={product.product_images}
+                      price={product.price}
+                      name={product.product_name}
+                      discount={product.discount}
+                      average_rating={product.average_ratings}
+                      review_count={product.review_count}
+                      product_status={product.product_status}
+                      description={product.description}
+                      value={product.value}
+                      category={product.category}
+                      stock={product.stock}
+                      sold={product.sold}
+                      brand={product.brand}
                   />
                 </div>
               ))}
             </div >
             <div className="pagination-container">
-              <Pagination onChange={onChangePage} total={50} />
+              <Pagination current={page} pageSize={limit} onChange={onChangePage} total={totalPages} />
             </div>
             </div>
           </div>

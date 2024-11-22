@@ -59,8 +59,8 @@
 
 .product_image{
     object-fit: cover; 
-    width: 100%;
-    height: 100%;
+    width: 270px;
+    height: 270px;
 }
 
 .primary-color{
@@ -140,7 +140,7 @@
 .carousel-item {
     position: relative;
     margin-top: 8px;
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
 }
 
 .carousel-item img.active-slide {
@@ -301,4 +301,9 @@ container-atc {
 
 .info-1 .discription {
     margin-top: 4px;
+}
+
+.brand-text{
+    font-weight: bold;
+    color: #00b207;
 }
