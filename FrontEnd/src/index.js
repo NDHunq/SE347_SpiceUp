@@ -9,12 +9,10 @@ import Layout from "./Layout";
 import store from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}> 
-    <React.StrictMode>
+  <Provider store={store}>
       <BrowserRouter>
         <Layout />
       </BrowserRouter>
-    </React.StrictMode>
   </Provider>
 );
 

@@ -12,8 +12,8 @@
 
 .product_image_sale {
     width: 80px;
-    height: auto; 
-    margin-right: 20px; 
+    height: 80px;
+    margin-right: 20px;
 }
 
 .card-content {
@@ -23,4 +23,9 @@
 
 .card-product-sale{
     padding: 0px 0px;
+}
+
+.brand-text{
+    font-weight: bold;
+    color: #00b207;
 }

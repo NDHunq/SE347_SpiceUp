@@ -6,7 +6,7 @@ function FilterRate({ star }) {
     <div className="rate-item">
       <Rate disabled defaultValue={star} />
       <span style={{marginLeft:8}}>{star}</span>
-      {star > 1 && <span> & up</span>}
+      {star < 5 && <span> & up</span>}
     </div>
   );
 }
