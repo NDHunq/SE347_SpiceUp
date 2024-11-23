@@ -18,7 +18,7 @@ const getReviewsByProductId = async (req, res) => {
     }
 
     try {
-        const reviews = await Review.find({ product_id: product_id}).sort({createdAt: -1});
+        const reviews = await Review.find({ product_id: product_id}).sort({createdAt: -1}).populate({path: 'user_id', select: 'email avatar'},);
         res.status(200).json(
             {
                 status: 'success',

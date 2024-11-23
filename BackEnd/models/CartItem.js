@@ -36,7 +36,7 @@ cartItemSchema.pre('save', async function (next) {
             return next(new Error('Product not found'));
         }
 
-        this.sub_total = product.price * this.quantities;
+        this.sub_total = ((1 - product.discount) * product.price * this.quantities).toFixed(0);
         next();
     }
     catch (err) {

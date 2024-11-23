@@ -45,23 +45,58 @@ const uploadFile = (req, res) => {
 };
 
 // API trả về ảnh từ GridFS dựa trên fileId
-const getImage = (req, res) => {
+const getImage = async (req, res) => {
     const { fileId } = req.params;
     const gridfsBucket = getGridFSBucket();
 
-    const readstream = gridfsBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    try {
+        // Lấy thông tin file từ GridFS
+        const file = await gridfsBucket.find({ _id: new mongoose.Types.ObjectId(fileId) }).toArray();
 
-    readstream.on('data', (chunk) => {
-        res.write(chunk);
-    });
+        if (!file || file.length === 0) {
+            return res.status(404).json({ message: 'File not found' });
+        }
 
-    readstream.on('end', () => {
-        res.end();
-    });
+        const fileInfo = file[0];
+        const contentType = fileInfo.contentType || 'application/octet-stream';
 
-    readstream.on('error', (err) => {
-        res.status(404).json({ message: 'File not found', error: err });
-    });
+        // Cài đặt header Content-Type
+        res.setHeader('Content-Type', contentType);
+
+        const readstream = gridfsBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+
+        readstream.on('data', (chunk) => {
+            res.write(chunk);
+        });
+
+        readstream.on('end', () => {
+            res.end();
+        });
+
+        readstream.on('error', (err) => {
+            res.status(404).json(
+                {
+                    status: 'error',
+                    code: 404,
+                    message: 'File not found',
+                    data: null,
+                    errors: err.message
+                }
+            );
+        });
+    }
+    catch (err) {
+        res.status(500).json(
+            {
+                status: 'error',
+                code: 500,
+                message: 'Internal server error',
+                data: null,
+                errors: err.message
+            }
+        );
+    }
+
 };
 
 module.exports = { uploadFile, getImage };

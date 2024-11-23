@@ -1,14 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../widget/top";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import {CloseCircleOutlined}from '@ant-design/icons';
-import { Table,Button,Popconfirm,Empty, Card } from 'antd';
+import {Table, Button, Popconfirm, Empty, Card, Skeleton, message} from 'antd';
 import "./Cart.css"
 import {
   Link,
   useNavigate,
 } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import instance from "../../../utils/axiosCustomize";
+import {toast} from "react-toastify";
 function Cart() {
+    // format number with dots
+    const formatNumberWithDots = (number) => {
+        // Convert the number to a string
+        let numberStr = number?.toString();
+
+        // Use a regular expression to add dots every three digits from the end
+        let formattedStr = numberStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        return formattedStr;
+    }
+
   const navigate = useNavigate();
 
   const [navItems, setNavItems] = useState([
@@ -21,37 +35,36 @@ function Cart() {
     ]);
     navigate(path);  
 };
+
+    const token = localStorage.getItem('token');
+    const decodedData = jwtDecode(token);
+    const user_id = decodedData.id;
+
+    const [cartItems, setCartItems] = useState([]);
+    const [productImages, setProductImages] = useState([]);
     const [subTotal,setSubtotal]=useState();
-    const [dataSource, setDataSource]  = useState([
-        {
-          key: '1',
-          product:{
-            name: 'cabage',
-            url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-            price:50,
-            qty:3
-          },
-        },
-        {
-          key: '2',
-          product:{
-            name: 'cabage 2',
-            url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-            price:10,
-            qty:2
-          },
-          
-        }
-    ]  )
+    const [dataSource, setDataSource]  = useState([]);
+
     useEffect(() => {
       const total = dataSource.reduce((acc, item) => acc + (item.product.qty * item.product.price), 0);
       setSubtotal(total);  
     }, [dataSource]);
+
     const handleDelete = (key) => {
-        const newData = dataSource.filter((item) => item.key !== key);
-        //update in database
-        setDataSource(newData);
+        const deleteCartItem = async () => {
+            try {
+                await instance.delete(`api/v1/cartItem/${key}`);
+                const newData = dataSource.filter(item => item.key !== key);
+                setDataSource(newData);
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
+
+        deleteCartItem();
     };
+
     const handleQtyChange = (key, operation) => {
       const newData = dataSource.map(item => {
           if (item.key === key) {
@@ -75,18 +88,22 @@ function Cart() {
           key: 'product',
           render: (product) => 
           <div class="flex jtf-ct-fs align-vertical">
-            <img src={product.url_img} width={60} height={60} class="mgr-8">
-            </img>
-            <p>
-                {product.name}
-            </p>
+              {productImages.length > 0
+                  ?
+                  <img src={product.url_img} width={60} height={60} className="mgr-8"/>
+                  :
+                  <Skeleton.Image active={true} style={{ width: 60, height: 60, marginRight: 8 }} />}
+
+              <p>
+                  {product.name}
+              </p>
           </div>,
         },
         {
           title: 'PRICE',
           dataIndex: 'product',
           key: 'product',
-          render:(product)=> <p>${product.price}</p>
+          render:(product)=> <p>đ {formatNumberWithDots(product.price)}</p>
         },
         {
             title: 'QUANTITY',
@@ -107,7 +124,7 @@ function Cart() {
             title:'SUBTOTAL',
             dataIndex: 'product',
             key: 'product',
-            render:(product)=><b>${(product.qty)*(product.price)}</b>
+            render:(product)=><b>đ {formatNumberWithDots(((product.qty)*(product.price)).toFixed(0))}</b>
         },
         {
             title: '',
@@ -121,6 +138,68 @@ function Cart() {
               ) : null,
           },
       ];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await instance.get(`api/v1/cartItem/user/${user_id}`);
+                setCartItems(response.data.data.cartItems);
+
+                for (let i = 0; i < response.data.data.cartItems.length; i++) {
+                    const res = await instance.get(`api/v1/image/${response.data.data.cartItems[i]?.product_id.product_images[0]}`, {
+                        responseType: 'arraybuffer'
+                    })
+                    const blob = new Blob([res.data], { type: `${res.headers["content-type"]}` });
+                    const url = URL.createObjectURL(blob);
+                    setProductImages((prevImages) => [...prevImages, url]);
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const newDataSource = cartItems.map((item, index) => {
+            return {
+                key: item._id,
+                product: {
+                    name: item.product_id.product_name,
+                    url_img: productImages[index],
+                    price: item.product_id.selling_price,
+                    qty: item.quantities
+                }
+            }
+        });
+        setDataSource(newDataSource);
+    }, [cartItems, productImages]);
+
+    const handleCheckout = () => {
+        if (dataSource.length === 0) {
+            toast.error("No items in cart");
+            return;
+        }
+        const updateCart = async () => {
+            try {
+                for (let i = 0; i < dataSource.length; i++) {
+                    await instance.patch(`api/v1/cartItem/${dataSource[i].key}`, {
+                        quantities: dataSource[i].product.qty
+                    });
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+            finally {
+                navigate('/shopping-cart/checkout');
+            }
+        }
+
+        updateCart();
+    }
     return(
         <div class="user-cart">
             <Header navItems={navItems}/>
@@ -130,7 +209,7 @@ function Cart() {
                     <div class="row">
                         
                         <div class="cart-product col-9">
-                            <Table columns={columns} dataSource={dataSource} 
+                            <Table columns={columns} dataSource={dataSource}
                                locale={{
                                 emptyText: <Empty description="No items in cart"></Empty>,
                               }}
@@ -145,7 +224,7 @@ function Cart() {
                               <h4>Cart Total</h4>
                               <div class="container-info">
                                 <p>Subtotal</p>
-                                <b class="align-right">${subTotal}</b>
+                                <b class="align-right">đ {formatNumberWithDots(subTotal)}</b>
                               </div>
                               <hr/>
                               <div class="container-info">
@@ -155,9 +234,9 @@ function Cart() {
                               <hr/>
                               <div class="container-info">
                                 <p>Total</p>
-                                <b>${subTotal}</b>
+                                <b>đ {formatNumberWithDots(subTotal)}</b>
                               </div>                                  
-                              <Button className="full-width-btn" type="primary" onClick={() => navigate('/shopping-cart/checkout')}>
+                              <Button className="full-width-btn" type="primary" onClick={handleCheckout}>
                                 Proceed to checkout
                               </Button>
                             </Card>

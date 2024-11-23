@@ -17,6 +17,11 @@ const productSchema = new Schema({
         required: true,
         default: 0
     },
+    selling_price: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     stock: {
         type: Number,
         required: true,
@@ -25,6 +30,11 @@ const productSchema = new Schema({
     sold: {
         type: Number,
         default: 0
+    },
+    value: {
+        type: String,
+        required: true,
+        default: ''
     },
     discount: {
         type: Number,
@@ -74,6 +84,9 @@ productSchema.post('save', async function (doc, next){
         const category_id = doc.category;
         await Category.findByIdAndUpdate(category_id, {$inc: {product_count: 1}});
 
+        const selling_price = (doc.price * (1 - doc.discount)).toFixed(0);
+        await doc.updateOne({selling_price: selling_price});
+
         next();
     }
     catch (err){
@@ -105,6 +118,9 @@ productSchema.post('findOneAndUpdate', async function (result, next) {
             result.product_status = "In Stock";
             await result.updateOne({product_status: "In Stock"});
         }
+
+        const selling_price = (result.price * (1 - result.discount)).toFixed(0);
+        await result.updateOne({selling_price: selling_price});
         next();
     } catch (err) {
         next(err);
