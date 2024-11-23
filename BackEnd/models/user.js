@@ -4,6 +4,50 @@ mongoose.set('debug', true)
 
 const SpiceUp = mongoose.connection.useDb('SpiceUp');
 const { v4: uuidv4 } = require('uuid');
+
+const billingAddressSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        require: true,
+    },
+    lastName: {
+        type: String,
+        require: true,
+    },
+    companyName: {
+        type: String,
+        require: false,
+    },
+    country: {
+        type: String,
+        require: false,
+    },
+    province: {
+        type: String,
+        require: true,
+    },
+    district: {
+        type: String,
+        require: true,
+    },
+    commune: {
+        type: String,
+        require: true,
+    },
+    detailAddress: {
+        type: String,
+        require: true,
+    },
+    email: {
+        type: String,
+        require: true,
+    },
+    phone: {
+        type: String,
+        require: true,
+    }
+});
+
 const UserSchema = new mongoose.Schema({
     // id : {
     //     type: String,
@@ -38,38 +82,8 @@ const UserSchema = new mongoose.Schema({
         default: undefined
     },
     billingAddress: {
-        firstName: {
-            type: String,
-            require: true,
-        },
-        lastName: {
-            type: String,
-            require: true,
-        },
-        companyName: {
-            type: String,
-            require: true,
-        },
-        country: {
-            type: String,
-            require: true,
-        },
-        province: {
-            type: String,
-            require: true,
-        },
-        district: {
-            type: String,
-            require: true,
-        },
-        commune: {
-            type: String,
-            require: true,
-        },
-        detailAddress: {
-            type: String,
-            require: true,
-        }
+        type: billingAddressSchema,
+        default: null
     },
     role: {
         type: String,

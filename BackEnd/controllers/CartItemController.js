@@ -75,7 +75,7 @@ const getAllUserItems = async (req, res) => {
     }
 
     try {
-        const cartItems = await CartItem.find({user_id: id}).sort({createdAt: -1}).populate({path: 'product_id', select: 'product_name price stock product_images', populate: {path: 'category', select: 'category_name'}});
+        const cartItems = await CartItem.find({user_id: id}).sort({createdAt: -1}).populate({path: 'product_id', select: 'product_name price selling_price stock product_images', populate: {path: 'category', select: 'category_name'}});
         res.status(200).json(
             {
                 status: 'success',

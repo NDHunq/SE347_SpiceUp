@@ -79,18 +79,17 @@ orderSchema.post('save', async function (doc, next){
     try {
         const cartItems = doc.order_items;
         const cartItemsPost = await CartItem.find({ _id: { $in: cartItems}})
-            .populate({path: 'product_id', select: 'product_name category price product_images', populate: {path: 'category', select: 'category_name'}}).lean();
+            .populate({path: 'product_id', select: 'product_name category price selling_price discount product_images', populate: {path: 'category', select: 'category_name'}}).lean();
 
         // Update product stock after an order is saved
         for (const item of doc.order_items){
             const cartItem = await CartItem.findById(item);
-
-            const product = await Product.findById(cartItem.product_id);
+            const product = await Product.findById(cartItem?.product_id);
 
             if (product){
                 product.stock -= cartItem.quantities;
                 product.sold += cartItem.quantities;
-                await Product.findByIdAndUpdate(cartItem.product_id, {$set: {stock: product.stock, sold: product.sold}});
+                await Product.findByIdAndUpdate(cartItem?.product_id, {$set: {stock: product.stock, sold: product.sold}});
             }
         }
 

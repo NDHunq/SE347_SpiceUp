@@ -15,7 +15,7 @@ router.use('/reset_password/send', userController.sendResetLink)
 router.use('/reset_password/:token', userController.resetPassword)
 
 
-router.post('/billingAddress/:user_id', authenticate, userController.setBillingAddress)
+router.patch('/billingAddress/:user_id', authenticate, userController.setBillingAddress)
 //router.post('/billingAddress', userController.setBillingAddress)
 router.get('/billingAddress/:user_id', authenticate, userController.getBillingAddress)
 
