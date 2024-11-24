@@ -62,9 +62,25 @@ class UserController {
 
             const user = await User.findOne({ _id: user_id })
             if (user) {
-                res.status(200).json(user.billingAddress)
+                res.status(200).json(
+                    {
+                        status: 'success',
+                        code: 200,
+                        message: 'Billing address found',
+                        data: user.billingAddress,
+                        errors: null
+                    }
+                )
             } else {
-                res.status(404).send('User not found')
+                res.status(404).json(
+                    {
+                        status: 'error',
+                        code: 404,
+                        message: 'User not found',
+                        data: null,
+                        errors: 'Invalid user_id'
+                    }
+                )
             }
         } catch (e) {
             console.log('Some errors happen', e)
@@ -190,6 +206,11 @@ class UserController {
 
     async setBillingAddress(req, res) {
         const { user_id } = req.params;
+        const { firstName, lastName, companyName, province, district, commune, detailAddress, email, phone } = req.body;
+        let {country} = req.body;
+        if (!country) {
+            country = 'Việt Nam';
+        }
 
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
             return res.status(404).json(
@@ -205,7 +226,18 @@ class UserController {
 
         try {
             const user = await User.findOne({ _id: user_id });
-            const newBillingAddress = req.body
+            const newBillingAddress = {
+                firstName: firstName,
+                lastName: lastName,
+                companyName: companyName,
+                country: country,
+                province: province,
+                district: district,
+                commune: commune,
+                detailAddress: detailAddress,
+                email: email,
+                phone: phone
+            }
             if (user) {
                 user.billingAddress = newBillingAddress
                 await user.save();

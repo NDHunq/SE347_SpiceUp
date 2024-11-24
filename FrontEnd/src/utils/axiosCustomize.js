@@ -31,15 +31,13 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    return response && response.data ? response.data : response;
+      return response;
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     console.log("API error", error);
-    return error && error.response && error.response.data
-      ? error.response.data
-      : Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 export default instance;

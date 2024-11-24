@@ -8,20 +8,15 @@ class LoginController {
     async verify(req,res) {
         const JWT_SECRET = process.env.JWT_SECRET
         const {email, password} = req.body
-        console.log()
-        console.log('abc')
         const user = await User.findOne({email})
-        
-        console.log('def')
-        
-
+        console.log(user.password)
 
             const isMatched = bcrypt.compare(password, user.password, (err,data)=> {
                 if (err) throw err
 
                 //if both match than you can do anything
                 if (data) {
-                    const token = jwt.sign({ id: user._id, email: user.email, role: user.role},JWT_SECRET, {expiresIn: '1h'})
+                    const token = jwt.sign({ id: user._id, email: user.email, role: user.role},JWT_SECRET, {expiresIn: '5h'})
                     return res.json({
                         status: 'success',
                         code: 200,

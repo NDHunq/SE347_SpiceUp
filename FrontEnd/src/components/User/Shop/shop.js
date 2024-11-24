@@ -5,7 +5,7 @@ import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
 import FilterCategoryShop from "./filter_category_shop/filter_category_shop";
 import '../Recipe/filter_drop_category/filter_category.css'
-import { Slider , Dropdown, Menu ,Radio, Button, Pagination } from 'antd';
+import {Slider, Dropdown, Menu, Radio, Button, Pagination, Empty, Typography} from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterRate from "./filter_rate/filter_rate";
@@ -351,7 +351,9 @@ function Shop() {
               </div>
               <div className="row product-area">
 
-              { products.map(product => (
+              { products.length > 0
+                  ?
+                products.map(product => (
                 <div className="col-md-4 mb-4" key={product._id}>
                   <Product
                       id={product._id}
@@ -370,7 +372,12 @@ function Shop() {
                       brand={product.brand}
                   />
                 </div>
-              ))}
+              ))
+                  :
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}
+                         description={ <Typography.Text>
+                                           No products found
+                                       </Typography.Text> }/>}
             </div >
             <div className="pagination-container">
               <Pagination current={page} pageSize={limit} onChange={onChangePage} total={totalPages} />

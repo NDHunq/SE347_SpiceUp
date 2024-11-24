@@ -37,11 +37,11 @@ const getProductByID = async (req, res) => {
 
 //CREATE a product
 const createProduct = async (req, res) => {
-    const {product_name, category, price, stock, discount, brand, description, product_images} = req.body;
+    const {product_name, category, price, stock, value, discount, brand, description, product_images} = req.body;
     const productStatus = 'active';
     const averageRatings = 0;
 
-    if (!product_name || !category || !price || !stock || !discount || !brand || !description || !product_images) {
+    if (!product_name || !category || !price || !stock || !value || !discount || !brand || !description || !product_images) {
         return res.status(400).json(
             {
                 status: 'error',
@@ -53,7 +53,7 @@ const createProduct = async (req, res) => {
         );
     }
     try{
-        const newProduct = await Product.create({product_name, category, price, stock, discount, averageRatings, productStatus, brand, description, product_images});
+        const newProduct = await Product.create({product_name, category, price, stock, value,  discount, averageRatings, productStatus, brand, description, product_images});
         res.status(201).json(
             {
                 status: 'success',
@@ -234,7 +234,7 @@ const getAllProducts = async (req, res) => {
                 message: 'Products retrieved successfully',
                 data: {
                     products,
-                    total: total_products
+                    total: total_products,
                 },
                 errors: null,
                 // page,
@@ -281,27 +281,35 @@ const findProductsWithFilter = async (req, res) => {
     const sortOrder = sort?.order || 'desc';
 
     if (category) {
-        filter.category = { $in: category };
+        filter.category = {};
+        if (category === "all") {
+            delete filter.category;
+        }
+        else{
+            filter.category = category;
+        }
     }
 
     if (price && price.length === 2) {
-        filter.price = {};
-        filter.price.$gte = price[0];
-        filter.price.$lte = price[1];
+        filter.selling_price = {};
+        filter.selling_price.$gte = price[0];
+        filter.selling_price.$lte = price[1];
     }
 
     if (average_ratings) {
-        filter.average_ratings = average_ratings;
+        filter.average_ratings = {};
+        filter.average_ratings.$gte = average_ratings;
     }
 
     if (product_name) {
         filter.product_name = { $regex: product_name, $options: 'i' };
     }
 
-    //console.log(sortField, sortOrder, filter);
+    console.log(filter);
 
     try {
         const products = await Product.find(filter).sort({ [sortField]: sortOrder }).skip(skip).limit(limit);
+        const product_counts = await Product.countDocuments(filter);
         res.status(200).json(
             {
                 status: 'success',
@@ -309,7 +317,7 @@ const findProductsWithFilter = async (req, res) => {
                 message: 'Products retrieved successfully',
                 data: {
                     products,
-                    total: products?.length
+                    total: product_counts
                 },
                 errors: null
             }

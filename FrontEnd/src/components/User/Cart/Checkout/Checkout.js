@@ -1,16 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../../widget/top";
-import { useState,useEffect } from "react";
-import {CloseCircleOutlined, LeftCircleFilled, LeftOutlined}from '@ant-design/icons';
+import { useState } from "react";
 import { Radio,Button,AutoComplete ,  Card,message, Space, Select,Input  } from 'antd';
-
-import { DownOutlined, UserOutlined} from '@ant-design/icons';
+import {toast} from "react-toastify";
 import "./Checkout.css"
-import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import instance from "../../../../utils/axiosCustomize";
 const { TextArea } = Input;
 
 
 function Checkout() {
+  // format number with dots
+  const formatNumberWithDots = (number) => {
+    // Convert the number to a string
+    let numberStr = number?.toString();
+
+    // Use a regular expression to add dots every three digits from the end
+    let formattedStr = numberStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return formattedStr;
+  }
+
+    const navigate = useNavigate();
     const navItems=[
       { link: "/shopping-cart", text: "Shopping Cart" },{link:"/shopping-cart/checkout",text:"Checkout"}];
     const [firstName, setFirstName] = useState("");
@@ -28,6 +40,15 @@ function Checkout() {
     const [provinces,setProvinces]=useState([]);
     const [communes,setCommunes]=useState([]);
     const apiKey ="a84f0896-7c1a-11ef-8e53-0a00184fe694";
+    const token = localStorage.getItem('token');
+    const decodedData = jwtDecode(token);
+    const user_id = decodedData.id;
+
+    const [cartItems, setCartItems] = useState([]);
+    const [productImages, setProductImages] = useState([]);
+    const [billingAddress, setBillingAddress] = useState({});
+    const [payments, setPayments] = useState('');
+
     useEffect(() => {
       const fetchProvinces = async () => {
         try {
@@ -62,7 +83,7 @@ function Checkout() {
             body: JSON.stringify({ "province_id": province })
           });
           const data = await response.json();
-          setDistricts(data.data.map(item => ({
+          setDistricts(data.data?.map(item => ({
             label: item.DistrictName,
             value: item.DistrictID
           })));
@@ -113,36 +134,73 @@ function Checkout() {
     }, [district, apiKey]);
     
 
-    const [orderItems, setOrderItems]  = useState([
-      {
-        key: '1',
-        product:{
-          name: 'cabage',
-          url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-          price:50,
-          qty:3
-        },
-      },
-      {
-        key: '2',
-        product:{
-          name: 'cabage 2',
-          url_img:'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-          price:10,
-          qty:2
-        },
-        
-      }
-  ]  )
+    const [orderItems, setOrderItems]  = useState([]);
     useEffect(() => {
-      const total = orderItems.reduce((acc, item) => acc + (item.product.qty * item.product.price), 0);
-      setSubtotal(total);  
-    }, [orderItems]);
+      const fetchData = async () => {
+        try {
+          const [cartItemsResponse, billingAddressResponse] = await Promise.all([
+            instance.get(`api/v1/cartItem/user/${user_id}`),
+            instance.get(`api/v1/user/billingAddress/${user_id}`)
+          ]);
+          setCartItems(cartItemsResponse.data.data.cartItems);
+          setSubtotal(cartItemsResponse.data.data.cartItems.reduce((acc, item) => acc + item.sub_total, 0));
+          setBillingAddress(billingAddressResponse.data.data);
+
+          for (let i = 0; i < cartItemsResponse.data.data.cartItems.length; i++) {
+            const res = await instance.get(`api/v1/image/${cartItemsResponse.data.data.cartItems[i]?.product_id.product_images[0]}`, {
+              responseType: 'arraybuffer'
+            })
+            const blob = new Blob([res.data], { type: `${res.headers["content-type"]}` });
+            const url = URL.createObjectURL(blob);
+            setProductImages((prevImages) => [...prevImages, url]);
+          }
+        }
+        catch (error) {
+          console.log("error", error);
+        }
+      }
+
+      fetchData();
+    }, []);
+
+  useEffect(() => {
+    const newOrderItems = cartItems.map((item, index) => {
+      return {
+        key: item._id,
+        product: {
+          name: item.product_id.product_name,
+          url_img: productImages[index],
+          price: item.product_id.selling_price,
+          qty: item.quantities
+        }
+      }
+    });
+    setOrderItems(newOrderItems);
+  }, [cartItems, productImages]);
+
+  useEffect(() => {
+    if (billingAddress) {
+      setFirstName(billingAddress.firstName);
+      setLastName(billingAddress.lastName);
+      setCompanyName(billingAddress.companyName);
+      setEmail(billingAddress.email);
+      setPhone(billingAddress.phone);
+      setProvince(billingAddress.province);
+      setDetailAddress(billingAddress.detailAddress);
+    }
+  }, [billingAddress]);
+
+  useEffect(() => {
+    if (billingAddress) {
+      setDistrict(billingAddress.district);
+      setCommune(billingAddress.commune);
+    }
+  }, [province, district]);
     
     const handleMenuClick = (e) => {
       message.info();
     };
-    const namePattern = /^[A-Za-z\s]+$/;
+    const namePattern = /^[\p{L}\s]+$/u;
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     const phonePattern = /^[0-9]+$/;
     const [errors, setErrors] = useState({});  
@@ -179,7 +237,7 @@ function Checkout() {
       if (!commune) newErrors.commune = "Please select a commune.";
       if (!detailAddress) newErrors.detailAddress = "Please enter your detailed address.";
   
-      if (payments==0) {
+      if (payments === '') {
         newErrors.payments = "Please select a payment method.";
       }
   
@@ -191,17 +249,47 @@ function Checkout() {
   
     const handlePlaceOrder = () => {
       if (validateForm()) {
-        message.success("Order placed successfully!");
-        // update database
+        const orderItems = cartItems.map(item => (item._id));
+        const createOrder = async () => {
+          try {
+            let order = {
+                user_id: user_id,
+                order_items: orderItems,
+                total_cost: subTotal,
+                payment_method: payments,
+                order_notes: orderNotes,
+            }
+
+            await Promise.all(
+                instance.post('api/v1/order', order),
+                instance.patch(`api/v1/user/billingAddress/${user_id}`, {
+                  firstName: firstName,
+                  lastName: lastName,
+                  companyName: companyName,
+                  province: province,
+                  district: district,
+                  commune: commune,
+                  detailAddress: detailAddress,
+                  email: email,
+                  phone: phone
+                })
+            )
+
+            toast.success("Order placed successfully");
+            navigate(-1);
+          }
+          catch (error) {
+            console.log("error", error);
+          }
+        }
+
+        createOrder();
       }
     };
   
     const onChangePayment = (e) => {
       setPayments(e.target.value);
     };
-
-    const [payments, setPayments] = useState(0);
-
 
     return(
         <div class="user-checkout">
@@ -350,12 +438,12 @@ function Checkout() {
                                     <img class="marginr8px" width={32} height={32} src={orderItem.product.url_img}></img>
                                     <p>{orderItem.product.name}    x{orderItem.product.qty}</p>
                                   </div>
-                                  <b>${orderItem.product.qty*orderItem.product.price}</b>
+                                  <b>đ {formatNumberWithDots((orderItem.product.qty * orderItem.product.price).toFixed(0))}</b>
                                 </div>
                               ))}
                               <div class="container-info margint8px">
                                 <p>Subtotal</p>
-                                <b class="align-right">${subTotal}</b>
+                                <b class="align-right">đ {formatNumberWithDots(subTotal)}</b>
                               </div>
                               <hr/>
                               <div class="container-info">
@@ -365,7 +453,7 @@ function Checkout() {
                               <hr/>
                               <div class="container-info">
                                 <p>Total</p>
-                                <b class="size24">${subTotal}</b>
+                                <b class="size24">đ {formatNumberWithDots(subTotal)}</b>
                               </div>  
                               <h4 class="marginbt8px">Payment Method</h4>
                               <Radio.Group onChange={onChangePayment} value={payments}>
