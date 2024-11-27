@@ -8,9 +8,9 @@ class LoginController {
     async verify(req,res) {
         const JWT_SECRET = process.env.JWT_SECRET
         const {email, password} = req.body
-        const user = await User.findOne({email})
-        console.log(user.password)
-
+        const user = await User.findOne({email:email})
+        //console.log(user.password)
+        try{
             const isMatched = bcrypt.compare(password, user.password, (err,data)=> {
                 if (err) throw err
 
@@ -32,6 +32,13 @@ class LoginController {
                 }
 
             })
+        } catch(e) {
+            console.log("error", e)
+            res.json({
+                message: "user not existed"
+            })
+        }
+            
 
     }
 
