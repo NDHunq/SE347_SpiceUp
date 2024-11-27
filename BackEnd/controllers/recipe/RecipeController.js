@@ -10,13 +10,13 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { recipeName, description, cookingTimeInSecond, email, recipeIds, tag, ingredients } = req.body
+            const { recipeName, description, cookingTimeInSecond, email, recipeIds, type, ingredients } = req.body
             const recipe = new Recipe({
                 recipeName: recipeName,
                 email: email,
                 description: description,
                 cookingTimeInSecond: cookingTimeInSecond,
-                tag: tag,
+                tag: type,
                 createdAt: new Date,
                 step: recipeIds,
                 ingredients: ingredients
@@ -163,6 +163,7 @@ class RecipeController {
                 }
             } else {
                 const recipes = await Recipe.find({ isDeleted: false })
+                
                 if (recipes) {
                     res.status(200).json(recipes)
                 } else {

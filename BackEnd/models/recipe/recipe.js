@@ -38,9 +38,9 @@ const RecipeSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    tag: [{
+    type: {
         type: String,
-    }],
+    },
     ingredients: [{
         name: {
             type: String,
