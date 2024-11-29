@@ -1,92 +1,92 @@
 .display_item {
-  width    : 100%;
-  height   : 400px;
+  width: 100%;
+  height: 400px;
   max-width: 350px;
-  margin   : 0 !important;
-  padding  : 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .display_item:hover {
-  cursor       : pointer;
-  margin       : 0 !important;
-  padding      : 0 !important;
-  box-shadow   : 0px 0px 12px 0px rgba(32, 181, 38, 0.32);
+  cursor: pointer;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0px 0px 12px 0px rgba(32, 181, 38, 0.32);
   border-radius: 8px;
-  border       : 1px solid var(--Branding-Success-Dark, #1fb824);
+  border: 1px solid var(--Branding-Success-Dark, #1fb824);
 }
 
 .bot {
-  width : 100%;
+  width: 100%;
   height: 32%;
 
   border-radius: 0px 0px 8px 8px;
-  border       : 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
 }
 
 .top_dis {
   width: 100%;
 
-  height       : 68%;
+  height: 68%;
   border-radius: 8px 8px 0px 0px;
-  position     : relative;
+  position: relative;
   /* Ensure the container is positioned relative */
 }
 
 .time {
   border-radius: 4px;
-  background   : rgba(255, 255, 255, 0.85);
-  height       : 60px;
-  width        : 60px;
-  position     : absolute;
+  background: rgba(255, 255, 255, 0.85);
+  height: 60px;
+  width: 60px;
+  position: absolute;
   /* Position the element absolutely within the container */
-  bottom       : 20px;
+  bottom: 20px;
   /* Adjust the distance from the bottom */
-  left         : 20px;
+  left: 20px;
   /* Adjust the distance from the left */
 }
 
 .clock {
-  width      : 23px;
-  height     : 23px;
+  width: 23px;
+  height: 23px;
   margin-left: 20px;
-  margin-top : 5px;
-  color      : var(--Gray-Scale-Gray-500, #808080);
+  margin-top: 5px;
+  color: var(--Gray-Scale-Gray-500, #808080);
 }
 
 .timetxt {
   margin-left: 2px;
-  margin-top : 12px;
+  margin-top: 12px;
 
-  color         : var(--Gray-Scale-Gray-500, #808080);
-  text-align    : center;
+  color: var(--Gray-Scale-Gray-500, #808080);
+  text-align: center;
   /* CAPS LOCK/Small Caps Lock */
-  font-family   : Poppins;
-  font-size     : 12px;
-  font-style    : normal;
-  font-weight   : 500;
-  line-height   : 100%;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
   /* 12px */
   letter-spacing: 0.36px;
   text-transform: uppercase;
 }
 
 .bot_row1 {
-  width        : 100%;
-  margin       : 10px;
-  height       : 30%;
-  margin-left  : 20px;
-  display      : flex;
+  width: 100%;
+  margin: 10px;
+  height: 30%;
+  margin-left: 20px;
+  display: flex;
   padding-right: 10px;
-  align-items  : center;
-  margin-top   : 20px;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .bot_row3 {
   display: flex;
 
-  margin-left    : 20px;
+  margin-left: 20px;
   justify-content: space-between;
-  margin-right   : 20px;
+  margin-right: 20px;
 }
 
 .height {
@@ -95,29 +95,30 @@
 
 .tagicon1,
 .tagicon3 {
-  width       : 18px;
-  height      : 18px;
+  width: 18px;
+  height: 18px;
   margin-right: 5px;
-  color       : #b3b3b3;
+  color: #b3b3b3;
 }
 
 .tagicon2 {
-  width       : 23px;
-  height      : 23px;
+  width: 23px;
+  height: 23px;
   margin-right: 5px;
-  color       : #b3b3b3;
+  color: #b3b3b3;
 }
 
-.tagicon1 {}
+.tagicon1 {
+}
 
 .tagtxt,
 .tagtxt1 {
-  font-size   : 12px;
-  font-style  : normal;
-  font-weight : 400;
-  font-family : "Roboto", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
   margin-right: 10px;
-  color       : var(--Gray-Scale-Gray-700, #4d4d4d);
+  color: var(--Gray-Scale-Gray-700, #4d4d4d);
 }
 
 .tagtxt1 {
@@ -125,36 +126,36 @@
 }
 
 .txt_name {
-  color      : var(--Gray-Scale-Gray-900, #1a1a1a);
+  color: var(--Gray-Scale-Gray-900, #1a1a1a);
   /* Body Large/Body Large, 500 */
   font-family: "Roboto", sans-serif;
-  font-size  : 18px;
-  font-style : normal;
+  font-size: 18px;
+  font-style: normal;
   font-weight: 600;
-  transform  : translateY(3px);
+  transform: translateY(3px);
   /* 27px */
 }
 
 .readmore {
   display: flex;
-  height : 50px;
+  height: 50px;
 
   align-items: center;
-  color      : var(--Branding-Success, var(--Main-Green, #00b207));
+  color: var(--Branding-Success, var(--Main-Green, #00b207));
   /* Body Medium/Body Medium, 600 */
   font-family: "Roboto", sans-serif;
-  font-size  : 14px;
-  font-style : normal;
+  font-size: 14px;
+  font-style: normal;
   font-weight: 600;
   line-height: 120%;
   /* 19.2px */
-  transform  : translateY(-0px);
+  transform: translateY(-0px);
 }
 
 .arrow {
-  width : 25px;
+  width: 25px;
   height: 20.049px;
-  color : #00b207;
+  color: #00b207;
 }
 
 .bookmark {
@@ -162,9 +163,9 @@
 }
 
 .bookmark-icon {
-  width : 20px;
+  width: 20px;
   height: 25.049px;
-  color : #b3b3b3;
+  color: #b3b3b3;
   /* Default color */
 }
 
@@ -174,26 +175,26 @@
 }
 
 .cancelX {
-  margin-right    : 5px;
-  background-size : cover;
-  height          : 34px;
-  width           : 34px;
-  filter          : grayscale(100%);
-  opacity         : 0.5;
-  background-image: url(../../../../assets/images/admin/recipe/times.png);
+  margin-right: 5px;
+  background-size: cover;
+  height: 34px;
+  width: 34px;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  background-image: url(../../../../assets/images/Admin/recipe/times.png);
 }
 
 .cancelX:hover,
 .acceptV:hover {
-  filter : grayscale(0%);
+  filter: grayscale(0%);
   opacity: 1;
 }
 
 .acceptV {
-  background-size : cover;
-  height          : 35px;
-  width           : 35px;
-  filter          : grayscale(100%);
-  opacity         : 0.7;
-  background-image: url(../../../../assets/images/admin/recipe/check.png);
+  background-size: cover;
+  height: 35px;
+  width: 35px;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  background-image: url(../../../../assets/images/Admin/recipe/check.png);
 }

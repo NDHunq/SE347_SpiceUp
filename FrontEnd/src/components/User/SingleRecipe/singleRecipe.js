@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, ConfigProvider, Space } from "antd"; // Import Input and ConfigProvider from antd
-import { AudioOutlined } from "@ant-design/icons"; // Import AudioOutlined from antd icons
 import Header from "../widget/top";
-import { FaClock, FaTag, FaRegBookmark, FaBookmark } from "react-icons/fa6";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { SlTag } from "react-icons/sl";
 import { FaRegClock } from "react-icons/fa6";
 import { IoLinkOutline } from "react-icons/io5";
@@ -12,13 +11,8 @@ import "./singleRecipe.css";
 import DisplayItem from "../Recipe/display_item/displayItem";
 import { MdOpenInNew } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
-import {
-  Link,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getARecipe } from "../../../services/userServices";
 
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
@@ -41,7 +35,7 @@ function SingleRecipe() {
   const [isBookmarked, setIsBookmarked] = useState(true);
   const [tags, setTags] = useState("Vietnamese Food");
   const [by, setBy] = useState("Admin");
-  const [cmt, setcmt] = useState(65);
+  const [cmt, setcmt] = useState();
   const [views, setViews] = useState(100);
   const [mins, setMins] = useState(140);
   const [userName, setUserName] = useState("Chuyên gia ẩm thực");
@@ -143,6 +137,21 @@ function SingleRecipe() {
       window.open(link, "_blank");
     }
   };
+  useEffect(() => {
+    const getRecipe = async () => {
+      try {
+        const id = queryParams.get("id");
+
+        const response = await getARecipe(id);
+        const recipe = response.data;
+        const data = recipe[0];
+        alert(data.cookingTimeInSecond);
+      } catch (error) {
+        console.error("Error fetching the recipe:", error);
+      }
+    };
+    getRecipe();
+  });
   {
     return (
       <ConfigProvider
@@ -159,7 +168,8 @@ function SingleRecipe() {
             colorPrimaryActive: "#00B207",
             colorPrimaryHover: "#00B207",
           },
-        }}>
+        }}
+      >
         <div className="recipes">
           <Header navItems={navItems} />
 
@@ -175,7 +185,8 @@ function SingleRecipe() {
                           backgroundImage: `url(${coverImage})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                        }}></div>
+                        }}
+                      ></div>
                       <div className="tag_chain">
                         <SlTag className="icon_chain"></SlTag>
                         <div className="txt_chain">{tags}</div>
@@ -198,7 +209,8 @@ function SingleRecipe() {
                             className="avatar_single"
                             style={{
                               backgroundImage: `url(${coverImage})`,
-                            }}></div>
+                            }}
+                          ></div>
                           <div>
                             {" "}
                             <div className="name_single">{userName}</div>
@@ -215,7 +227,8 @@ function SingleRecipe() {
                               e.stopPropagation();
                               toggleBookmark();
                             }}
-                            className="bookmarksingle">
+                            className="bookmarksingle"
+                          >
                             {isBookmarked ? (
                               <FaBookmark className="bookmark-icon-single active" />
                             ) : (
@@ -245,27 +258,32 @@ function SingleRecipe() {
                                   className="image"
                                   style={{
                                     backgroundImage: `url(${step.image1})`,
-                                  }}></div>
+                                  }}
+                                ></div>
                                 <div
                                   className="image"
                                   style={{
                                     backgroundImage: `url(${step.image2})`,
-                                  }}></div>
+                                  }}
+                                ></div>
                                 <div
                                   className="image"
                                   style={{
                                     backgroundImage: `url(${step.image3})`,
-                                  }}></div>
+                                  }}
+                                ></div>
                                 <div
                                   className="image"
                                   style={{
                                     backgroundImage: `url(${step.image4})`,
-                                  }}></div>
+                                  }}
+                                ></div>
                                 <div
                                   className="image"
                                   style={{
                                     backgroundImage: `url(${step.image5})`,
-                                  }}></div>
+                                  }}
+                                ></div>
                               </div>
                             </div>
                           </div>
@@ -294,7 +312,8 @@ function SingleRecipe() {
                                 className="cmt_icon"
                                 style={{
                                   backgroundImage: `url(${comment.linkavatar})`,
-                                }}></div>
+                                }}
+                              ></div>
                               <div>
                                 <div className="flex">
                                   {" "}
@@ -339,7 +358,8 @@ function SingleRecipe() {
                           className="flex clickable"
                           onClick={() =>
                             openLink(ingredient.link, ingredient.igredient)
-                          }>
+                          }
+                        >
                           <div className="ingredient-name">
                             {ingredient.igredient}
                           </div>
@@ -369,7 +389,8 @@ function SingleRecipe() {
                     tname={"Trứng cuộn Hàn Quốc"}
                     tlink={
                       "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                    }></DisplayItem>
+                    }
+                  ></DisplayItem>
                   <br />
                   <DisplayItem
                     id={"1234"}
@@ -381,7 +402,8 @@ function SingleRecipe() {
                     tname={"Trứng cuộn Hàn Quốc"}
                     tlink={
                       "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                    }></DisplayItem>
+                    }
+                  ></DisplayItem>
                 </div>
               </div>
             </div>

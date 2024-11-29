@@ -45,7 +45,7 @@ function Recipes({ search }) {
   ];
   const listDisplay_pending = [
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -56,7 +56,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -67,7 +67,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -78,7 +78,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -89,7 +89,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -100,7 +100,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -111,7 +111,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -122,7 +122,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -133,7 +133,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -144,7 +144,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -155,7 +155,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -166,7 +166,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -177,7 +177,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -188,7 +188,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -199,7 +199,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -210,7 +210,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -221,7 +221,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -232,7 +232,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -244,7 +244,7 @@ function Recipes({ search }) {
     },
 
     {
-      id: "1234",
+      id: "673709bdfac968b1b4b9dced",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -333,7 +333,7 @@ function Recipes({ search }) {
                       tlink={
                         "https://file.hstatic.net/1000361915/article/sinh-to-chuoi-xoai-giam-can_9ad409cb707d438689515eeb643275ea.jpg"
                       }
-                      id={"1234"}
+                      id={"673709bdfac968b1b4b9dced"}
                     />
                     <br />
                     <RecentItem
@@ -342,7 +342,7 @@ function Recipes({ search }) {
                       }
                       tname={"Smoothie xoài chuối kiwi trộn dâu tây Đà Lạt"}
                       ttime={"Apr 25, 2024"}
-                      id={"1234"}
+                      id={"673709bdfac968b1b4b9dced"}
                     />
                     <br />
                     <RecentItem
@@ -351,7 +351,7 @@ function Recipes({ search }) {
                       }
                       tname={"Smoothie xoài chuối kiwi"}
                       ttime={"Apr 25, 2024"}
-                      id={"1234"}
+                      id={"673709bdfac968b1b4b9dced"}
                     />
                   </div>
                 </div>

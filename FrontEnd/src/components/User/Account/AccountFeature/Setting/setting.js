@@ -5,6 +5,10 @@ import { ConfigProvider } from "antd";
 
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space } from "antd";
+import {
+  getUserInfo,
+  getBillingAddress,
+} from "../../../../../services/userServices";
 
 const Setting = () => {
   const [firstName, setFirstName] = useState("");
@@ -102,7 +106,33 @@ const Setting = () => {
       e.preventDefault();
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getUserInfo("66f6cd4a06a448abe23763e0");
+        const bresponse = await getBillingAddress("66f6cd4a06a448abe23763e0");
+        const bresponseData = bresponse.data;
+        const bdata = bresponseData.data;
+        bsetFirstName(bdata.firstName);
+        bsetLastName(bdata.lastName);
+        bsetCompany(bdata.companyName);
+        bsetcountry(bdata.country);
+        bsetcity(bdata.province);
+        bsetdistrict(bdata.district);
+        bsetAddress(bdata.detailAddress);
+
+        const responseData = response.data;
+        const data = responseData.userInfo;
+        setFirstName(data.firstname);
+        setLastName(data.lastname);
+        setEmail(data.email);
+        setPhone(data.phone);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <ConfigProvider
@@ -238,7 +268,7 @@ const Setting = () => {
             />
           </div>
         </div>
-        <div className="divflex2">
+        {/* <div className="divflex2">
           <div className="div15">
             <p className="txtna2">Email</p>
             <Input
@@ -267,7 +297,7 @@ const Setting = () => {
             />
             {bphoneWarning && <p className="warning2">{bphoneWarning}</p>}
           </div>
-        </div>
+        </div> */}
 
         <div className="button">
           <p className="save"> Save Changes</p>
