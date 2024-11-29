@@ -44,6 +44,10 @@ const RecipeSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    views: {
+        type: Number,
+        default: 0
+    },
     ingredients: [{
         name: {
             type: String,

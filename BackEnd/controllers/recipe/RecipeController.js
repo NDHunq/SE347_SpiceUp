@@ -224,11 +224,14 @@ class RecipeController {
 
             const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false })
 
-            res.status(200).json({
+            return res.status(200).json({
                 views: recipe.views
             })
         } catch (e) {
             console.log('some errors happen', e)
+            return res.status(500).json({
+                message: "Internal server error"
+            })
         }
 
     }
