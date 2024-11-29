@@ -12,8 +12,8 @@ class UserController {
         await connectToDb()
         const { user_id } = req.params
 
-        const userInfo = user_id?await User.findOne({ _id: user_id }, { password: 0 }):await User.find()
-        
+        const userInfo = user_id ? await User.findOne({ _id: user_id }, { password: 0 }) : await User.find()
+
         try {
             if (userInfo) {
                 res.status(200).json({
@@ -50,6 +50,37 @@ class UserController {
         } catch (e) {
             res.status(500).send("Internal server error")
             console.log("Error", e)
+        }
+    }
+
+    async changePassword(req, res) {
+        // debugger;
+        const {user_id} = req.params
+        const {oldPassword, newPassword} = req.body
+        try {
+            const user = await User.findOne({ _id: user_id });
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ message: "Wrong old password" });
+            }
+
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+
+            user.password = hashedPassword;
+            await user.save();
+
+            return res.status(200).json({ message: "Password updated successfully" });
+        } catch (e) {
+            console.log("Error", e)
+            return res.status(500).send("Internal server error")
         }
     }
 
@@ -207,7 +238,7 @@ class UserController {
     async setBillingAddress(req, res) {
         const { user_id } = req.params;
         const { firstName, lastName, companyName, province, district, commune, detailAddress, email, phone } = req.body;
-        let {country} = req.body;
+        let { country } = req.body;
         if (!country) {
             country = 'Việt Nam';
         }

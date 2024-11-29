@@ -24,10 +24,9 @@ const RecipeSchema = new mongoose.Schema({
         type: Date,
         require: true
     },
-    email: {
-        type: String,
+    userId: {
+        type:  mongoose.Schema.Types.ObjectId,
         require: true,
-        unique: true
     },
     status: {
         type: String,
@@ -38,9 +37,17 @@ const RecipeSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    tag: [{
+    type: {
         type: String,
-    }],
+    },
+    isSaved: {
+        type: Boolean,
+        default: false
+    },
+    views: {
+        type: Number,
+        default: 0
+    },
     ingredients: [{
         name: {
             type: String,

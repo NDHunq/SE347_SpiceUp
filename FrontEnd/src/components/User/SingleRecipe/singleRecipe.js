@@ -145,7 +145,7 @@ function SingleRecipe() {
         const response = await getARecipe(id);
         const recipe = response.data;
         const data = recipe[0];
-        alert(data.cookingTimeInSecond);
+    
       } catch (error) {
         console.error("Error fetching the recipe:", error);
       }
