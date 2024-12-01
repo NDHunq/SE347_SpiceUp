@@ -7,6 +7,7 @@ import "./newRecipe.css";
 import { Dropdown, Button, Space, message, ConfigProvider, Input } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import NewIngredient from "./newIgredient/newIgredient";
+import { createStep, uploadImage } from "../../../services/userServices";
 
 const { TextArea } = Input;
 
@@ -45,18 +46,35 @@ function SingleRecipe() {
   const [steps, setSteps] = useState([]);
   const [value, setValue] = useState("");
   const [selectedType, setSelectedType] = useState("");
-
+  const handleStepChange = (id, newValue) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step) =>
+        step.id === id ? { ...step, content: newValue } : step
+      )
+    );
+  };
+  const handleStepImageChange = (id, newValue) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step) =>
+        step.id === id ? { ...step, images: newValue } : step
+      )
+    );
+  };
   const addNewStep = () => {
     setSteps([
       ...steps,
       {
         id: steps.length,
+        content: "",
+        images: [],
         component: (
           <NewStep
             txt={""}
             key={steps.length}
             id={steps.length}
             onDelete={deleteStep}
+            onChange={handleStepChange}
+            onImageChange={handleStepImageChange}
           />
         ),
       },
@@ -70,12 +88,15 @@ function SingleRecipe() {
       return newSteps.map((step, index) => ({
         ...step,
         id: index,
+
         component: (
           <NewStep
             text={step.txt}
             key={index}
             id={index}
             onDelete={deleteStep}
+            onChange={handleStepChange}
+            onImageChange={handleStepImageChange}
           />
         ),
       }));
@@ -114,6 +135,13 @@ function SingleRecipe() {
   const triggerFileInput = () => {
     document.getElementById("fileInput").click();
   };
+  const handleSubmit = () => {
+    steps.forEach((step) => {
+      uploadImage(step.images);
+      // console.log("step", step.images);
+    });
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -129,8 +157,7 @@ function SingleRecipe() {
           colorPrimaryActive: "#00B207",
           colorPrimaryHover: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
         <main className="content">
@@ -142,8 +169,7 @@ function SingleRecipe() {
                 <div
                   className="coverImage"
                   onClick={triggerFileInput}
-                  style={{ backgroundImage: `url(${coverImage})` }}
-                >
+                  style={{ backgroundImage: `url(${coverImage})` }}>
                   {coverImage ? "" : "Click to add cover image"}
                 </div>
                 <input
@@ -225,23 +251,22 @@ function SingleRecipe() {
                     <Input
                       placeholder="Name"
                       value={nameigre}
-                      onChange={(e) => setName(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setName(e.target.value)}></Input>
                     <Input
                       placeholder="Quantity"
                       value={quantityigre}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setQuantity(e.target.value)}></Input>
                   </div>
 
                   <Input
                     placeholder="Link (optional)"
                     className="gap"
                     value={linkin}
-                    onChange={(e) => setLinkin(e.target.value)}
-                  ></Input>
+                    onChange={(e) => setLinkin(e.target.value)}></Input>
                 </div>
-                <div className="upload_btn width100">Upload</div>
+                <div className="upload_btn width100" onClick={handleSubmit}>
+                  Upload
+                </div>
                 <br />
                 <br />
               </div>

@@ -2,23 +2,23 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:5000/",
-    timeout: 10000,
-    headers: {
-        "Content-Type": "application/json; charset=utf-8",
-    }
-
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json; charset=utf-8",
+  },
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-      // Temporary solution for token (Neu chua lam login thi vao postman call API login de lay token roi quang no vao localStorage voi key la: 'token')
-      const token = localStorage.getItem('token');
-      if (token) {
-          config.headers['Authorization'] = `Bearer ${token}`;
-      }
-      return config;
+    // Temporary solution for token (Neu chua lam login thi vao postman call API login de lay token roi quang no vao localStorage voi key la: 'token')
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("token", token);
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
   },
   function (error) {
     // Do something with request error
@@ -31,7 +31,7 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-      return response;
+    return response;
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger

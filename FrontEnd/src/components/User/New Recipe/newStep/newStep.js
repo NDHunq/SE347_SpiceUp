@@ -7,16 +7,22 @@ import { Input } from "antd";
 
 const { TextArea } = Input;
 
-const NewStep = ({ id, onDelete, txt }) => {
+const NewStep = ({ id, onDelete, txt, onChange, onImageChange }) => {
   let image = 0;
   const [value, setValue] = useState(txt || "");
   const [images, setImages] = useState([]);
-
+  const [imageFiles, setImageFiles] = useState([]);
+  const handleValueChange = (e) => {
+    setValue(e.target.value);
+    onChange(id, e.target.value);
+  };
   const handleImageChange = (event) => {
     if (images.length < 5) {
       const files = Array.from(event.target.files);
       const imageUrls = files.map((file) => URL.createObjectURL(file));
       setImages((prevImages) => [...prevImages, ...imageUrls]);
+      setImageFiles((prevFiles) => [...prevFiles, ...files]);
+      onImageChange(id, [...imageFiles, ...files]);
     } else {
       alert("You can only upload up to 5 images.");
     }
@@ -41,7 +47,7 @@ const NewStep = ({ id, onDelete, txt }) => {
         <div className="step_input">
           <TextArea
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={handleValueChange}
             placeholder="Content"
             autoSize={{
               minRows: 3,
@@ -55,12 +61,10 @@ const NewStep = ({ id, onDelete, txt }) => {
                   key={index}
                   style={{ backgroundImage: `url(${image})` }}
                   alt={`Selected ${index}`}
-                  className="selectedImage"
-                >
+                  className="selectedImage">
                   <div
                     className="deleteIcon"
-                    onClick={() => handleImageDelete(index)}
-                  >
+                    onClick={() => handleImageDelete(index)}>
                     <p className="x">X</p>
                   </div>
                 </div>
