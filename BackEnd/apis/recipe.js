@@ -33,7 +33,7 @@ router.use('/status/update/:recipe_id', authenticate, recipeController.updateSta
 
 router.use('/comment/update/:id', authenticate, recipeCommentController.editComment)
 router.use('/comment/delete/:id', authenticate, recipeCommentController.deleteComment)
-router.use('/comment/get', authenticate, recipeCommentController.getComment)
+router.use('/comment/get/:recipe_id',  authenticate, recipeCommentController.getComment)
 router.use('/comment', authenticate, recipeCommentController.postComment)
 
 

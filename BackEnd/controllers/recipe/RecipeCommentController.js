@@ -32,22 +32,31 @@ class RecipeCommentController {
         try {
             await connectToDb()
 
-            const {id} = req.query
+            const {recipe_id} = req.params
 
             const comment = await Comment.find({
-                recipeId: id,
+                recipeId: recipe_id,
                 isDeleted: false
             })
 
+            if(!comment) {
+                return res.status(404).json({
+                    message: "Comment not found"
+                })
+            }
 
 
             console.log(comment)
 
-            res.status(200).json({
+            return res.status(200).json({
                 comments: comment
             })
         } catch(e) {
             console.log("Some errors happen", e)
+            return res.status(500).json({
+                message: "Internal server error"
+            })
+            
         }        
     }
 
