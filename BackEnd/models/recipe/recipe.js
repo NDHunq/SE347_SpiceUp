@@ -44,9 +44,10 @@ const RecipeSchema = new mongoose.Schema({
     type: {
         type: String,
     },
-    isSaved: {
-        type: Boolean,
-        default: false
+    savedUserId: {
+        type:  [mongoose.Schema.Types.ObjectId],
+        require: true,
+        default: []
     },
     views: {
         type: Number,

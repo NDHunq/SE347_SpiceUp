@@ -261,10 +261,12 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { isSaved } = req.query
+            const { user_id } = req.query
             const { recipe_id } = req.params
 
             const recipe = await Recipe.findOne({ _id: recipe_id })
+
+            const newSavedUserId = [...recipe.savedUserId, user_id]
 
             if (!recipe) {
                 return res.status(404).json({
@@ -272,11 +274,11 @@ class RecipeController {
                 })
             }
 
-            recipe.isSaved = isSaved
+            recipe.savedUserId = newSavedUserId
             recipe.save()
 
             return res.status(200).json({
-                message: "update save status succesfully"
+                message: "update saved user succesfully"
             })
         } catch (e) {
             console.log('some errors happen', e)
@@ -292,7 +294,7 @@ class RecipeController {
 
             const { user_id } = req.params
 
-            const recipe = await Recipe.findOne({ userId: user_id, isSaved: true, isDeleted: false })
+            const recipe = await Recipe.find({ savedUserId: user_id, isDeleted: false })
 
             if(recipe) {
                 return res.status(200).json(recipe)
