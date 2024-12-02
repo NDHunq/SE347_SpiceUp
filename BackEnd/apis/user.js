@@ -11,6 +11,8 @@ router.use('/info/update/:user_id', authenticate, userController.updateInfo)
 router.use('/info/:user_id', authenticate, userController.getInfo)
 router.use('/info', authenticate, userController.getInfo)
 
+router.use('/change_password/:user_id', authenticate, userController.changePassword)
+
 router.use('/reset_password/send', userController.sendResetLink)
 router.use('/reset_password/:token', userController.resetPassword)
 

@@ -10,10 +10,11 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { recipeName, description, cookingTimeInSecond, email, recipeIds, type, ingredients } = req.body
-            const recipe = new Recipe({
+            const { recipeName, description, cookingTimeInSecond, userId, coverImageId, recipeIds, type, ingredients } = req.body
+            const recipe = new Recipe({ 
                 recipeName: recipeName,
-                email: email,
+                userId: userId,
+                coverImageId: coverImageId,
                 description: description,
                 cookingTimeInSecond: cookingTimeInSecond,
                 tag: type,
@@ -153,26 +154,40 @@ class RecipeController {
         try {
             await connectToDb()
             const { user_id } = req.params
+            const { recipe_id } = req.params
+            console.log("user_id", user_id)
+            console.log("recipe_id", recipe_id)
             if (user_id) {
-                
-                const recipe = await Recipe.find({ _id: user_id, isDeleted: false }).populate("step")
+
+                const recipe = await Recipe.find({ userId: user_id, isDeleted: false }).populate("step")
                 if (recipe) {
-                    res.status(200).json(recipe)
+                    return res.status(200).json(recipe)
                 } else {
-                    res.status(404).send('No recipe found')
+                    return res.status(404).send('No recipe found')
                 }
+            }
+
+            if (recipe_id) {
+                const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false }).populate("step")
+                if (recipe) {
+                    return res.status(200).json(recipe)
+                } else {
+                    return res.status(404).send('No recipe found')
+                }
+            }
+
+            const recipe = await Recipe.find({ isDeleted: false }).populate("step")
+            if (recipe) {
+                return res.status(200).json(recipe)
             } else {
-                const recipes = await Recipe.find({ isDeleted: false })
-                
-                if (recipes) {
-                    res.status(200).json(recipes)
-                } else {
-                    res.status(404).send('No recipe found')
-                }
+                return res.status(404).send('No recipe found')
             }
 
         } catch (e) {
             console.log("error", e)
+            return res.status(500).json({
+                message: "Iternal server error"
+            })
         }
 
     }
@@ -183,7 +198,7 @@ class RecipeController {
             await connectToDb()
 
             const { recipe_id } = req.params
-            const recipe = await Recipe.findOne({_id:recipe_id, isDeleted:false})
+            const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false })
             recipe.views = recipe.views + 1
             console.log("recipe.views", recipe.views)
             await recipe.save()
@@ -210,11 +225,14 @@ class RecipeController {
 
             const recipe = await Recipe.findOne({ _id: recipe_id, isDeleted: false })
 
-            res.status(200).json({
+            return res.status(200).json({
                 views: recipe.views
             })
         } catch (e) {
             console.log('some errors happen', e)
+            return res.status(500).json({
+                message: "Internal server error"
+            })
         }
 
     }
@@ -223,8 +241,8 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const {status } = req.query
-            const {recipe_id} = req.params
+            const { status } = req.query
+            const { recipe_id } = req.params
 
             const recipe = await Recipe.findOne({ _id: recipe_id })
 
@@ -239,6 +257,53 @@ class RecipeController {
         }
     }
 
+    async setSaveState(req, res) {
+        try {
+            await connectToDb()
+
+            const { isSaved } = req.query
+            const { recipe_id } = req.params
+
+            const recipe = await Recipe.findOne({ _id: recipe_id })
+
+            if (!recipe) {
+                return res.status(404).json({
+                    message: "Recipe not found"
+                })
+            }
+
+            recipe.isSaved = isSaved
+            recipe.save()
+
+            return res.status(200).json({
+                message: "update save status succesfully"
+            })
+        } catch (e) {
+            console.log('some errors happen', e)
+            return res.status(500).json({
+                message: "Internal server eror"
+            })
+        }
+    }
+
+    async getSavedRecipe(req, res) {
+        try {
+            await connectToDb()
+
+            const { user_id } = req.params
+
+            const recipe = await Recipe.findOne({ userId: user_id, isSaved: true, isDeleted: false })
+
+            if(recipe) {
+                return res.status(200).json(recipe)
+            }
+        } catch (e) {
+            console.log('some errors happen', e)
+            return res.status(404).json({
+                message: "Recipe not found"
+            })
+        }
+    }
 }
 
 module.exports = new RecipeController
