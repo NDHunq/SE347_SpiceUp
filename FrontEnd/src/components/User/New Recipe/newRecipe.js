@@ -7,14 +7,18 @@ import "./newRecipe.css";
 import { Dropdown, Button, Space, message, ConfigProvider, Input } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import NewIngredient from "./newIgredient/newIgredient";
-import { createStep, uploadImage } from "../../../services/userServices";
+import {
+  createStep,
+  uploadImage,
+  createRecipe,
+} from "../../../services/userServices";
 
 const { TextArea } = Input;
 
 const handleMenuClick = (e, setSelectedType) => {
-  message.info(`Clicked on menu item: ${e.key}`);
-  setSelectedType(e.item.props.children);
-  console.log("click", e);
+  //message.info(`Clicked on menu item: ${e.key}`);
+  setSelectedType(e.item.props.children[0][1].props.children);
+  //console.log("click", e.item.props.children[0][1].props.children);
 };
 
 const menuProps = (setSelectedType) => ({
@@ -24,11 +28,11 @@ const menuProps = (setSelectedType) => ({
       key: "1",
     },
     {
-      label: "Option 2",
+      label: "Japanese Food",
       key: "2",
     },
     {
-      label: "Option 3",
+      label: "Korean Food",
       key: "3",
     },
   ],
@@ -46,6 +50,8 @@ function SingleRecipe() {
   const [steps, setSteps] = useState([]);
   const [value, setValue] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [recipeName, setRecipeName] = useState("");
+  const [cookingTime, setCookingTime] = useState("");
   const handleStepChange = (id, newValue) => {
     setSteps((prevSteps) =>
       prevSteps.map((step) =>
@@ -121,6 +127,9 @@ function SingleRecipe() {
         tlinh: linkin,
       },
     ]);
+    setName("");
+    setQuantity("");
+    setLinkin("");
   };
   const [coverImage, setCoverImage] = useState(null);
 
@@ -135,11 +144,35 @@ function SingleRecipe() {
   const triggerFileInput = () => {
     document.getElementById("fileInput").click();
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    //API create step
+    const stepsArr = [];
     steps.forEach((step) => {
-      uploadImage(step.images);
-      // console.log("step", step.images);
+      stepsArr.push({
+        stepNumber: step.id + 1,
+        description: step.content,
+        image: uploadImage(step.images),
+      });
     });
+    console.log("stepsArr", stepsArr);
+    let recipeIds = await createStep(stepsArr);
+    const ingredientsArr = ingredients.map(({ name, quantity }) => ({
+      name,
+      quantity,
+    }));
+
+    //API create recipe
+    const data = {
+      recipeName: recipeName,
+      description: value,
+      cookingTimeInSecond: cookingTime * 60,
+      email: "abc@example.com",
+      coverImageId: "",
+      recipeIds: recipeIds,
+      type: selectedType,
+      ingredients: ingredientsArr,
+    };
+    console.log("data", data);
   };
 
   return (
@@ -182,12 +215,20 @@ function SingleRecipe() {
                 <div className="flex3 ">
                   <div className="div11">
                     <p className="newtxt"> Name</p>
-                    <Input placeholder="Name" />
+                    <Input
+                      placeholder="Name"
+                      value={recipeName}
+                      onChange={(e) => setRecipeName(e.target.value)}
+                    />
                   </div>
                   <div className="flex4">
                     <div className="div13">
                       <p className="newtxt">Cooking time (min)</p>
-                      <Input placeholder="Cooking time" />
+                      <Input
+                        placeholder="Cooking time"
+                        value={cookingTime}
+                        onChange={(e) => setCookingTime(e.target.value)}
+                      />
                     </div>
                     <div className="div12">
                       <p className="newtxt">Type</p>
