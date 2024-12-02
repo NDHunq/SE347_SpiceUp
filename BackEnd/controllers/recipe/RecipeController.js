@@ -10,10 +10,11 @@ class RecipeController {
         try {
             await connectToDb()
 
-            const { recipeName, description, cookingTimeInSecond, userId, recipeIds, type, ingredients } = req.body
-            const recipe = new Recipe({
+            const { recipeName, description, cookingTimeInSecond, userId, coverImageId, recipeIds, type, ingredients } = req.body
+            const recipe = new Recipe({ 
                 recipeName: recipeName,
                 userId: userId,
+                coverImageId: coverImageId,
                 description: description,
                 cookingTimeInSecond: cookingTimeInSecond,
                 tag: type,

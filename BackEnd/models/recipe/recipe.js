@@ -28,6 +28,10 @@ const RecipeSchema = new mongoose.Schema({
         type:  mongoose.Schema.Types.ObjectId,
         require: true,
     },
+    coverImageId: {
+        type: String,
+        require: true
+    },
     status: {
         type: String,
         require: true,
