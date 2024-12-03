@@ -11,6 +11,7 @@ import {
   createStep,
   uploadImage,
   createRecipe,
+  upload1Image,
 } from "../../../services/userServices";
 
 const { TextArea } = Input;
@@ -132,12 +133,14 @@ function SingleRecipe() {
     setLinkin("");
   };
   const [coverImage, setCoverImage] = useState(null);
+  const [fileCoverImage, setFileCoverImage] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setCoverImage(imageUrl);
+      setFileCoverImage(file);
     }
   };
 
@@ -145,6 +148,8 @@ function SingleRecipe() {
     document.getElementById("fileInput").click();
   };
   const handleSubmit = async () => {
+    //API upload cover image
+    let coverImageId = await upload1Image(fileCoverImage);
     //API create step
     const stepsArr = [];
     steps.forEach((step) => {
@@ -167,12 +172,16 @@ function SingleRecipe() {
       description: value,
       cookingTimeInSecond: cookingTime * 60,
       email: "abc@example.com",
-      coverImageId: "",
+      coverImageId: coverImageId,
       recipeIds: recipeIds,
       type: selectedType,
       ingredients: ingredientsArr,
     };
     console.log("data", data);
+
+    let recipeId = await createRecipe(data);
+    console.log("recipeId", recipeId);
+    window.location.href = `/singlerecipe?id=${recipeId}`;
   };
 
   return (

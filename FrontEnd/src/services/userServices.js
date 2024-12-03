@@ -16,7 +16,7 @@ const createRecipe = async (data) => {
       Authorization: token,
     },
   });
-  return response ? response.data : null;
+  return response ? response.data.id : null;
 };
 const uploadImage = (imageArr) => {
   try {
@@ -38,6 +38,32 @@ const uploadImage = (imageArr) => {
     return uploadImages;
   } catch (error) {
     console.log("error", error);
+
+    return null;
   }
 };
-export { createStep, uploadImage, createRecipe };
+const upload1Image = async (image) => {
+  try {
+    let uploadImage = "";
+
+    const formData = new FormData();
+    formData.append("file", image);
+
+    const response = await axios.post("api/v1/image/upload", formData, {
+      headers: {
+        "Content-Type":
+          "multipart/form-data; boundary=<calculated when request is sent>",
+        Authorization: token,
+      },
+    });
+    // console.log("response", response);
+    uploadImage = response.data.file.fileId;
+
+    return uploadImage;
+  } catch (error) {
+    console.log("error", error);
+
+    return null;
+  }
+};
+export { createStep, uploadImage, createRecipe, upload1Image };
