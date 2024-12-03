@@ -13,6 +13,7 @@ import {
   createRecipe,
   upload1Image,
 } from "../../../services/userServices";
+import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
@@ -148,17 +149,31 @@ function SingleRecipe() {
     document.getElementById("fileInput").click();
   };
   const handleSubmit = async () => {
+    if (
+      !recipeName ||
+      !cookingTime ||
+      !selectedType ||
+      !value ||
+      !fileCoverImage ||
+      steps.length === 0 ||
+      ingredients.length === 0
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
     //API upload cover image
     let coverImageId = await upload1Image(fileCoverImage);
     //API create step
-    const stepsArr = [];
-    steps.forEach((step) => {
-      stepsArr.push({
-        stepNumber: step.id + 1,
-        description: step.content,
-        image: uploadImage(step.images),
-      });
-    });
+    const stepsArr = await Promise.all(
+      steps.map(async (step) => {
+        const uploadedImages = await uploadImage(step.images);
+        return {
+          stepNumber: step.id + 1,
+          description: step.content,
+          image: uploadedImages,
+        };
+      })
+    );
     console.log("stepsArr", stepsArr);
     let recipeIds = await createStep(stepsArr);
     const ingredientsArr = ingredients.map(({ name, quantity }) => ({
@@ -181,6 +196,7 @@ function SingleRecipe() {
 
     let recipeId = await createRecipe(data);
     console.log("recipeId", recipeId);
+    toast.success("Recipe created successfully");
     window.location.href = `/singlerecipe?id=${recipeId}`;
   };
 
