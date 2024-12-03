@@ -19,7 +19,7 @@ router.use('/create', authenticate, recipeController.createRecipe)
 
 router.use('/step/update/:step_id', authenticate, recipeController.updateStep)
 router.use('/step/delete/:step_id', authenticate, recipeController.deleteStep)
-router.use('/step/create', authenticate, recipeController.createStep)
+router.use('/step/create',  recipeController.createStep)
 
 router.use('/user/:user_id', authenticate, recipeController.getRecipe)
 

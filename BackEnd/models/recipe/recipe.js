@@ -59,7 +59,7 @@ const RecipeSchema = new mongoose.Schema({
             require: true
         },
         quantity: {
-            type: Number,
+            type: String,
             require: true
         },
         link: {
