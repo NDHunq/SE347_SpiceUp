@@ -12,7 +12,7 @@ import DisplayItem from "../Recipe/display_item/displayItem";
 import { MdOpenInNew } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
 import { useNavigate, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import {
   getARecipe,
   increaseView,
