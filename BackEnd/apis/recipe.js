@@ -49,7 +49,11 @@ router.use(
   authenticate,
   recipeCommentController.deleteComment
 );
-router.use("/comment/get", authenticate, recipeCommentController.getComment);
+router.use(
+  "/comment/get/:recipe_id",
+  authenticate,
+  recipeCommentController.getComment
+);
 router.use("/comment", authenticate, recipeCommentController.postComment);
 
 module.exports = router;

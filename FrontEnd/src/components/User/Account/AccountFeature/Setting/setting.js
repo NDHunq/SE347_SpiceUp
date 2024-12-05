@@ -4,10 +4,14 @@ import "./setting.css";
 import { ConfigProvider } from "antd";
 
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Button, Input, Space } from "antd";
+import { Button, Input, Space, message } from "antd";
 import {
   getUserInfo,
   getBillingAddress,
+  change_password,
+  changUserInfo,
+  getImage,
+  pushImage,
 } from "../../../../../services/userServices";
 
 const Setting = () => {
@@ -38,6 +42,8 @@ const Setting = () => {
 
   const [bphoneWarning, bsetPhoneWarning] = useState("");
   const [bphoneStatus, bsetPhoneStatus] = useState("none");
+  const [avatar, setAvatar] = useState("");
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -100,17 +106,64 @@ const Setting = () => {
       bsetPhoneStatus("none");
     }
   };
+  const userId = "674ec2e837f4b676e0f946fb";
   const bhandlePhoneKeyPress = (e) => {
     const charCode = e.charCode;
     if (charCode < 48 || charCode > 57) {
       e.preventDefault();
     }
   };
+  const handleChangePass = async () => {
+    const currentPassword = document.querySelector(".input2 input").value;
+
+    const newPassword = document.querySelector(".input22 input").value;
+
+    const confirmPassword = document.querySelector(".input23 input").value;
+    if (
+      currentPassword == "" ||
+      (newPassword == "") | (confirmPassword == "")
+    ) {
+      message.error("Please fill in all password fields.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      message.error("New password and Confirm password do not match.");
+    } else {
+      const response = await change_password(userId, {
+        oldPassword: currentPassword,
+        newPassword: newPassword,
+      });
+      message.info(response.data.message);
+    }
+  };
+  const handleSave = async () => {
+    const response = await changUserInfo(userId, {
+      firstname: firstName,
+      lastname: lastName,
+    });
+    message.info(response.data.message);
+  };
+  const handleSave2 = async () => {
+    const response = await changUserInfo(userId, {
+      billingAddress: {
+        firstName: bfirstName,
+        lastName: blastName,
+        companyName: bcompany,
+        country: bcountry,
+        province: bcity,
+        district: bdistrict,
+        detailAddress: baddress,
+      },
+    });
+    message.info(response.data.message);
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getUserInfo("66f6cd4a06a448abe23763e0");
-        const bresponse = await getBillingAddress("66f6cd4a06a448abe23763e0");
+        const response = await getUserInfo(userId);
+        const bresponse = await getBillingAddress(userId);
         const bresponseData = bresponse.data;
         const bdata = bresponseData.data;
         bsetFirstName(bdata.firstName);
@@ -127,12 +180,41 @@ const Setting = () => {
         setLastName(data.lastname);
         setEmail(data.email);
         setPhone(data.phone);
+        const avatarId = data.avatar;
+        const url = await getImage(avatarId);
+
+        setAvatar(url);
       } catch (error) {
         console.error(error);
       }
     };
     getData();
   }, []);
+  const handleChooseImage = async () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await pushImage(formData);
+        const imageUrl = response.data.file.fileId;
+
+        const url = await getImage(imageUrl);
+
+        setAvatar(url);
+        await changUserInfo(userId, {
+          avatar: imageUrl,
+        });
+
+        message.info("Image uploaded successfully!");
+      }
+    };
+    input.click();
+  };
 
   return (
     <ConfigProvider
@@ -156,20 +238,25 @@ const Setting = () => {
               placeholder="Frist Name"
               className="input"
               value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <p className="txtna2">Last Name</p>
-            <Input placeholder="Last Name" className="input" value={lastName} />
+            <Input
+              placeholder="Last Name"
+              className="input"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
             <p className="txtna2">Email</p>
             <Input
-              status={status}
               placeholder="Email"
               className="input"
               type="email"
               value={email}
               onChange={handleEmailChange}
               onBlur={handleEmailBlur}
+              readOnly
             />{" "}
-            {warning && <p className="warning">{warning}</p>}
             <p className="txtna2">Phone Number</p>
             <Input
               placeholder="Phone"
@@ -180,24 +267,26 @@ const Setting = () => {
               onBlur={handlePhoneBlur}
               onKeyPress={handlePhoneKeyPress}
               pattern="[0-9]*"
-              status={phoneStatus}
+              readOnly
             />
-            {phoneWarning && <p className="warning">{phoneWarning}</p>}
           </div>
           <div className="div02">
             <div className="imgframe_container">
-              <div className="imgframe"></div>
+              <img className="imgframe" src={avatar} alt="Profile" />
             </div>
             <br />
             <div className="imgframe_container">
               <div className="button_sv">
-                <p className="save"> Choose Image</p>
+                <p className="save" onClick={handleChooseImage}>
+                  {" "}
+                  Choose Image
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="button">
+        <div className="button" onClick={handleSave}>
           <p className="save"> Save Changes</p>
         </div>
       </div>
@@ -209,8 +298,9 @@ const Setting = () => {
             <p className="txtna2">Frist Name</p>
             <Input
               placeholder="Frist Name"
-              className="input2"
+              className="input2 fristname"
               value={bfirstName}
+              onChange={(e) => bsetFirstName(e.target.value)}
             />
           </div>
 
@@ -218,8 +308,9 @@ const Setting = () => {
             <p className="txtna22">Last Name</p>
             <Input
               placeholder="Last Name"
-              className="input4"
+              className="input4 lastname"
               value={blastName}
+              onChange={(e) => bsetLastName(e.target.value)}
             />
           </div>
           <div className="div33">
@@ -228,6 +319,7 @@ const Setting = () => {
               placeholder="Company Name "
               className="input3"
               value={bcompany}
+              onChange={(e) => bsetCompany(e.target.value)}
             />
           </div>
         </div>
@@ -238,6 +330,7 @@ const Setting = () => {
               placeholder="Country / Region"
               className="input2"
               value={bcountry}
+              onChange={(e) => bsetcountry(e.target.value)}
             />
           </div>
 
@@ -247,6 +340,7 @@ const Setting = () => {
               placeholder="City/Province "
               className="input4"
               value={bcity}
+              onChange={(e) => bsetcity(e.target.value)}
             />
           </div>
           <div className="div33">
@@ -255,6 +349,7 @@ const Setting = () => {
               placeholder="District "
               className="input3"
               value={bdistrict}
+              onChange={(e) => bsetdistrict(e.target.value)}
             />
           </div>
         </div>
@@ -265,6 +360,7 @@ const Setting = () => {
               placeholder="Detail Address"
               className="input2"
               value={baddress}
+              onChange={(e) => bsetAddress(e.target.value)}
             />
           </div>
         </div>
@@ -299,7 +395,7 @@ const Setting = () => {
           </div>
         </div> */}
 
-        <div className="button">
+        <div className="button" onClick={handleSave2}>
           <p className="save"> Save Changes</p>
         </div>
       </div>
@@ -343,7 +439,10 @@ const Setting = () => {
           </div>
         </div>
         <div className="button">
-          <p className="save"> Save Changes</p>
+          <p className="save" onClick={handleChangePass}>
+            {" "}
+            Save Changes
+          </p>
         </div>
       </div>
       <br />

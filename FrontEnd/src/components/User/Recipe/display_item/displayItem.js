@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const DisplayItem = ({
   istrue,
+  isbook = true,
   ttime,
   ttag,
   tby,
@@ -25,6 +26,7 @@ const DisplayItem = ({
 
   const handleItemClick = () => {
     navigate(`/singlerecipe?id=${id}`);
+    window.location.reload();
   };
 
   return (
@@ -51,24 +53,27 @@ const DisplayItem = ({
             <span style={{ color: "#B3B3B3" }}>By</span> {tby}
           </div>
           <LiaCommentAltSolid className="tagicon3" />
-          <div className="tagtxt">{tcomments} Comments</div>
+          <div className="tagtxt">{tcomments} Views</div>
         </div>
         <div className="height"></div>
         <div className="bot_row3">
           <div className="bot_row txt_name">{tname}</div>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleBookmark();
-            }}
-            className="bookmark"
-          >
-            {isBookmarked ? (
-              <FaBookmark className="bookmark-icon active" />
-            ) : (
-              <FaRegBookmark className="bookmark-icon" />
-            )}
-          </div>
+
+          {isbook && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleBookmark();
+              }}
+              className="bookmark"
+            >
+              {isBookmarked ? (
+                <FaBookmark className="bookmark-icon active" />
+              ) : (
+                <FaRegBookmark className="bookmark-icon" />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
