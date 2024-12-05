@@ -14,6 +14,7 @@ import {
   upload1Image,
 } from "../../../services/userServices";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -116,6 +117,8 @@ function SingleRecipe() {
     { link: "/recipes", text: "Recipes" },
     { link: "/newrecipe", text: "New Recipe" },
   ];
+  const nav = useNavigate();
+
   const [nameigre, setName] = useState("");
   const [quantityigre, setQuantity] = useState("");
   const [linkin, setLinkin] = useState("");
@@ -186,7 +189,7 @@ function SingleRecipe() {
       recipeName: recipeName,
       description: value,
       cookingTimeInSecond: cookingTime * 60,
-      email: "abc@example.com",
+      userId: "6749b120bb624f5bedc3abf8",
       coverImageId: coverImageId,
       recipeIds: recipeIds,
       type: selectedType,
@@ -197,7 +200,8 @@ function SingleRecipe() {
     let recipeId = await createRecipe(data);
     console.log("recipeId", recipeId);
     toast.success("Recipe created successfully");
-    window.location.href = `/singlerecipe?id=${recipeId}`;
+    const url = `/singlerecipe?id=${recipeId}`;
+    //nav(url);
   };
 
   return (

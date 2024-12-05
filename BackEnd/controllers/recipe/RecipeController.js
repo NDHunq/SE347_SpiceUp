@@ -8,6 +8,7 @@ class RecipeController {
   async createRecipe(req, res) {
     try {
       await connectToDb();
+      console.log("req.body", req.body);
 
       const {
         recipeName,
@@ -25,7 +26,7 @@ class RecipeController {
         coverImageId: coverImageId,
         description: description,
         cookingTimeInSecond: cookingTimeInSecond,
-        tag: type,
+        type: type,
         createdAt: new Date(),
         step: recipeIds,
         ingredients: ingredients,

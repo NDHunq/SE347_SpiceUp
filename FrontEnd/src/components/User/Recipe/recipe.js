@@ -9,6 +9,7 @@ import FilterCategory from "./filter_drop_category/filter_category";
 import { Pagination } from "antd";
 import DisplayItem from "./display_item/displayItem";
 import RecentItem from "./recent_Item/recent_item";
+import { getAllRecipes } from "../../../services/userServices";
 const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
@@ -43,225 +44,233 @@ function Recipes({ search }) {
     { name: "Cate9", number: 90, id: 9 },
     { name: "Cate10", number: 100, id: 10 },
   ];
-  const listDisplay_pending = [
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn hàn quốc1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc2",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc3",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc4",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc5",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc6",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc7",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc8",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc9",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc10",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc11",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc12",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc13",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc14",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc15",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc16",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc17",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc18",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc19",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
+  const listDisplay_pendingg = [
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn hàn quốc1",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc2",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc3",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc4",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc5",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc6",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc7",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc8",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc9",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc10",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc11",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc12",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc13",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc14",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc15",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc16",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc17",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc18",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
+    // {
+    //   id: "1234",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Trứng cuộn Hàn Quốc19",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
   ];
   const [currentPage, setCurrentPage] = useState(1);
   const [total_pages, setTotalPages] = useState(1);
-
+  const [listDisplay_pending, setListDisplay_pending] = useState([]);
   const handlePageChange = (page) => {
     setCurrentPage(page);
     renderDisplayItems(page, 1);
   };
+  useEffect(() => {
+    const recipes = getAllRecipes();
+    if (Array.isArray(recipes)) {
+      setListDisplay_pending(recipes);
+    } else {
+      setListDisplay_pending([]);
+      console.error("getAllRecipes() did not return an array");
+    }
+  }, []);
 
   useEffect(() => {
     setTotalPages(Math.ceil(listDisplay_pending.length / 8) * 10);
@@ -301,8 +310,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -322,8 +330,7 @@ function Recipes({ search }) {
                   <div className="filter_content">
                     <FilterCategory
                       listname={"Recipe Types"}
-                      listCategory={listCategory}
-                    ></FilterCategory>
+                      listCategory={listCategory}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt">Recenty Saved</p>
 
@@ -366,8 +373,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>

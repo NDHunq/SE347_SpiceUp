@@ -1,7 +1,7 @@
 import axios from "../utils/axiosCustomize";
 
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzMyMDg3MjksImV4cCI6MTczMzIyNjcyOX0.fRmpIE-vm4n20WXH1TJ-ymWITmGadzgbPFY8AdpgK8E";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzMzODc1OTUsImV4cCI6MTczMzQwNTU5NX0.n3n09xjbPC1k4Vzxt0zYzuhb8N3mgLUA4ded2lnt-SE";
 const createStep = async (data) => {
   console.log("data", data);
 
@@ -68,4 +68,12 @@ const upload1Image = async (image) => {
     return null;
   }
 };
-export { createStep, uploadImage, createRecipe, upload1Image };
+const getAllRecipes = async () => {
+  const response = await axios.get("api/v1/recipe/get", {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return response ? response.data : null;
+};
+export { createStep, uploadImage, createRecipe, upload1Image, getAllRecipes };
