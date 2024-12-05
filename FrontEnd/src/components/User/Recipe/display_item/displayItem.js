@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const DisplayItem = ({
   istrue,
+  isbook = true,
   ttime,
   ttag,
   tby,
@@ -25,6 +26,7 @@ const DisplayItem = ({
 
   const handleItemClick = () => {
     navigate(`/singlerecipe?id=${id}`);
+    window.location.reload();
   };
 
   return (
@@ -35,7 +37,8 @@ const DisplayItem = ({
           backgroundImage: `url(${tlink})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-        }}>
+        }}
+      >
         <div className="time">
           <FaClock className="clock" />
           <div className="timetxt">{ttime} min</div>
@@ -55,18 +58,22 @@ const DisplayItem = ({
         <div className="height"></div>
         <div className="bot_row3">
           <div className="bot_row txt_name">{tname}</div>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleBookmark();
-            }}
-            className="bookmark">
-            {isBookmarked ? (
-              <FaBookmark className="bookmark-icon active" />
-            ) : (
-              <FaRegBookmark className="bookmark-icon" />
-            )}
-          </div>
+
+          {isbook && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleBookmark();
+              }}
+              className="bookmark"
+            >
+              {isBookmarked ? (
+                <FaBookmark className="bookmark-icon active" />
+              ) : (
+                <FaRegBookmark className="bookmark-icon" />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

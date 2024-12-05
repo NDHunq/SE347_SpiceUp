@@ -1,228 +1,167 @@
-.home-admin-container {
-    .content {
-        .container {
-            height: 1500px;
+.home-container {
+  .banner {
+    height: 400px;
+    width: 100%;
 
-            .title {
-                display        : flex;
-                justify-content: space-between;
-                padding-top    : 20px;
-                margin-bottom  : 20px;
+    .banner1 {
+      background-color: hsl(132, 16%, 94%);
+      display: flex !important;
+      height: 400px;
 
-                .date {}
-            }
+      .banner1-1 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_vector_left.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
-            .number {
-                height : 430px;
-                display: flex;
-                gap    : 10px;
+      .banner1-2 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_fruit.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
-                .left {
-                    align-content: center;
-                    height       : 360px;
-                    border       : 2px solid #E6E6E6;
-                    border-radius: 10px;
+      .banner1-3 {
+        align-content: space-evenly;
+        padding-left: 30px;
 
-                    .tex {
-                        font-size  : 60px;
-                        font-weight: 600;
-                        text-align : center;
-                    }
-
-                    .num {
-                        padding-top: 20px;
-                        font-size  : 20px;
-                        color      : #4C4C4C;
-                        text-align : center;
-                    }
-                }
-
-                .left:hover {
-                    border: 2px solid #00B207;
-                }
-
-
-                .right {
-
-                    .top-right {
-                        display      : flex;
-                        height       : 170px;
-                        gap          : 10px;
-                        margin-bottom: 10px;
-
-                        .top-right-child {
-                            align-content: center;
-                            height       : 170px;
-                            border       : 2px solid #E6E6E6;
-                            border-radius: 10px;
-                        }
-
-                        .top-right-child:hover {
-                            border: 2px solid #00B207;
-                        }
-                    }
-
-                    .bot-right {
-                        align-content: center;
-                        display      : flex;
-                        height       : 180px;
-                        gap          : 10px;
-
-                        .bot-right1 {
-                            height          : 180px;
-                            border          : 2px solid #00B207;
-                            border-radius   : 10px;
-                            background-color: #00B207;
-
-                            .image {
-                                background-image: url("../../../assets/images/Admin/4f82780fe59eaf78c651ac795e5ead00.jpg");
-                                background-size : cover;
-                                width           : 100%;
-                                height          : 135px;
-                                align-content   : center;
-
-
-                                .numb {
-                                    margin-left     : 35px;
-                                    background-color: rgba($color: #000000, $alpha: 0.6);
-                                    height          : 70px;
-                                    color           : white;
-                                    width           : 110px;
-                                    font-size       : 50px;
-                                    font-weight     : 700;
-                                    text-align      : center;
-                                    align-content   : center;
-                                    border-radius   : 8px;
-                                }
-                            }
-
-                            .name {
-                                display      : flex;
-                                align-content: center;
-
-                                .text1 {
-                                    font-weight : 550;
-                                    color       : white;
-                                    padding-left: 13px;
-                                    margin-top  : 10px;
-                                    font-size   : 18px;
-                                }
-
-                                .text2 {
-                                    font-weight  : 550;
-                                    color        : white;
-                                    margin-left  : auto;
-                                    padding-right: 13px;
-                                    padding-top  : 10px;
-                                    font-size    : 18px;
-                                }
-                            }
-                        }
-
-                        .bot-right1:hover {
-                            border: 2px solid #00B207;
-                        }
-
-                        .bot-right2 {
-                            height          : 180px;
-                            border          : 2px solid #00B207;
-                            border-radius   : 10px;
-                            background-color: #ffffff;
-
-                            .image {
-                                background-image: url("../../../assets/images/Admin/2.jpg");
-                                background-size : cover;
-                                width           : 100%;
-                                height          : 135px;
-                                align-content   : center;
-
-
-                                .numb {
-                                    margin-left     : 35px;
-                                    background-color: rgba($color: #000000, $alpha: 0.6);
-                                    height          : 70px;
-                                    color           : #ffffff;
-                                    width           : 110px;
-                                    font-size       : 50px;
-                                    font-weight     : 700;
-                                    text-align      : center;
-                                    align-content   : center;
-                                    border-radius   : 8px;
-                                }
-                            }
-
-                            .name {
-                                display      : flex;
-                                align-content: center;
-
-                                .text1 {
-                                    font-weight : 550;
-                                    color       : #00B207;
-                                    padding-left: 13px;
-                                    margin-top  : 10px;
-                                    font-size   : 18px;
-                                }
-
-                                .text2 {
-                                    font-weight  : 550;
-                                    color        : #00B207;
-                                    margin-left  : auto;
-                                    padding-right: 13px;
-                                    padding-top  : 10px;
-                                    font-size    : 18px;
-                                }
-                            }
-                        }
-
-                        .bot-right2:hover {
-                            border: 2px solid #00B207;
-                        }
-                    }
-                }
-
-                .tex {
-                    font-size  : 45px;
-                    font-weight: 600;
-                    text-align : center;
-                    padding-top: 20px;
-                }
-
-                .num {
-                    font-size : 20px;
-                    color     : #4C4C4C;
-                    text-align: center;
-                }
-
-                .per {
-                    padding-top: 20px;
-                    font-size  : 20px;
-                    color      : #00B207;
-                    text-align : center;
-                }
-            }
-
-            .chart {
-                height: 500px;
-            }
-
-            .new-recipe {
-                display: flex;
-                height : 250px;
-                gap    : 10px;
-
-                .recipe {
-                    height          : 250px;
-                    background-color: yellow;
-                }
-            }
+        .shop-now {
+          border-radius: 43px;
+          border: 2px solid var(--Main-Green, #00b207);
+          background: var(--Main-Green, #00b207);
+          text-align: center;
+          padding: 10px 20px;
+          text-decoration: none;
+          color: white;
+          min-width: fit-content;
+          text-decoration: none;
+          width: 50px;
+          font-weight: 500;
         }
+
+        .text-1 {
+          color: #00b207;
+          font-weight: 500;
+        }
+
+        .text-2 {
+          font-weight: 700;
+          font-size: 40px;
+        }
+
+        .text-2-1 {
+          transform: translateY(-8px);
+        }
+
+        .text-3 {
+          font-weight: 500;
+          font-size: 23px;
+          padding-bottom: 5px;
+        }
+
+        .text-4 {
+          font-weight: 600;
+          font-size: 23px;
+          color: #ff8a00;
+        }
+
+        .text-5 {
+          color: #808080;
+          padding-bottom: 15px;
+        }
+      }
+
+      .banner1-4 {
+        background-image: url("../../../assets/images/Home_banner/Banner1_vector_right.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+      }
     }
-}
 
-:where(.css-dev-only-do-not-override-qnu6hi).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected:not(.ant-picker-cell-disabled) .ant-picker-cell-inner,
-:where(.css-dev-only-do-not-override-qnu6hi).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-disabled) .ant-picker-cell-inner,
-:where(.css-dev-only-do-not-override-qnu6hi).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
-    color     : #fff;
-    background: #00B207;
+    .banner2 {
+      background-image: url("../../../assets/images/Home_banner/jack1.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
+    }
 
+    .banner3 {
+      background-image: url("../../../assets/images/Home_banner/jack2.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
+    }
+
+    .banner4 {
+      background-image: url("../../../assets/images/Home_banner/jack3.jpg");
+      background-size: contain;
+      background-position: center;
+      display: flex !important;
+      height: 400px;
+    }
+
+    /* Tùy chỉnh màu sắc cho mũi tên của Carousel */
+    .ant-carousel .slick-prev,
+    .ant-carousel .slick-next {
+      color: #00b207;
+      font-size: 50px;
+      z-index: 1;
+    }
+
+    .ant-carousel .slick-dots li button {
+      background-color: #6c7c6c;
+      /* Màu sắc của dấu chấm */
+    }
+
+    .ant-carousel .slick-dots li.slick-active button {
+      background-color: #00b207;
+      /* Màu sắc của dấu chấm khi active */
+    }
+  }
+
+  .business-info {
+    height: 170px;
+    display: flex;
+
+    .inner-icon {
+      color: #00b207;
+      width: 25px;
+      height: 25px;
+    }
+
+    .title {
+      font-weight: 650;
+      font-size: 18px;
+    }
+
+    .description_home_home_home_home {
+      font-size: 14px;
+      color: var(--Gray-Scale-Gray-400, #999) !important;
+    }
+
+    .info-1 {
+      text-align: -webkit-center;
+      align-content: space-around;
+
+      .icon {
+        background-image: url("../../../assets/images/icon_bg.svg");
+        height: 50px;
+        width: 50px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        text-align: -webkit-center;
+        align-content: space-around;
+      }
+    }
+  }
+
+  hr {
+    height: 1px;
+    width: 100%;
+    color: #999999;
+  }
 }

@@ -5,6 +5,7 @@ import { SlTag } from "react-icons/sl";
 import { LiaUser, LiaCommentAltSolid } from "react-icons/lia";
 import { IoArrowForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { saveReicpe } from "../../../../../../services/userServices";
 import "./SaveItem.css";
 const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
   const [isBookmarked, setIsBookmarked] = useState(istrue);
@@ -16,6 +17,12 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
 
   const handleItemClick = () => {
     navigate(`/singlerecipe?id=${id}`);
+  };
+  const userId = "66f6cd4a06a448abe23763e0";
+  const handleSave = async () => {
+    await saveReicpe(id, {
+      user_id: userId,
+    });
   };
 
   return (
@@ -41,9 +48,12 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
             className="bookmark"
           >
             {isBookmarked ? (
-              <FaBookmark className="bookmark-icon active" />
+              <FaBookmark
+                className="bookmark-icon active"
+                onClick={handleSave}
+              />
             ) : (
-              <FaRegBookmark className="bookmark-icon" />
+              <FaRegBookmark className="bookmark-icon" onClick={handleSave} />
             )}
           </div>
         )}

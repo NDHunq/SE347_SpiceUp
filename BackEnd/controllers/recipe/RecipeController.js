@@ -8,6 +8,7 @@ class RecipeController {
   async createRecipe(req, res) {
     try {
       await connectToDb();
+
       console.log("req.body", req.body);
 
       const {
@@ -15,7 +16,9 @@ class RecipeController {
         description,
         cookingTimeInSecond,
         userId,
+
         coverImageId,
+
         recipeIds,
         type,
         ingredients,
@@ -23,10 +26,12 @@ class RecipeController {
       const recipe = new Recipe({
         recipeName: recipeName,
         userId: userId,
+
         coverImageId: coverImageId,
         description: description,
         cookingTimeInSecond: cookingTimeInSecond,
         type: type,
+
         createdAt: new Date(),
         step: recipeIds,
         ingredients: ingredients,
@@ -165,7 +170,10 @@ class RecipeController {
         const recipe = await Recipe.find({
           userId: user_id,
           isDeleted: false,
-        }).populate("step");
+        })
+          .populate("step")
+          .populate("userId");
+
         if (recipe) {
           return res.status(200).json(recipe);
         } else {
@@ -185,7 +193,10 @@ class RecipeController {
         }
       }
 
-      const recipe = await Recipe.find({ isDeleted: false }).populate("step");
+      const recipe = await Recipe.find({ isDeleted: false })
+        .populate("step")
+        .populate("userId");
+
       if (recipe) {
         return res.status(200).json(recipe);
       } else {
@@ -267,33 +278,41 @@ class RecipeController {
     try {
       await connectToDb();
 
-      const { user_id } = req.query;
+      const { user_id } = req.body;
       const { recipe_id } = req.params;
 
       const recipe = await Recipe.findOne({ _id: recipe_id });
-
-      const newSavedUserId = [...recipe.savedUserId, user_id];
-
       if (!recipe) {
         return res.status(404).json({
           message: "Recipe not found",
         });
       }
 
-      recipe.savedUserId = newSavedUserId;
-      recipe.save();
+      if (recipe.savedUserId.includes(user_id)) {
+        const newsavedUserId = [];
+        for (let i = 0; i < recipe.savedUserId.length; i++) {
+          if (recipe.savedUserId[i].toString() === user_id) {
+          } else {
+            newsavedUserId.push(recipe.savedUserId[i]);
+          }
+        }
+        recipe.savedUserId = newsavedUserId;
+      } else {
+        recipe.savedUserId.push(user_id);
+      }
+
+      await recipe.save();
 
       return res.status(200).json({
-        message: "update saved user succesfully",
+        message: "Updated saved user successfully",
       });
     } catch (e) {
-      console.log("some errors happen", e);
+      console.log("Some errors happened", e);
       return res.status(500).json({
-        message: "Internal server eror",
+        message: "Internal server error",
       });
     }
   }
-
   async getSavedRecipe(req, res) {
     try {
       await connectToDb();
@@ -301,7 +320,7 @@ class RecipeController {
       const { user_id } = req.params;
 
       const recipe = await Recipe.find({
-        savedUserId: user_id,
+        savedUserId: { $in: [user_id] },
         isDeleted: false,
       });
 
