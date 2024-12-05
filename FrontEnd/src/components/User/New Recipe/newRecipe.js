@@ -189,7 +189,7 @@ function SingleRecipe() {
       recipeName: recipeName,
       description: value,
       cookingTimeInSecond: cookingTime * 60,
-      userId: "6749b120bb624f5bedc3abf8",
+      userId: "66f6cd4a06a448abe23763e0",
       coverImageId: coverImageId,
       recipeIds: recipeIds,
       type: selectedType,
@@ -201,7 +201,7 @@ function SingleRecipe() {
     console.log("recipeId", recipeId);
     toast.success("Recipe created successfully");
     const url = `/singlerecipe?id=${recipeId}`;
-    //nav(url);
+    nav(url);
   };
 
   return (

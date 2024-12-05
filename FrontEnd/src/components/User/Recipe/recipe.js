@@ -257,19 +257,30 @@ function Recipes({ search }) {
   ];
   const [currentPage, setCurrentPage] = useState(1);
   const [total_pages, setTotalPages] = useState(1);
+  const [result, setResult] = useState(0);
   const [listDisplay_pending, setListDisplay_pending] = useState([]);
   const handlePageChange = (page) => {
     setCurrentPage(page);
     renderDisplayItems(page, 1);
   };
   useEffect(() => {
-    const recipes = getAllRecipes();
-    if (Array.isArray(recipes)) {
-      setListDisplay_pending(recipes);
-    } else {
-      setListDisplay_pending([]);
-      console.error("getAllRecipes() did not return an array");
-    }
+    const fetchRecipes = async () => {
+      try {
+        const recipes = await getAllRecipes();
+        //console.log("recipes", recipes);
+        if (Array.isArray(recipes)) {
+          setResult(recipes.length);
+          setListDisplay_pending(recipes);
+        } else {
+          setListDisplay_pending([]);
+          console.error("getAllRecipes() did not return an array");
+        }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
   }, []);
 
   useEffect(() => {
@@ -280,19 +291,24 @@ function Recipes({ search }) {
     let itemsToRender = listDisplay_pending.slice(startIndex, startIndex + 2);
     return (
       <div style={{ display: "flex", gap: "20px" }}>
-        {itemsToRender.map((item, index) => (
-          <DisplayItem
-            key={index}
-            id={item.id}
-            istrue={item.istrue}
-            ttime={item.ttime}
-            ttag={item.ttag}
-            tby={item.tby}
-            tcomments={item.tcomments}
-            tname={item.tname}
-            tlink={item.tlink}
-          />
-        ))}
+        {itemsToRender.map((item, index) => {
+          let time = item.cookingTimeInSecond / 60;
+
+          console.log("item", item);
+          return (
+            <DisplayItem
+              key={index}
+              id={item._id}
+              istrue={item.istrue}
+              ttime={time}
+              ttag={item.type}
+              tby={item.userId}
+              tcomments={item.views}
+              tname={item.recipeName}
+              tlink={item.tlink}
+            />
+          );
+        })}
       </div>
     );
   };
@@ -392,7 +408,8 @@ function Recipes({ search }) {
                     </select>
                   </div>
                   <p className="txt2">
-                    <span className="txt-bold txt2">52</span> Results Found
+                    <span className="txt-bold txt2">{result}</span> Results
+                    Found
                   </p>
                 </div>
                 <div className="display_row">
