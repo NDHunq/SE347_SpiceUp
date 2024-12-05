@@ -65,17 +65,13 @@ const UserSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        require: true,
         unique: true
     },
     firstname: {
         type: String,
-        require: true,
-        default: ''
     },
     lastname: {
         type: String,
-        require: true,
     },
     resetPasswordToken: {
         type: String,
@@ -91,7 +87,6 @@ const UserSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        require: true,
     },
     createdAt: {
         type: Date
