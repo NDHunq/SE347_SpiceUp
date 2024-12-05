@@ -5,15 +5,37 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
+import { signUp } from "../../services/authServices";
 function SignUp() {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [cf_password, setCFPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    debugger;
+    if(password !== cf_password) {
+      toast.error("confirmed password doesn't match")
+      return 
+    }
+
+    if(password.length<8) {
+      toast.error("password must be at least 8 character long")
+      return 
+    }
+
+    const response = await signUp({
+      "email": userName,
+      "password": password
+    })
+
+    if(response.status !== 200) {
+      toast.error("Email already existed")
+      return 
+    }
+
     toast.success("Sign up successfully");
-    navigate("/home");
+    navigate("/signin");
   };
   return (
     <>
