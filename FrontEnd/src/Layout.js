@@ -28,7 +28,7 @@ import HomeAdmin from "./components/Admin/Home/Home";
 import DetailOrder from "./components/User/Account/AccountFeature/OderHistory/DetailOrder/DetailOrder";
 import RecipeAdmin from "./components/Admin/Recipe/recipe";
 import SingleRecipeAdmin from "./components/Admin/SingleRecipe/singleRecipe";
-
+import ShopAdmin from "./components/Admin/Shop/Shop";
 import NewRecipeAdmin from "./components/Admin/New Recipe/newRecipe";
 
 const Layout = (props) => {
@@ -59,6 +59,7 @@ const Layout = (props) => {
         </Route>
         <Route path="/admin" element={<AppAdmin />}>
           <Route path="home" element={<HomeAdmin />} />
+          <Route path="shop" element={<ShopAdmin />} />
           <Route path="recipes" element={<RecipeAdmin />} />
           <Route path="singlerecipe" element={<SingleRecipeAdmin />} />
           <Route path="newrecipe" element={<NewRecipeAdmin />} />

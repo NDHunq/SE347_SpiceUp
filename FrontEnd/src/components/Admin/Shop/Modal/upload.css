@@ -1,0 +1,101 @@
+.im-area {
+    flex: 1;              
+    display: flex;
+    flex-direction: row;    
+    height: 100%;
+}
+.img-list-admin{
+    flex:1;
+    height: 100%;
+    vertical-align: middle;
+}
+.img-product{
+    flex:5;
+}
+.info-1{
+    flex:8;
+    max-height: 90%; 
+    overflow-y: auto;  
+    padding-right: 16px; 
+}
+
+
+.price-line .sell-price,.sell-price{
+    color:#2C742F;
+    font-size: 24px;
+}
+
+.container-atc {
+    display: flex;
+    margin: 8px 24px;
+    flex-direction: row;
+}
+.vertical-upload .ant-upload-list {
+    display: flex;
+    flex-direction: column;
+}
+.vertical-upload .ant-upload-list-item {
+    width: 100%; 
+    margin-bottom: 8px; 
+}
+.antd-modal-body{
+    height: 100%;   
+    display: flex; 
+    flex-direction: column; 
+}
+.modal-content{
+    height: 500px; 
+
+}
+.ant-upload-wrapper{
+    vertical-align: middle;
+}
+.input-pirce .ant-input-number-input {
+    color: #2C742F !important; 
+    font-size: 24px !important; 
+    width: 120px;
+  }
+
+.input-percent-sale .ant-input-number-input{
+    color: rgb(216, 115, 115) !important; 
+    font-size: 16px !important; 
+    width: 50px;
+    margin-left: 8px;
+}
+
+.input-qty .ant-input-number-input{
+    font-size: 16px !important; 
+    width: 50px;
+    margin-left: 8px;
+}
+.discription .ant-input {
+    width: 100%;
+    color: darkgrey !important;;
+}
+
+.container-price-remain{
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-line{
+    display: flex;
+    justify-content: left;
+}
+.margin-left8{
+    margin-left: 8px;
+}
+.margin-right8{
+    margin-right: 8px;
+}
+.margin-left16{
+    margin-left: 12px;
+}
+
+.paddingLeft0{
+    padding-left: 0px;
+}
+.container-unit-category{
+    display: flex;
+    justify-content: space-between;
+}
