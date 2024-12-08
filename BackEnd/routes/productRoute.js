@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //import controllers
-const {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct, getProductByName, findProductsWithFilter } = require('../controllers/productController');
+const {createProduct, getAllProducts, getProductByID, deleteProduct, updateProduct, getProductByName, findProductsWithFilter } = require('../controllers/ProductController');
 const authenticate = require("../middlewares/auth/auth");
 
 // Get all products with pagination, sorting and filtering
