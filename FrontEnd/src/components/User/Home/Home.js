@@ -94,7 +94,7 @@ const Home = (props) => {
           <hr />
         </div>
       </main>
-      <FeaturedProducts />
+      {/* <FeaturedProducts /> */}
       <TopCategories />
       <Analysis />
       <BestSeller />

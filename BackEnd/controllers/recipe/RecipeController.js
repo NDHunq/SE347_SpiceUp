@@ -155,6 +155,8 @@ class RecipeController {
             await connectToDb()
             const { user_id } = req.params
             const { recipe_id } = req.params
+            const page = parseInt(req.query.page) || 1; 
+            const limit = parseInt(req.query.limit) || 10;
             console.log("user_id", user_id)
             console.log("recipe_id", recipe_id)
             if (user_id) {
@@ -176,11 +178,28 @@ class RecipeController {
                 }
             }
 
-            const recipe = await Recipe.find({ isDeleted: false }).populate("step")
-            if (recipe) {
-                return res.status(200).json(recipe)
+            
+            const recipes = await Recipe.find({ isDeleted: false })
+            .populate("step")
+            .populate("userId", "firstname lastname")
+            .skip((page - 1) * limit) // Skip the documents for previous pages
+            .limit(limit); // Limit the number of documents returned
+
+            if (recipes.length > 0) {
+                const totalRecipes = await Recipe.countDocuments({ isDeleted: false }); // Total count of recipes
+                const totalPages = Math.ceil(totalRecipes / limit); // Calculate total pages
+        
+                return res.status(200).json({
+                    recipes,
+                    pagination: {
+                        totalRecipes,
+                        totalPages,
+                        currentPage: page,
+                        pageSize: recipes.length,
+                    },
+                });
             } else {
-                return res.status(404).send('No recipe found')
+                return res.status(404).send('No recipe found');
             }
 
         } catch (e) {

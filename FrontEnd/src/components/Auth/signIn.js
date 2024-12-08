@@ -5,13 +5,29 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
+import { signIn } from "../../services/authServices";
 function SignIn() {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    debugger;
+
+    const response = await signIn({
+      "email": userName,
+      "password": password
+    })
+
+    if(response.status !== 200) {
+      toast.error("Wrong email or password");
+      return 
+    }
+
+    localStorage.setItem("jwt", response.data.data.jwt)
+    localStorage.setItem("user_id", response.data.data.user_id)
+    
     toast.success("Sign in successfully");
     navigate("/home");
   };

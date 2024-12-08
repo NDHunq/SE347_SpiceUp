@@ -26,8 +26,8 @@ function HorizontalProduct(props){
     }
 
     const token = localStorage.getItem('token');
-    const decodedData = jwtDecode(token);
-    const user_id = decodedData.id;
+    //const decodedData = jwtDecode(token);
+    const user_id = localStorage.getItem('user_id');
 
     const qtyInCart = useSelector(state=>state.qtyInCart.count);
     const dispatch=useDispatch();

@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 //console.log(orderId)
 mongoose.set('debug', true)
 
-const RecipeStep = require("./recipeStep")
+const RecipeStep = require("./recipeStep");
+const User = require('../user');
 const SpiceUp = mongoose.connection.useDb('SpiceUp');
 
 
@@ -26,6 +27,7 @@ const RecipeSchema = new mongoose.Schema({
     },
     userId: {
         type:  mongoose.Schema.Types.ObjectId,
+        ref: User,
         require: true,
     },
     coverImageId: {

@@ -25,9 +25,11 @@ function Product(props){
         return formattedStr;
     }
 
+
+    console.log("img url", props.urls_img)
     const token = localStorage.getItem('token');
-    const decodedData = jwtDecode(token);
-    const user_id = decodedData.id;
+    //const decodedData = jwtDecode(token);
+    const user_id = localStorage.getItem('user_id');
 
     const [soldCount, setSoldCount] = useState(props.sold);
     const [soldOut, setSoldOut] = useState(props.stock === 0);
