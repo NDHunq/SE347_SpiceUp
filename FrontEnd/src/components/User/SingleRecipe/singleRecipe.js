@@ -57,6 +57,8 @@ function SingleRecipe() {
   const [steps, setSteps] = useState([]);
   const [igredients, setIgredients] = useState([]);
   const [discovers, setDiscovers] = useState([]);
+  const [status, setStatus] = useState("RS2");
+  const [authorrole, setAuthorrole] = useState("");
   const handlePost = async () => {
     const comment = {
       recipeId: id, // Replace with a valid recipe ID from your database
@@ -111,6 +113,7 @@ function SingleRecipe() {
         setTags(recipe.type);
 
         setViews(recipe.views);
+        setStatus(recipe.status);
 
         setRecipeName(recipe.recipeName);
         setDate(recipe.createdAt);
@@ -140,7 +143,13 @@ function SingleRecipe() {
         }
         const rawuser = await getUserInfo(recipe.userId);
         const user = rawuser.data.userInfo;
+
         setUserName(user.firstname + " " + user.lastname);
+        if (user.role === "R1") {
+          setAuthorrole("Admin");
+        } else {
+          setAuthorrole("User");
+        }
 
         const rawcomments = await getComment(id);
         const comments = [];
@@ -173,7 +182,7 @@ function SingleRecipe() {
           const rawuserr = await getUserInfo(recipee.userId);
           const userr = rawuserr.data.userInfo;
           const url = await getImage(recipee.coverImageId);
-          if (recipee._id !== idd) {
+          if (recipee._id !== idd && recipee.status === "RS2") {
             allReciperes.push({
               id: recipee._id,
               name: recipee.recipeName,
@@ -253,7 +262,7 @@ function SingleRecipe() {
                         <SlTag className="icon_chain"></SlTag>
                         <div className="txt_chain">{tags}</div>
                         <LiaUser className="icon_chain"></LiaUser>
-                        <div className="txt_chain">{by}</div>
+                        <div className="txt_chain">{authorrole}</div>
                         <LiaCommentAltSolid className="icon_chain"></LiaCommentAltSolid>
                         <div className="txt_chain"> {cmt} comments</div>
                         <LuEye className="icon_chain"></LuEye>
@@ -327,20 +336,25 @@ function SingleRecipe() {
                           </div>
                         ))}
                       </div>
-                      <div className="leaveacomment">Leave a comment</div>
-                      <div className="message">Message</div>
-                      <TextArea
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        placeholder="Write your comment here..."
-                        autoSize={{
-                          minRows: 3,
-                          maxRows: 5,
-                        }}
-                      />
-                      <div className="button margin0" onClick={handlePost}>
-                        <p className="save post">Post Comments</p>
-                      </div>
+                      {status === "RS2" ? (
+                        <div>
+                          <div className="leaveacomment">Leave a comment</div>
+                          <div className="message">Message</div>
+                          <TextArea
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Write your comment here..."
+                            autoSize={{
+                              minRows: 3,
+                              maxRows: 5,
+                            }}
+                          />
+                          <div className="button margin0" onClick={handlePost}>
+                            <p className="save post">Post Comments</p>
+                          </div>
+                        </div>
+                      ) : null}
+
                       <div className="cmt">Comments</div>
                       <div className="comments">
                         {comments.map((comment, index) => (
@@ -379,6 +393,13 @@ function SingleRecipe() {
                 </div>
 
                 <div className="col scot2 ">
+                  {status === "RS1" ? (
+                    <div className="ccontainer newcon">
+                      <div className="rcapp textclred">
+                        Recipe is not currently public.
+                      </div>
+                    </div>
+                  ) : null}
                   <Search
                     placeholder="Find more recipes..."
                     onSearch={onSearch}

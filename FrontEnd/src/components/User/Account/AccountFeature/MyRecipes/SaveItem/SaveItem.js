@@ -7,7 +7,7 @@ import { IoArrowForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { saveReicpe } from "../../../../../../services/userServices";
 import "./SaveItem.css";
-const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
+const SaveItem = ({ imagelink, name, istrue, issave, id, status }) => {
   const [isBookmarked, setIsBookmarked] = useState(istrue);
   const navigate = useNavigate();
 
@@ -36,9 +36,28 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
         }}
       ></div>
       <div className="sbot sbot2">
-        <p className="txtbot" data-tooltip="Your tooltip text here">
+        <p className="txtbot " data-tooltip="Your tooltip text here">
           {name}
         </p>
+        {istrue && status === "RS1" && (
+          <p
+            className="txtbot bold"
+            data-tooltip="Your tooltip text here"
+            style={{ color: "red" }}
+          >
+            Pending
+          </p>
+        )}
+        {istrue && status === "RS2" && (
+          <p
+            className="txtbot bold"
+            data-tooltip="Your tooltip text here"
+            style={{ color: "green" }}
+          >
+            Approved
+          </p>
+        )}
+
         {issave && (
           <div
             onClick={(e) => {
