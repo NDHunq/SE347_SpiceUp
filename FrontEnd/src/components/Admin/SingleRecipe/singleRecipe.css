@@ -353,3 +353,25 @@
   border-radius: 30px !important;
   padding-bottom: 20px;
 }
+.stop_btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: fit-content;
+  height: 45px;
+  padding: 10px 24px;
+  font-weight: 600;
+  user-select: none;
+  border-radius: 43px;
+  border: 2px solid var(--Main-Green, #e00b0b);
+  background: var(--Gray-Scale-White, #fff);
+  text-align: center;
+  color: var(--Main-Green, #e00b0b);
+  max-lines: 1;
+  margin-left: 25px;
+  min-width: 380px;
+}
+.stop_btn:hover {
+  cursor: pointer;
+  background: var(--Main-Green, #e00b0b);
+  color: var(--Gray-Scale-White, #fff);
+}

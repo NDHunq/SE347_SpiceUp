@@ -17,7 +17,7 @@ function Recipes({ search }) {
   const [searchInput, setSearchInput] = useState("");
   const [listDisplay_app, setlistapp] = useState([
     {
-      id: "1",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -28,7 +28,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "2",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -40,7 +40,7 @@ function Recipes({ search }) {
     },
 
     {
-      id: "3",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -52,7 +52,7 @@ function Recipes({ search }) {
     },
 
     {
-      id: "4",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -63,7 +63,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "5",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -74,7 +74,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "6",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -85,7 +85,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "7",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -96,7 +96,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "8",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -107,7 +107,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "9",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -120,7 +120,7 @@ function Recipes({ search }) {
   ]);
   const listDisplay_pending = [
     {
-      id: "1234",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -131,7 +131,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",
@@ -142,7 +142,7 @@ function Recipes({ search }) {
         "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
     },
     {
-      id: "1234",
+      id: "67516e44378a160ce4b02c79",
       istrue: true,
       ttime: 140,
       ttag: "Vietnamese Food",

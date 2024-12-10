@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./displayItem.css";
 import { FaClock, FaTag, FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { SlTag } from "react-icons/sl";
-import { LiaUser, LiaCommentAltSolid } from "react-icons/lia";
+import { LiaUser, LiaCommentAltSolid, LiaEye } from "react-icons/lia";
 import { IoArrowForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +52,7 @@ const DisplayItem = ({
           <div className="tagtxt">
             <span style={{ color: "#B3B3B3" }}>By</span> {tby}
           </div>
-          <LiaCommentAltSolid className="tagicon3" />
+          <LiaEye className="tagicon3" />
           <div className="tagtxt">{tcomments} Views</div>
         </div>
         <div className="height"></div>

@@ -15,7 +15,7 @@ import Account from "./components/User/Account/account";
 import Setting from "./components/User/Account/AccountFeature/Setting/setting";
 import MyRecipe from "./components/User/Account/AccountFeature/MyRecipes/myrecipe";
 import OrderHistory from "./components/User/Account/AccountFeature/OderHistory/order";
-import Cart from "./components/User/Cart/Cart"
+import Cart from "./components/User/Cart/Cart";
 import Checkout from "./components/User/Cart/Checkout/Checkout";
 import { ToastContainer } from "react-toastify";
 
@@ -55,7 +55,6 @@ const Layout = (props) => {
             <Route path="/shopping-cart" element={<Cart />} />
             <Route path="/shopping-cart/checkout" element={<Checkout />} />
           </Route>
-
         </Route>
         <Route path="/admin" element={<AppAdmin />}>
           <Route path="home" element={<HomeAdmin />} />
