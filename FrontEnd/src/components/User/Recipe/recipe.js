@@ -9,7 +9,7 @@ import FilterCategory from "./filter_drop_category/filter_category";
 import { Pagination } from "antd";
 import DisplayItem from "./display_item/displayItem";
 import RecentItem from "./recent_Item/recent_item";
-import { getAllRecipes } from "../../../services/userServices";
+import { getAllRecipes, getImage } from "../../../services/userServices";
 const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
@@ -33,16 +33,18 @@ function Recipes({ search }) {
 
   const navItems = [{ link: "/recipes", text: "Recipes" }];
   const listCategory = [
-    { name: "Cate1", number: 10, id: 1 },
-    { name: "Cate2", number: 20, id: 2 },
-    { name: "Cate3", number: 30, id: 3 },
-    { name: "Cate4", number: 40, id: 4 },
-    { name: "Cate5", number: 50, id: 5 },
-    { name: "Cate6", number: 60, id: 6 },
-    { name: "Cate7", number: 70, id: 7 },
-    { name: "Cate8", number: 80, id: 8 },
-    { name: "Cate9", number: 90, id: 9 },
-    { name: "Cate10", number: 100, id: 10 },
+    { name: "All", number: 10, id: 1 },
+    { name: "Sauce", number: 20, id: 2 },
+    { name: "Dessert", number: 30, id: 3 },
+    { name: "Beverages", number: 40, id: 4 },
+    { name: "Snack", number: 50, id: 5 },
+    { name: "Soup", number: 60, id: 6 },
+    { name: "Baking", number: 70, id: 7 },
+    { name: "Breakfast", number: 80, id: 8 },
+    { name: "Lunch", number: 90, id: 9 },
+    { name: "Dinner", number: 100, id: 10 },
+    { name: "Salad", number: 10, id: 11 },
+    { name: "Vietnamese Food", number: 90, id: 12 },
   ];
   const listDisplay_pendingg = [
     // {
@@ -259,18 +261,63 @@ function Recipes({ search }) {
   const [total_pages, setTotalPages] = useState(1);
   const [result, setResult] = useState(0);
   const [listDisplay_pending, setListDisplay_pending] = useState([]);
+  let listDisplay_pending_all = [];
   const handlePageChange = (page) => {
     setCurrentPage(page);
     renderDisplayItems(page, 1);
   };
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(listDisplay_pending.length / 8) * 10);
+  }, [listDisplay_pending]);
+  const renderDisplayItems = (page, row) => {
+    const startIndex = (page - 1) * 8 + (row - 1) * 2;
+    let itemsToRender = listDisplay_pending.slice(startIndex, startIndex + 2);
+
+    return (
+      <div style={{ display: "flex", gap: "20px" }}>
+        {itemsToRender.map((item, index) => {
+          let time = item.cookingTimeInSecond / 60;
+          let isTrue = false;
+          if (item.savedUserId.includes("userId")) {
+            isTrue = true;
+          }
+
+          return (
+            <DisplayItem
+              key={index}
+              id={item._id}
+              istrue={isTrue}
+              ttime={time}
+              ttag={item.type}
+              tby={item.userId}
+              tcomments={item.views}
+              tname={item.recipeName}
+              tlink={item.coverImageUrl}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const recipes = await getAllRecipes();
-        //console.log("recipes", recipes);
         if (Array.isArray(recipes)) {
-          setResult(recipes.length);
-          setListDisplay_pending(recipes);
+          const recipesWithImages = await Promise.all(
+            recipes.map(async (item) => {
+              const url = await getImage(item.coverImageId);
+              return { ...item, coverImageUrl: url };
+            })
+          );
+          console.log("recipesWithImages", recipesWithImages);
+          setResult(recipesWithImages.length);
+          setListDisplay_pending(recipesWithImages);
+          localStorage.setItem("allRecipes", JSON.stringify(recipesWithImages));
+          console.log("listDisplay_pending", listDisplay_pending);
+          console.log("allRecipes", localStorage.getItem("allRecipes"));
         } else {
           setListDisplay_pending([]);
           console.error("getAllRecipes() did not return an array");
@@ -282,37 +329,32 @@ function Recipes({ search }) {
 
     fetchRecipes();
   }, []);
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(listDisplay_pending.length / 8) * 10);
-  }, [listDisplay_pending]);
-  const renderDisplayItems = (page, row) => {
-    const startIndex = (page - 1) * 8 + (row - 1) * 2;
-    let itemsToRender = listDisplay_pending.slice(startIndex, startIndex + 2);
-    return (
-      <div style={{ display: "flex", gap: "20px" }}>
-        {itemsToRender.map((item, index) => {
-          let time = item.cookingTimeInSecond / 60;
-
-          console.log("item", item);
-          return (
-            <DisplayItem
-              key={index}
-              id={item._id}
-              istrue={item.istrue}
-              ttime={time}
-              ttag={item.type}
-              tby={item.userId}
-              tcomments={item.views}
-              tname={item.recipeName}
-              tlink={item.tlink}
-            />
-          );
-        })}
-      </div>
-    );
+  const onSelectChange = (e) => {
+    const value = e.target.value;
+    let sorted = [];
+    if (value === "latest") {
+      sorted = [...listDisplay_pending].sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    } else if (value === "best-seller") {
+      sorted = [...listDisplay_pending].sort((a, b) => {
+        return b.views - a.views;
+      });
+    }
+    setListDisplay_pending(sorted);
   };
-
+  const handleTypeSelect = (typeName) => {
+    const allRecipes = JSON.parse(localStorage.getItem("allRecipes") || "[]");
+    if (typeName === "All") {
+      setListDisplay_pending(allRecipes);
+      console.log("allRecipes", allRecipes);
+    } else {
+      const filtered = listDisplay_pending.filter(
+        (item) => item.type === typeName
+      );
+      setListDisplay_pending(filtered);
+    }
+  };
   return (
     <ConfigProvider
       theme={{
@@ -326,8 +368,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -348,7 +389,7 @@ function Recipes({ search }) {
                     <FilterCategory
                       listname={"Recipe Types"}
                       listCategory={listCategory}
-                    ></FilterCategory>
+                      onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt">Recenty Saved</p>
 
@@ -391,8 +432,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
@@ -405,7 +445,11 @@ function Recipes({ search }) {
                 <div className="div2">
                   <div className="flex">
                     <p className="txt_Sortby"> Sort by:</p>
-                    <select className="sort-by">
+                    <select
+                      className="sort-by"
+                      onChange={(e) => {
+                        onSelectChange(e);
+                      }}>
                       <option value="latest"> Latest </option>
                       <option value="best-seller"> View </option>
                     </select>

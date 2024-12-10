@@ -19,16 +19,48 @@ const handleMenuClick = (e, setSelectedType) => {
 const menuProps = (setSelectedType) => ({
   items: [
     {
-      label: "Vietnamese Food",
+      label: "Sauce",
       key: "1",
     },
     {
-      label: "Option 2",
+      label: "Dessert",
       key: "2",
     },
     {
-      label: "Option 3",
+      label: "Beverages",
       key: "3",
+    },
+    {
+      label: "Snack",
+      key: "4",
+    },
+    {
+      label: "Soup",
+      key: "5",
+    },
+    {
+      label: "Baking",
+      key: "6",
+    },
+    {
+      label: "Breakfast",
+      key: "7",
+    },
+    {
+      label: "Lunch",
+      key: "8",
+    },
+    {
+      label: "Dinner",
+      key: "9",
+    },
+    {
+      label: "Salad",
+      key: "10",
+    },
+    {
+      label: "Vietnamese Food",
+      key: "11",
     },
   ],
   onClick: (e) => handleMenuClick(e, setSelectedType),
@@ -129,8 +161,7 @@ function SingleRecipe() {
           colorPrimaryActive: "#00B207",
           colorPrimaryHover: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
         <main className="content">
@@ -142,8 +173,7 @@ function SingleRecipe() {
                 <div
                   className="coverImage"
                   onClick={triggerFileInput}
-                  style={{ backgroundImage: `url(${coverImage})` }}
-                >
+                  style={{ backgroundImage: `url(${coverImage})` }}>
                   {coverImage ? "" : "Click to add cover image"}
                 </div>
                 <input
@@ -225,21 +255,18 @@ function SingleRecipe() {
                     <Input
                       placeholder="Name"
                       value={nameigre}
-                      onChange={(e) => setName(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setName(e.target.value)}></Input>
                     <Input
                       placeholder="Quantity"
                       value={quantityigre}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setQuantity(e.target.value)}></Input>
                   </div>
 
                   <Input
                     placeholder="Link (optional)"
                     className="gap"
                     value={linkin}
-                    onChange={(e) => setLinkin(e.target.value)}
-                  ></Input>
+                    onChange={(e) => setLinkin(e.target.value)}></Input>
                 </div>
                 <div className="upload_btn width100">Upload</div>
                 <br />

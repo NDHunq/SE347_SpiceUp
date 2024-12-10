@@ -1,6 +1,6 @@
 import axios from "../utils/axiosCustomize";
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM0MDcyMjksImV4cCI6MTczMzQyNTIyOX0.bC_8GhLOYu5al-D8nczXv72q5W6eg5rS_TriRA5MusA";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM4MTg0MTgsImV4cCI6MTczMzgzNjQxOH0.v0GB8vBUXtzN9Qy40OkMpuEhDqTNHAAPfMRfg2FwbSs";
 const getARecipe = (id) => {
   return axios.get("api/v1/recipe/get/" + id, {
     headers: {

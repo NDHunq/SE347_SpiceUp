@@ -27,16 +27,48 @@ const handleMenuClick = (e, setSelectedType) => {
 const menuProps = (setSelectedType) => ({
   items: [
     {
-      label: "Vietnamese Food",
+      label: "Sauce",
       key: "1",
     },
     {
-      label: "Japanese Food",
+      label: "Dessert",
       key: "2",
     },
     {
-      label: "Korean Food",
+      label: "Beverages",
       key: "3",
+    },
+    {
+      label: "Snack",
+      key: "4",
+    },
+    {
+      label: "Soup",
+      key: "5",
+    },
+    {
+      label: "Baking",
+      key: "6",
+    },
+    {
+      label: "Breakfast",
+      key: "7",
+    },
+    {
+      label: "Lunch",
+      key: "8",
+    },
+    {
+      label: "Dinner",
+      key: "9",
+    },
+    {
+      label: "Salad",
+      key: "10",
+    },
+    {
+      label: "Vietnamese Food",
+      key: "11",
     },
   ],
   onClick: (e) => handleMenuClick(e, setSelectedType),

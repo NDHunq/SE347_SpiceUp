@@ -230,8 +230,7 @@ function SingleRecipe() {
             colorPrimaryActive: "#00B207",
             colorPrimaryHover: "#00B207",
           },
-        }}
-      >
+        }}>
         <div className="recipes">
           <Header navItems={navItems} />
 
@@ -247,8 +246,7 @@ function SingleRecipe() {
                           backgroundImage: `url(${coverImage})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                        }}
-                      ></div>
+                        }}></div>
                       <div className="tag_chain">
                         <SlTag className="icon_chain"></SlTag>
                         <div className="txt_chain">{tags}</div>
@@ -268,8 +266,7 @@ function SingleRecipe() {
                             className="avatar_single"
                             style={{
                               backgroundImage: `url(${userAvatar})`,
-                            }}
-                          ></div>
+                            }}></div>
                           <div>
                             {" "}
                             <div className="name_single">{userName}</div>
@@ -290,8 +287,7 @@ function SingleRecipe() {
                               e.stopPropagation();
                               toggleBookmark();
                             }}
-                            className="bookmarksingle"
-                          >
+                            className="bookmarksingle">
                             {isBookmarked ? (
                               <FaBookmark
                                 onClick={handelSave}
@@ -350,8 +346,7 @@ function SingleRecipe() {
                                 className="cmt_icon"
                                 style={{
                                   backgroundImage: `url(${comment.image})`,
-                                }}
-                              ></div>
+                                }}></div>
                               <div>
                                 <div className="flex">
                                   {" "}
@@ -396,8 +391,7 @@ function SingleRecipe() {
                           className="flex clickable"
                           onClick={() =>
                             openLink(ingredient.link, ingredient.igredient)
-                          }
-                        >
+                          }>
                           <div className="ingredient-name">
                             {ingredient.name}
                           </div>
