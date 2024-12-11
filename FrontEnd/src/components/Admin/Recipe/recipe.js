@@ -139,6 +139,7 @@ function Recipes({ search }) {
               tcomments: item.views,
               tname: item.recipeName,
               tlink: item.coverImageUrl,
+              date: item.createdAt,
             };
           });
           const NewPending = pending.map((item) => {
@@ -162,8 +163,8 @@ function Recipes({ search }) {
 
           setlistapp(NewApproved);
           setListDisplay_pending(NewPending);
-          localStorage.setItem("approved", JSON.stringify(approved));
-          localStorage.setItem("pending", JSON.stringify(pending));
+          localStorage.setItem("approved", JSON.stringify(NewApproved));
+          localStorage.setItem("pending", JSON.stringify(NewPending));
         } else {
           setListDisplay_pending([]);
           console.error("getAllRecipes() did not return an array");
@@ -175,9 +176,75 @@ function Recipes({ search }) {
 
     fetchRecipes();
   }, []);
+  const handleSearch = () => {
+    if (value !== 1) {
+      const allRecipes = JSON.parse(localStorage.getItem("pending") || "[]");
+      console.log("allRecipes", allRecipes);
+      const filtered = allRecipes.filter(
+        (item) =>
+          item.tname &&
+          item.tname.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setListDisplay_pending(filtered);
+    } else {
+      const allRecipes = JSON.parse(localStorage.getItem("approved") || "[]");
+      const filtered = allRecipes.filter(
+        (item) =>
+          item.tname &&
+          item.tname.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setlistapp(filtered);
+    }
+  };
+  const handleTypeSelect = (typeName) => {
+    if (value != 1) {
+      const allRecipes = JSON.parse(localStorage.getItem("pending") || "[]");
+      if (typeName === "All") {
+        setListDisplay_pending(allRecipes);
+      } else {
+        const filtered = allRecipes.filter((item) => item.ttag === typeName);
+        setListDisplay_pending(filtered);
+      }
+    } else {
+      const allRecipes = JSON.parse(localStorage.getItem("approved") || "[]");
+      if (typeName === "All") {
+        setlistapp(allRecipes);
+      } else {
+        const filtered = allRecipes.filter((item) => item.ttag === typeName);
+        setlistapp(filtered);
+      }
+    }
+  };
+  const onSelectChange = (e) => {
+    const valuee = e.target.value;
 
-  const handleSearch = (searchQuery) => {};
-
+    let sorted = [];
+    if (value != 1) {
+      console.log("listDisplay_pending", listDisplay_pending);
+      if (valuee === "latest") {
+        sorted = [...listDisplay_pending].sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+        });
+      } else if (valuee === "best-seller") {
+        sorted = [...listDisplay_pending].sort((a, b) => {
+          return b.tcomments - a.tcomments;
+        });
+      }
+      console.log("sorted", sorted);
+      setListDisplay_pending(sorted);
+    } else {
+      if (valuee === "latest") {
+        sorted = [...listDisplay_app].sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+        });
+      } else if (valuee === "best-seller") {
+        sorted = [...listDisplay_app].sort((a, b) => {
+          return b.tcomments - a.tcomments;
+        });
+      }
+      setlistapp(sorted);
+    }
+  };
   return (
     <ConfigProvider
       theme={{
@@ -226,7 +293,8 @@ function Recipes({ search }) {
                   <div className="filter_content">
                     <FilterCategory
                       listname={"Recipe Types"}
-                      listCategory={listCategory}></FilterCategory>
+                      listCategory={listCategory}
+                      onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt bot5px">Recenty Saved</p>
 
@@ -271,7 +339,7 @@ function Recipes({ search }) {
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}></input>
 
-                    <div className="search_i2">
+                    <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
                     </div>
                   </div>
@@ -282,7 +350,11 @@ function Recipes({ search }) {
                 <div className="div2">
                   <div className="flex flexgap">
                     <p className="txt_Sortby"> Sort by:</p>
-                    <select className="sort-by">
+                    <select
+                      className="sort-by"
+                      onChange={(e) => {
+                        onSelectChange(e);
+                      }}>
                       <option value="latest"> Latest </option>
                       <option value="best-seller"> View </option>
                     </select>

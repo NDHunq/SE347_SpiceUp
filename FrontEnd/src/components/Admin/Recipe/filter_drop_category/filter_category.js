@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./filter_category.css";
 import { Radio } from "antd";
 import { RiArrowDropDownLine } from "react-icons/ri";
-function FilterCategory({ listname, listCategory }) {
+function FilterCategory({ listname, listCategory, onTypeSelect }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isRotated, setIsRotated] = useState(true);
   const Name = listname;
@@ -13,6 +13,9 @@ function FilterCategory({ listname, listCategory }) {
   };
   const onChange = (e) => {
     setSelectedCategory(e.target.value);
+  };
+  const handleTypeSelect = (e, name) => {
+    onTypeSelect(name);
   };
 
   return (
@@ -37,7 +40,10 @@ function FilterCategory({ listname, listCategory }) {
                 <Radio
                   key={category.name}
                   value={category.id}
-                  className="category_radi">
+                  className="category_radi"
+                  onChange={(e) => {
+                    handleTypeSelect(e, category.name);
+                  }}>
                   <div htmlFor={category.name} className="category_labe">
                     <p className="category_name">{category.name}</p>
                     <p className="category_number">&nbsp;</p>

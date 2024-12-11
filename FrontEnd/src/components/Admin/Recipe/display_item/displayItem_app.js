@@ -69,11 +69,6 @@ const DisplayItem = ({
           <div className="bot_row txt_name" onClick={handleItemClick}>
             {tname}
           </div>
-
-          <div className="flex">
-            <p className="cancelX" onClick={handleRefuse}></p>
-            <p className="acceptV" onClick={handleAccept}></p>
-          </div>
         </div>
       </div>
     </div>
