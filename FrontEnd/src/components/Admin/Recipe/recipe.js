@@ -10,152 +10,41 @@ import DisplayItem from "./display_item/displayItem";
 import DisplayItemApp from "./display_item/displayItem_app";
 import RecentItem from "./recent_Item/recent_item";
 import { Radio } from "antd";
+import { getAllRecipes, getImage } from "../../../services/userServices";
 
 function Recipes({ search }) {
   //radio
   const [value, setValue] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [listDisplay_app, setlistapp] = useState([
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả2",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả3",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả4",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả5",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả6",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả7",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả8",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Cá đuối hấp xả9",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
+    // {
+    //   id: "67516e44378a160ce4b02c79",
+    //   istrue: true,
+    //   ttime: 140,
+    //   ttag: "Vietnamese Food",
+    //   tby: "Admin",
+    //   tcomments: 65,
+    //   tname: "Cá đuối hấp xả1",
+    //   tlink:
+    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    // },
   ]);
-  const listDisplay_pending = [
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn hàn quốc1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn hàn quốc1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "67516e44378a160ce4b02c79",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn hàn quốc1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    // ... other items
-  ];
+  const [listDisplay_pending, setListDisplay_pending] = useState([
+    // {
+    // id: "67516e44378a160ce4b02c79",
+    // istrue: true,
+    // ttime: 140,
+    // ttag: "Vietnamese Food",
+    // tby: "Admin",
+    // tcomments: 65,
+    // tname: "Trứng cuộn hàn quốc1",
+    // tlink:
+    //   "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
+    //},
+  ]);
   const [total_pages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [result, setResult] = useState(0);
 
   useEffect(() => {
     if (value === 1) {
@@ -172,8 +61,10 @@ function Recipes({ search }) {
 
     if (newValue === 1) {
       setTotalPages(listDisplay_app.length * 10);
+      setResult(listDisplay_app.length);
     } else {
       setTotalPages(listDisplay_pending.length * 10);
+      setResult(listDisplay_pending.length);
     }
   };
 
@@ -193,17 +84,18 @@ function Recipes({ search }) {
 
   const navItems = [{ link: "/admin/recipes", text: "Recipes" }];
   const listCategory = [
-    { name: "Cate1", number: 10, id: 1 },
-    { name: "Cate2", number: 20, id: 2 },
-    { name: "Cate3", number: 30, id: 3 },
-    { name: "Cate4", number: 40, id: 4 },
-    { name: "Cate5", number: 50, id: 5 },
-    { name: "Cate5", number: 50, id: 6 },
-    { name: "Cate5", number: 50, id: 7 },
-    { name: "Cate5", number: 50, id: 8 },
-    { name: "Cate5", number: 50, id: 9 },
-    { name: "Cate5", number: 50, id: 10 },
-    { name: "Cate5", number: 50, id: 11 },
+    { name: "All", number: 10, id: 1 },
+    { name: "Sauce", number: 20, id: 2 },
+    { name: "Dessert", number: 30, id: 3 },
+    { name: "Beverages", number: 40, id: 4 },
+    { name: "Snack", number: 50, id: 5 },
+    { name: "Soup", number: 60, id: 6 },
+    { name: "Baking", number: 70, id: 7 },
+    { name: "Breakfast", number: 80, id: 8 },
+    { name: "Lunch", number: 90, id: 9 },
+    { name: "Dinner", number: 100, id: 10 },
+    { name: "Salad", number: 10, id: 11 },
+    { name: "Vietnamese Food", number: 90, id: 12 },
   ];
 
   useEffect(() => {
@@ -213,6 +105,75 @@ function Recipes({ search }) {
       setSearchInput(searchQuery);
       handleSearch(searchQuery);
     }
+    const fetchRecipes = async () => {
+      try {
+        const recipes = await getAllRecipes();
+        if (Array.isArray(recipes)) {
+          const recipesWithImages = await Promise.all(
+            recipes.map(async (item) => {
+              const url = await getImage(item.coverImageId);
+              return { ...item, coverImageUrl: url };
+            })
+          );
+          console.log("recipesWithImages", recipesWithImages);
+          const approved = recipesWithImages.filter(
+            (item) => item.status === "RS1"
+          );
+          const pending = recipesWithImages.filter(
+            (item) => item.status === "RS2"
+          );
+          setResult(pending.length);
+          const NewApproved = approved.map((item) => {
+            let isTrue = false;
+            if (item.savedUserId.includes("userId")) {
+              isTrue = true;
+            }
+            let time = item.cookingTimeInSecond / 60;
+
+            return {
+              id: item._id,
+              istrue: isTrue,
+              ttime: time,
+              ttag: item.type,
+              tby: item.userId,
+              tcomments: item.views,
+              tname: item.recipeName,
+              tlink: item.coverImageUrl,
+            };
+          });
+          const NewPending = pending.map((item) => {
+            let isTrue = false;
+            if (item.savedUserId.includes("userId")) {
+              isTrue = true;
+            }
+            let time = item.cookingTimeInSecond / 60;
+
+            return {
+              id: item._id,
+              istrue: isTrue,
+              ttime: time,
+              ttag: item.type,
+              tby: item.userId,
+              tcomments: item.views,
+              tname: item.recipeName,
+              tlink: item.coverImageUrl,
+            };
+          });
+
+          setlistapp(NewApproved);
+          setListDisplay_pending(NewPending);
+          localStorage.setItem("approved", JSON.stringify(approved));
+          localStorage.setItem("pending", JSON.stringify(pending));
+        } else {
+          setListDisplay_pending([]);
+          console.error("getAllRecipes() did not return an array");
+        }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
   }, []);
 
   const handleSearch = (searchQuery) => {};
@@ -230,8 +191,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -253,8 +213,7 @@ function Recipes({ search }) {
                     <Radio.Group
                       onChange={onChange}
                       value={value}
-                      className="radio_div"
-                    >
+                      className="radio_div">
                       <Radio className={"pentxt"} value={1}>
                         Pending
                       </Radio>
@@ -267,8 +226,7 @@ function Recipes({ search }) {
                   <div className="filter_content">
                     <FilterCategory
                       listname={"Recipe Types"}
-                      listCategory={listCategory}
-                    ></FilterCategory>
+                      listCategory={listCategory}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt bot5px">Recenty Saved</p>
 
@@ -311,8 +269,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2">
                       <p className="txt_search2">Search</p>
@@ -331,7 +288,8 @@ function Recipes({ search }) {
                     </select>
                   </div>
                   <p className="txt2">
-                    <span className="txt-bold txt2">52</span> Results Found
+                    <span className="txt-bold txt2">{result}</span> Results
+                    Found
                   </p>
                 </div>
                 {value === 1 ? (
@@ -350,8 +308,7 @@ function Recipes({ search }) {
                           }
                           tname={listDisplay_app[(currentPage - 1) * 8].tname}
                           tlink={listDisplay_app[(currentPage - 1) * 8].tlink}
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 1] ? (
                         <DisplayItemApp
@@ -399,8 +356,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 2].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 3] ? (
                         <DisplayItemApp
@@ -448,8 +404,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItemApp
@@ -498,8 +453,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 6].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 7] ? (
                         <DisplayItemApp
@@ -550,8 +504,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 1] ? (
                         <DisplayItem
@@ -611,8 +564,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 2].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 3] ? (
                         <DisplayItem
@@ -672,8 +624,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItem
@@ -733,8 +684,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItem
@@ -794,8 +744,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 6].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 7] ? (
                         <DisplayItem

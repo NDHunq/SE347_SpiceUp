@@ -21,8 +21,7 @@ function FilterCategory({ listname, listCategory }) {
         <p className="txt">{Name}</p>
         <div
           onClick={toggleDropdown}
-          className={`img_frame ${isRotated ? "rotated" : ""}`}
-        >
+          className={`img_frame ${isRotated ? "rotated" : ""}`}>
           <RiArrowDropDownLine className="img"></RiArrowDropDownLine>
         </div>
       </div>
@@ -32,21 +31,16 @@ function FilterCategory({ listname, listCategory }) {
           <Radio.Group
             value={selectedCategory}
             onChange={onChange}
-            className="selectedCategory"
-          >
+            className="selectedCategory">
             {listCategory.map((category) => (
               <div key={category.name} className="category">
                 <Radio
                   key={category.name}
                   value={category.id}
-                  className="category_radi"
-                >
+                  className="category_radi">
                   <div htmlFor={category.name} className="category_labe">
                     <p className="category_name">{category.name}</p>
-                    <p className="category_number">
-                      &nbsp;
-                      {"   (" + category.number + ") "}
-                    </p>
+                    <p className="category_number">&nbsp;</p>
                   </div>
                 </Radio>
               </div>
