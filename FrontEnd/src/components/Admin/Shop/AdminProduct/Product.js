@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Rate, Card, Modal } from "antd";
+import { Rate, Card, Modal ,Skeleton} from "antd";
 import ModalModify from "../Modal/ModalModify";
-
-function Product({ id, urls_img, price, name }) {
-  const [percentSale, setPercentSale] = useState(10);
-  const [star, setStar] = useState(1);
-  const [soldOut, setSoldOut] = useState(false);
+import instance from "../../../../utils/axiosCustomize";
+import { useEffect } from "react";
+import { Color } from "antd/es/color-picker";
+function Product(props) {
+  const [percentSale, serPercentSale]=useState(props.discount);
+  const [star, setStar] = useState(props.average_rating);
+  const [soldCount, setSoldCount] = useState(props.sold);
+  const [soldOut, setSoldOut] = useState(props.stock === 0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hovered,setHovered]=useState(false);
-
+  const [images, setImages] = useState([]);
+  const [currentImage, setCurrentImage] = useState(images[0]);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -16,6 +20,43 @@ function Product({ id, urls_img, price, name }) {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const promises = props.urls_img.map((image) =>
+                    instance.get(`api/v1/image/${image}`, { responseType: 'arraybuffer' })
+                );
+                const responses = await Promise.all(promises); 
+                const tempImages = responses.map((response) => {
+                    const blob = new Blob([response.data], { type: `${response.headers["content-type"]}` });
+                    return URL.createObjectURL(blob);
+                });
+                setImages(tempImages); 
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchImage();
+
+        return () => {
+            images.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [props.urls_img]);
+  
+    useEffect(() => {
+      setCurrentImage(images[0]);
+  }, [images]);
+  const formatNumberWithDots = (number) => {
+    // Convert the number to a string
+    let numberStr = number?.toString();
+
+    // Use a regular expression to add dots every three digits from the end
+    let formattedStr = numberStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return formattedStr;
+}
   return (
     <>
       <Card
@@ -28,38 +69,36 @@ function Product({ id, urls_img, price, name }) {
       >
         <div onClick={showModal}>
           <div style={{ position: "relative" }}>
-            <img
-              alt="product_image"
-              src={urls_img[0]}
-              className="product_image"
-            />
+          { images[0]
+                    ?
+                    <img alt="product_image" src={images[0]} className="product_image"/>
+                    :
+                    <Skeleton.Image active={true} style={{ width: 270, height: 270}}/>}
             {soldOut ? (
               <div className="sold-out-label">Sold Out</div>
             ) : (
-              percentSale > 0 && (
-                <div className="sale-label">Sale {percentSale}%</div>
-              )
+              (percentSale * 100) > 0 && (
+                <div className="sale-label">
+                    Sale {(percentSale*100).toFixed(0)}%
+                </div>
+            )
             )}
           </div>
           <div className="container-product">
             <div className="container-info">
               {hovered ? (
-                <p className="primary-color margin0">{name}</p>
+                <p className="primary-color margin0">{props.name}</p>
               ) : (
-                <p className="margin0">{name}</p>
+                <p className="margin0">{props.name}</p>
               )}
-              {percentSale > 0 ? (
-                <div>
-                  <p>
-                    <b>${(1 - percentSale / 100) * price}</b>{" "}
-                    <span className="strikethrough grey">${price}</span>
-                  </p>
-                </div>
-              ) : (
-                <b>${price}</b>
-              )}
+                {(percentSale * 100)>0?
+                        <div><p><b>đ {formatNumberWithDots((1 - percentSale).toFixed(2) * props.price)}</b> <span class="strikethrough grey">đ {formatNumberWithDots(props.price)}</span></p></div>
+                        :<b >đ {formatNumberWithDots(props.price)}</b>}
               <Rate className="rate" disabled defaultValue={star} />
             </div>
+            <div class="container-right">
+                    <p style={{color:"#00b207"}}>{soldCount} sold{soldCount>1?"s":""}</p>
+                </div>
           </div>
         </div>
       </Card>
@@ -71,7 +110,7 @@ function Product({ id, urls_img, price, name }) {
         onCancel={handleCloseModal}
         footer={null}
     >
-        <ModalModify productId={id} />
+        <ModalModify {...props} onClose={handleCloseModal}   />
     </Modal>
     </>
   );

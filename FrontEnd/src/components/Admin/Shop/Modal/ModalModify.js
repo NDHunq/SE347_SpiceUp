@@ -1,65 +1,200 @@
 import React, { useState } from "react";
 import './upload.css';
-import { Image, Upload, Button, Form, Input, InputNumber, Select, Flex} from 'antd';
+import { Image, Upload, Button, Form, Input, InputNumber, Select, Flex,Popconfirm,message} from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
-
+import instance from "../../../../utils/axiosCustomize";
+import { useEffect } from "react";
 const { TextArea } = Input;
-
-function ModalModify({ productId }) {
+function ModalModify(props) {
   const [form] = Form.useForm();
-  const [product, setProduct] = useState({
-    productName: "Cabbage",
-    price: 12,
-    percentSale: 2,
-    brand: "Minh",
-    remain: 12,
-    description: "Example description",
-    category: "1",
-    unit: "kg",
-  });
-
+  const [product, setProduct] = useState();
   const [isSaving, setIsSaving] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [categories,setCategories]=useState(props.categories);
+  const confirmDeleteProduct  =  (e) => {
+    console.log(e);
+    
+    message.success('Delete successfull');
+    if (props.onClose) {
+      props.onClose();
+    }
+
+  };
+  useEffect(() => {
+    const updatedProduct = {
+      id:props.id,
+      product_name: props.name,
+      price: props.price,
+      discount: props.discount,
+      brand: props.brand,
+      stock: props.stock,
+      description: props.description,
+      category: props.category,
+      value: props.value,
+      product_images:props.urls_img
+    };
+  
+    setProduct(updatedProduct); 
+    setCategories(props.categories || []); 
+  
+    form.setFieldsValue(updatedProduct);
+  }, [props.name, props.price, props.discount, props.brand, props.stock, props.description, props.category, props.value, props.categories,form]);  
+
+  useEffect(() => {
+    if (!product || !product.product_images || product.product_images.length === 0) {
+      return;
+    }
+  
+    const fetchImage = async () => {
+      try {
+        const promises = product.product_images.map((fileId) =>
+          instance.get(`api/v1/image/${fileId}`, { responseType: 'arraybuffer' })
+        );
+        const responses = await Promise.all(promises);
+        const tempFileList = responses.map((response, index) => {
+          const blob = new Blob([response.data], { type: response.headers["content-type"] });
+          const url = URL.createObjectURL(blob);
+          return {
+            uid: product.product_images[index],
+            name: `Image ${index + 1}`,
+            status: 'done',
+            url: url, 
+            originFileObj: blob, 
+          };
+        });
+        setFileList(tempFileList);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+  
+    fetchImage();
+  
+    return () => {
+      fileList.forEach((file) => {
+        if (file.url) {
+          URL.revokeObjectURL(file.url); // Dọn dẹp các URL Object
+        }
+      });
+    };
+  }, [product?.product_images]);
+  useEffect(() => {
+    if (fileList.length > 0) {
+      setPreviewImage(fileList[0].url); // Đặt URL ảnh đầu tiên
+    }
+  }, [fileList]);
+
 
   const handlePreview = async (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file.originFileObj);
-    reader.onload = () => setPreviewImage(reader.result);
+    try {
+      if (file.originFileObj instanceof Blob) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => setPreviewImage(reader.result);
+      } else if (file.url) {
+        setPreviewImage(file.url);
+      } else {
+        console.error("File is not a Blob or does not have a URL.");
+      }
+    } catch (error) {
+      console.error("Error in handlePreview:", error);
+    }
   };
-
+  
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    try {
+      const response = await instance.post('/api/v1/image/upload', formData);
+  
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+  
+      const result = await response.json();
+      console.log('Uploaded fileId:', result.file?.fileId);
+      return result.file?.fileId; 
+    } catch (error) {
+      console.error('Error during upload:', error);
+      return null;
+    }
+  };
   const handleChange = ({ fileList: newFileList }) => {
+    setIsChanged(true); 
+    if(newFileList.length===0)
+    {
+      setIsChanged(false);
+      setPreviewImage(null);
+    }
     setFileList(newFileList);
-  };
 
+  };
+  const handleRemove = (file) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      product_images: prevProduct.product_images.filter(imageId => imageId !== file.uid),
+    }));
+  };
+  
   const onFinish = async (values) => {
     setIsSaving(true);
     try {
-      const updatedProduct = { ...product, ...values };
-      console.log("Updated Product:", updatedProduct);
+      const newFiles = fileList.filter((file) => !product.product_images.includes(file.uid));
 
-      // Make an API call to save the edited data here
-      alert("Changes saved successfully!");
+      const uploadedFileIds = [];
+      for (const file of newFiles) {
+        const fileId = await uploadFile(file.originFileObj); 
+        if (fileId) {
+          uploadedFileIds.push(fileId);
+        }
+      }
+      const updatedProduct = { 
+        ...product, 
+        ...values,
+        product_images: [...product.product_images, ...uploadedFileIds] 
+      };
+  
+      console.log("Updated Product:", updatedProduct);
 
       // Reset state
       setProduct(updatedProduct);
-      setIsChanged(false); // Reset change detection
+      setIsChanged(false); 
+      const formData = {
+        ...updatedProduct,
+        product_images: updatedProduct.product_images, 
+      };
+  
+      console.log(formData);
+      // call api with form data
+      const response = await instance.patch(`/api/v1/product/${product.id}`, formData);
+      if (response.status === 200) {
+        message.success('Changes saved successfully!');
+      } else {
+        message.error('Failed to save changes');
+      }
+
+
     } catch (error) {
       console.error("Error saving changes:", error);
-      alert("Failed to save changes.");
+      message.error("Failed to save changes.");
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleValuesChange = (_, allValues) => {
-    // Compare current form values with the initial product state
+    
     const hasChanges = Object.keys(product).some(
       (key) => product[key] !== allValues[key]
     );
     setIsChanged(hasChanges);
   };
+  const saveChange=()=>{
+    console.log(form);
+  }
 
   return (
     <div>
@@ -70,6 +205,7 @@ function ModalModify({ productId }) {
               listType="picture-card"
               fileList={fileList}
               onPreview={handlePreview}
+              onRemove={handleRemove}
               onChange={handleChange}
               className="vertical-upload"
               maxCount={4}
@@ -103,7 +239,7 @@ function ModalModify({ productId }) {
             autoComplete="off"
           >
             <Form.Item
-              name="productName"
+              name="product_name"
               rules={[{ required: true, message: 'Please input product name!' }]}
             >
               <Input
@@ -126,19 +262,19 @@ function ModalModify({ productId }) {
                 />
               </Form.Item>
 
-              <Form.Item name="percentSale">
+              <Form.Item name="discount">
                 <InputNumber
                   className="input-percent-sale margin-left8"
                   placeholder="Off"
                   addonAfter="%"
                   min={0}
-                  max={99}
+                  max={1}
                 />
               </Form.Item>
 
               <Form.Item
                 label="Remain"
-                name="remain"
+                name="stock"
                 rules={[{ required: true, message: 'Please input remaining stock!' }]}
               >
                 <InputNumber placeholder="Qty" className="input-qty" min={0} />
@@ -168,15 +304,22 @@ function ModalModify({ productId }) {
                 name="category"
                 rules={[{ required: true, message: 'Please select category!' }]}
               >
-                <Select />
+                <Select style={{ width: '200px' }}
+                >
+                  {categories.map((category) => (
+                    <Select.Option key={category.id} value={category.id}>
+                      {category.name}
+                    </Select.Option>
+                    ))}
+                </Select>
               </Form.Item>
 
               <Form.Item
                 label="Unit"
-                name="unit"
+                name="value"
                 rules={[{ required: true, message: 'Please input unit!' }]}
               >
-                <Input placeholder="Enter unit" />
+                <Input placeholder="Enter unit"  />
               </Form.Item>
             </div>
 
@@ -185,21 +328,31 @@ function ModalModify({ productId }) {
               htmlType="submit"
               disabled={!isChanged} 
               loading={isSaving}
+              onClick={saveChange}
             >
               Save Changes
             </Button>
           </Form>
           <Flex wrap gap="small">
-          <Button
-              type="primary"
-              danger
-              style={{marginTop:'8px'}}
-            >
-              Delete
-            </Button>
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            onConfirm={confirmDeleteProduct}
+            okText="Delete"
+            cancelText="Cancel"
+          >
+                      <Button
+                      type="primary"
+                      danger
+                      style={{marginTop:'8px'}}
+                    >
+                      Delete
+                    </Button>
+          </Popconfirm>
           </Flex>
         </div>
       </div>
+
     </div>
   );
 }

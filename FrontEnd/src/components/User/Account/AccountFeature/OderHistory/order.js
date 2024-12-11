@@ -1,79 +1,93 @@
-import React from "react";
-import Header from "../../../widget/top";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import {Button,Table,Space,Typography  } from 'antd';
-import './order.css'
-import { useState } from "react";
+import { Table, Typography } from "antd";
+import {jwtDecode} from "jwt-decode";
+import instance from "../../../../../utils/axiosCustomize";
+import "./order.css";
+
 const { Text } = Typography;
 
 const OrderHistory = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const decodedData = jwtDecode(token);
+  const user_id = decodedData.id;
+
+  const [orders, setOrders] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(9);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const fetchOrders = async (page) => {
+    try {
+      const response = await instance.get("api/v1/order", {
+        params: { user_id, page, limit },
+      });
+      setOrders(response.data.data.orders);
+
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders(page);
+  }, [page]);
+
   const columns = [
     {
-      title: 'ORDER ID',
-      dataIndex: 'id',
+      title: "ORDER ID",
+      dataIndex: "id",
       render: (text) => <a>{text}</a>,
-      width: '15%'
+      width: "15%",
     },
     {
-      title:'DATE',
-      dataIndex:'date',
-      width: '20%',
+      title: "DATE",
+      dataIndex: "date",
+      width: "20%",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'TOTAL',
-      dataIndex: 'total_numProduct',
-      width: '30%',
-      render: ([total,numProduct]) => <a><b>${total} </b>({numProduct} Product{numProduct>1?'s':''})</a>,
-    },
-    {
-      dataIndex: 'id',
-      key: 'action',
-      align:'right',
-      width: '35%',
-      render: (id, record) => (
+      title: "TOTAL",
+      dataIndex: "total_numProduct",
+      width: "30%",
+      render: ([total, numProduct]) => (
         <a>
-          <Text
-            type="success"
-            onClick={() => navigate(`/account/order/${id}`)}
-          >
-            View Details
-          </Text>
+          <b>${total}</b> ({numProduct} Product{numProduct > 1 ? "s" : ""})
         </a>
       ),
     },
+    {
+      dataIndex: "id",
+      key: "action",
+      align: "right",
+      width: "35%",
+      render: (id) => (
+        <Text type="success" onClick={() => navigate(`/account/order/${id}`)}>
+          View Details
+        </Text>
+      ),
+    },
   ];
-  const [orders,setOrders] = useState([
-    {
-      id: 1,
-      date: '4 April, 2021',
-      total_numProduct: [300,3],
-    },
-    {
-      id: 2,
-      date: '4 April, 2021',
-      total_numProduct: [200,4],
-    },
-    {
-      id: 3,
-      date: '4 April, 2021',
-      total_numProduct: [100,1],
-    },
-  ]);
-  
+
   return (
-    <di >
+    <div>
       <Table
         columns={columns}
-        dataSource={orders}
+        dataSource={orders.map((order) => ({ ...order, key: order.id }))}
         className="margint20px"
         size="small"
         bordered
         title={() => <h4>Order History</h4>}
+        pagination={{
+          current: page,
+          pageSize: limit,
+          total: totalPages * limit,
+          onChange: setPage,
+        }}
       />
-
-    </di>
+    </div>
   );
 };
 

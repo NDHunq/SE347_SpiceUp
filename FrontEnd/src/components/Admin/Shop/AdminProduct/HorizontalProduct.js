@@ -2,23 +2,60 @@ import React from "react";
 import { Rate ,Card, Button, Modal, Carousel,Avatar, Divider, List, Skeleton } from 'antd';
 import { useState, useEffect } from "react";
 import ModalModify from "../Modal/ModalModify";
+import instance from "../../../../utils/axiosCustomize";
 
 
+function HorizontalProduct(props){
+    const [percentSale, serPercentSale]=useState(props.discount);
+  const [star, setStar] = useState(props.average_rating);
+  const [soldCount, setSoldCount] = useState(props.sold);
+  const [soldOut, setSoldOut] = useState(props.stock === 0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hovered,setHovered]=useState(false);
+  const [images, setImages] = useState([]);
+  const [currentImage, setCurrentImage] = useState(images[0]);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
-function HorizontalProduct({id, urls_img, price, name}){
-    const [percentSale, setPercentSale] = useState(10);
-    const [star, setStar] = useState(1);
-    const [soldOut, setSoldOut] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [hovered,setHovered]=useState(false);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const promises = props.urls_img.map((image) =>
+                    instance.get(`api/v1/image/${image}`, { responseType: 'arraybuffer' })
+                );
+                const responses = await Promise.all(promises); 
+                const tempImages = responses.map((response) => {
+                    const blob = new Blob([response.data], { type: `${response.headers["content-type"]}` });
+                    return URL.createObjectURL(blob);
+                });
+                setImages(tempImages); 
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchImage();
+
+        return () => {
+            images.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [props.urls_img]);
   
-    const showModal = () => {
-      setIsModalOpen(true);
-    };
-  
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-    };
+    useEffect(() => {
+      setCurrentImage(images[0]);
+  }, [images]);
+  const formatNumberWithDots = (number) => {
+    let numberStr = number?.toString();
+
+    let formattedStr = numberStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return formattedStr;
+}
     return (
         <Card
             hoverable
@@ -29,14 +66,21 @@ function HorizontalProduct({id, urls_img, price, name}){
             onMouseLeave={() => setHovered(false)}
         >
             <div className="card-content" onClick={showModal}>
-                <img alt="product_image" src={urls_img[0]} className="product_image_sale" />
+            {images[0]
+                    ?
+                    <img alt="product_image" src={images[0]} className="product_image_sale"/>
+                    :
+                    <Skeleton.Image active={true} style={{ width: 80, height: 80, marginRight: 20}}/>}
                 <div className="container-sale-product">
-                {hovered ? <p className="primary-color margin0">{name}</p> : <p className="margin0">{name}</p>}
+                {hovered ? (
+                <p className="primary-color margin0">{props.name}</p>
+              ) : (
+                <p className="margin0">{props.name}</p>
+              )}
                 <div>
-                    <p>
-                    <b>${(1 - percentSale / 100) * price} </b>
-                    <span className="strikethrough grey">${price}</span>
-                    </p>
+                    {(percentSale * 100)>0?
+                            <div><p><b>đ {formatNumberWithDots((1 - percentSale).toFixed(2) * props.price)}</b> <span class="strikethrough grey">đ {formatNumberWithDots(props.price)}</span></p></div>
+                            :<b >đ {formatNumberWithDots(props.price)}</b>}
                 </div>    
                 <Rate className="rate" disabled defaultValue={star} />
                 </div>
@@ -48,7 +92,7 @@ function HorizontalProduct({id, urls_img, price, name}){
                 onCancel={handleCloseModal}
                 footer={null}
             >
-                <ModalModify productId={id} />
+                <ModalModify {...props} onClose={handleCloseModal} />
             </Modal>
         </Card>
 

@@ -1,237 +1,278 @@
-import React from "react";
-import { useParams } from "react-router";
-import { useNavigate } from "react-router";
-import { Button, Table, Card, ConfigProvider, Row, Col, Typography, Divider, Modal, Rate, Input, message } from 'antd';
-import { useState, useEffect } from "react";
-import './DetailOrder.css';
-
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
+import {
+  Button,
+  Table,
+  Card,
+  ConfigProvider,
+  Row,
+  Col,
+  Typography,
+  Divider,
+  Modal,
+  Rate,
+  Input,
+  message,
+} from "antd";
+import instance from "../../../../../../utils/axiosCustomize";
+import "./DetailOrder.css";
+import {jwtDecode} from "jwt-decode";
 const { Text } = Typography;
 const { TextArea } = Input;
 
 const DetailOrder = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [ratee, setRatee] = useState(0); 
-  const [contentRate, setContentRate] = useState('');
+  const navigate = useNavigate(); 
+  const token = localStorage.getItem("token");
+  const decodedData = jwtDecode(token);
+  const user_id = decodedData.id;
+  // State variables
+  const [dataSource, setDataSource] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [ratee, setRatee] = useState(0);
+  const [contentRate, setContentRate] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [rateError, setRateError] = useState(false); 
-  const [date, setDate] = useState('April 24,2021');
-  const [num, setNum] = useState(3);
-  const [firstName, setFirstName] = useState('Danniel');
-  const [lastName, setLastName] = useState('Russel');
-  const [email, setEmail] = useState('daine.ressel@gmail.com');
-  const [phone, setPhone] = useState('098765432');
-  const [detailAdress, setDetailAdress] = useState('4140 Parker');
-  const [commune, setCommune] = useState('Rd.');
-  const [district, setDistrict] = useState('Allentown');
-  const [province, setProvince] = useState('New Mexico');
-  const [subTotal, setSubtotal] = useState(0);
-  const [payment, setPaymet] = useState('Paypal');
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '1',
-      product: {
-        id:'1',
-        name: 'cabage',
-        url_img: 'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-        price: 50,
-        qty: 3,
-        rate: [3, "content review"]
-      },
-    },
-    {
-      key: '2',
-      product: {
-        id: '2',
-        name: 'cabage 2',
-        url_img: 'https://i.pinimg.com/236x/26/85/39/268539e5792053cf0d707ffdaef14081.jpg',
-        price: 10,
-        qty: 2,
-        rate: [0,""] // no submit
-      },
-    }
-  ]);
+  const [rateError, setRateError] = useState(false);
+
+  // Additional State for Order Details
+  const [orderDetails, setOrderDetails] = useState({
+    date: "",
+    num: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    detailAddress: "",
+    commune: "",
+    district: "",
+    province: "",
+    payment: "",
+    subTotal: 0,
+  });
 
   useEffect(() => {
-    const total = dataSource.reduce((acc, item) => acc + (item.product.qty * item.product.price), 0);
-    setSubtotal(total);
-  }, [dataSource]);
+    const fetchOrderDetails = async () => {
+      try {
+        const response = await instance.get(`/api/v1/order/${id}`);
+
+        setDataSource(
+          response.data.data.order_items_post.map((item) => ({
+            key: item._id,
+            product: {
+              id: item.product_id._id,
+              name: item.product_id.product_name,
+              price: item.product_id.price,
+              qty: item.quantities,
+              subTotal: item.sub_total,
+              url_img: item.product_id.product_images[0] || "default_image_url", 
+              rate: [0, ""],
+            },
+          }))
+        );
+
+        setOrderDetails({
+          date: response.data.data.date_ordered || "Unknown Date",
+          num: response.data.data.order_items_post.length || 0,
+          firstName: response.data.data.user_id.billingAddress.firstName,
+          lastName: response.data.data.user_id.billingAddress.lastName,
+          detailAddress: response.data.data.user_id.billingAddress.detailAddress,
+          commune: response.data.data.user_id.billingAddress.commune,
+          district: response.data.data.user_id.billingAddress.district,
+          province: response.data.data.user_id.billingAddress.province,
+          payment: response.data.data.payment_method,
+          subTotal: response.data.data.total_cost,
+        });
+        
+
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to load order details.");
+        console.error(err);
+        setLoading(false);
+      }
+    };
+
+    fetchOrderDetails();
+  }, [id]);
 
   const columns = [
     {
-      title: 'PRODUCT',
-      dataIndex: 'product',
-      key: 'product',
-      render: (product) =>
+      title: "PRODUCT",
+      dataIndex: "product",
+      key: "product",
+      render: (product) => (
         <div className="flex jtf-ct-fs align-vertical">
-          <img src={product.url_img} width={60} height={60} className="mgr-8">
-          </img>
-          <p>
-            {product.name}
-          </p>
-        </div>,
-    },
-    {
-      title: 'PRICE',
-      dataIndex: 'product',
-      key: 'product',
-      render: (product) => <p>${product.price}</p>
-    },
-    {
-      title: 'QUANTITY',
-      dataIndex: 'product',
-      key: 'product',
-      render: (product, record) =>
-        <div >
-          <p>x{product.qty}</p>
+          <img
+            src={product.url_img}
+            width={60}
+            height={60}
+            className="mgr-8"
+            alt={product.name}
+          />
+          <p>{product.name}</p>
         </div>
+      ),
     },
     {
-      title: 'SUBTOTAL',
-      dataIndex: 'product',
-      key: 'product',
-      render: (product) => <b>${(product.qty) * (product.price)}</b>
+      title: "PRICE",
+      dataIndex: "product",
+      key: "product",
+      render: (product) => <p>${product.price}</p>,
     },
     {
-      title: '',
-      dataIndex: 'product',
-      align: 'right',
-      render: (product) =>
+      title: "QUANTITY",
+      dataIndex: "product",
+      key: "product",
+      render: (product) => <p>x{product.qty}</p>,
+    },
+    {
+      title: "SUBTOTAL",
+      dataIndex: "product",
+      key: "product",
+      render: (product) => <b>${product.qty * product.price}</b>,
+    },
+    {
+      title: "",
+      dataIndex: "product",
+      align: "right",
+      render: (product) => (
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: '#f9c73d',
-              borderRadius: '20px',
+              colorPrimary: "#f9c73d",
+              borderRadius: "20px",
             },
           }}
         >
-          <Button type="primary" onClick={() => showModal(product)}>
-            Review{Array.isArray(product.rate) && product.rate[0] ? "ed" : ""}
+          <Button
+            type="primary"
+            onClick={() => showModal(product)}
+          >
+            Review
           </Button>
         </ConfigProvider>
+      ),
     },
   ];
-  const showModal = (product) => {
-    setSelectedProduct(product);
-    setRatee(product.rate[0]); 
-    setContentRate(product.rate[1]); 
-    setOpen(true);
-    setRateError(false);
-  };
 
-  const handleOk = () => {
+  const showModal = async (product) => {
+    const product_id = product.id;
+  
+    try {
+      setOpen(true);
+      setLoading(true);
+  
+      const response = await instance.get("/api/v1/review", {
+        params: { user_id, product_id },
+      });
+  
+      if (response?.data?.status === "success" && response?.data?.data) {
+        const reviewData = response.data.data;
+  
+        const updatedProduct = {
+          ...product,
+          rate: [reviewData?.rating || 0, reviewData?.content || ""],
+        };
+  
+        setSelectedProduct(updatedProduct);
+        setRatee(reviewData?.rating || 0);
+        setContentRate(reviewData?.content || "");
+      } else {
+        const updatedProduct = {
+          ...product,
+          rate: [0, ""],
+        };
+  
+        setSelectedProduct(updatedProduct);
+        setRatee(0);
+        setContentRate("");
+        message.error("Failed to fetch review or no review exists.");
+      }
+    } catch (error) {
+      console.error("Error during API request:", error);
+      message.error("Could not fetch product review data.");
+      setSelectedProduct(product);
+      setRatee(0);
+      setContentRate("");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleOk = async () => {
     if (!ratee) {
-      setRateError(true);
+      message.error("Please provide a rating.");
       return;
     }
-    setLoading(true);
-
-    setSelectedProduct({
-      ...selectedProduct,
-      rate: [ratee, contentRate],
-    });
-
-    setLoading(false);
-    setOpen(false);
-    message.success("Review Submitted")
+    const payload = {
+      user_id,
+      product_id: selectedProduct.id,
+      content: contentRate,
+      rating: ratee,
+    };
+  
+    try {
+      const response = await instance.post('/api/v1/review', payload);
+  
+      if (response?.data?.status === "success") {
+        const updatedDataSource = dataSource.map((item) =>
+          item.product.id === selectedProduct.id
+            ? { ...item, product: { ...item.product, rate: [ratee, contentRate] } }
+            : item
+        );
+  
+        setDataSource(updatedDataSource);
+        setOpen(false);
+        message.success("Review submitted successfully!");
+      } else {
+        message.error("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      message.error("Failed to submit the review. Please try again.");
+    }
   };
-
+  
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (selectedProduct) {
-      const updatedDataSource = dataSource.map(item => {
-        if (item.product.id === selectedProduct.id) {
-          // update rate in database
-          return {
-            ...item,
-            product: {
-              ...item.product,
-              rate: selectedProduct.rate, 
-            },
-          };
-        }
-        return item; 
-      });
-      
-      setDataSource(updatedDataSource);
-      console.log(dataSource)
-    }
-  }, [selectedProduct]);
-
-  const orderTitle = <span className="orderTitle">Order Details <span>-</span> <span className="normal">{date}</span> <span>-</span> <span className="normal">{num} Product{num > 1 ? 's' : ''}</span></span>;
-  const billingTitle = <span className="normal gray">BILIING ADRESS</span>;
-  const priceTitle = <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: '8px', textAlign: 'center' }}>
-    <div>
-      <div className="normal gray">Order ID</div>
-      <p className="normal">{id}</p>
-    </div>
-    <Divider type="vertical" height={'100%'} />
-
-    <div>
-      <div className="normal gray">Payment Method</div>
-      <p className="normal">{payment}</p>
-    </div>
-  </div>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <Card title={orderTitle}
-        width={'100%'}
+      <Card
+        title={`Order Details - ${orderDetails.date} - ${orderDetails.num} Product${
+          orderDetails.num > 1 ? "s" : ""
+        }`}
         className="margint20px"
         extra={
-          <a>
-            <Text
-              type="success"
-              onClick={() => { window.history.back(); }}
-            >
-              Back to List
-            </Text>
-          </a>}>
+          <a onClick={() => navigate(-1)}>
+            <Text type="success">Back to List</Text>
+          </a>
+        }
+      >
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-            <Card
-              type="inner"
-              title={billingTitle}
-            >
-              <p className="margin4">{firstName} {lastName}</p>
-              <p className="gray">{detailAdress} {commune} {district}, {province}</p>
-              <br />
-              <p className="gray margin4">EMAIL</p>
-              <p className="margin4">{email}</p>
-              <p className="gray margin4">PHONE</p>
-              <p className="margin4">{phone}</p>
+          <Col xs={24} sm={24} md={16}>
+            <Card type="inner" title="Billing Address">
+              <p>{orderDetails.firstName} {orderDetails.lastName}</p>
+              <p>{orderDetails.detailAddress}, {orderDetails.commune}, {orderDetails.district}, {orderDetails.province}</p>
+              <p>Email: {orderDetails.email}</p>
+              <p>Phone: {orderDetails.phone}</p>
             </Card>
           </Col>
-
-          <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-            <Card
-              type="inner"
-              title={priceTitle}
-            >
-              <div className="container-info">
-                <p>Subtotal</p>
-                <b className="align-right">${subTotal}</b>
-              </div>
-              <hr />
-              <div className="container-info">
-                <p>Shipping</p>
-                <b>Free</b>
-              </div>
-              <hr />
-              <div className="container-info">
-                <p>Total</p>
-                <b className="total">${subTotal}</b>
-              </div>
+          <Col xs={24} sm={24} md={8}>
+            <Card type="inner" title="Order Summary">
+              <p>Payment Method: {orderDetails.payment}</p>
+              <p>Total: ${orderDetails.subTotal}</p>
             </Card>
           </Col>
         </Row>
-        <Table className="margint20px" columns={columns} dataSource={dataSource} />;
+        <Table columns={columns} dataSource={dataSource} />
       </Card>
       <Modal
         open={open}

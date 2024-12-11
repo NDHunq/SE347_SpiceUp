@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import './upload.css'
-import {Image, Upload,Button,Form,Input,InputNumber,Select
+import {Image, Upload,Button,Form,Input,InputNumber,Select,message
 } from 'antd'
+import { useEffect } from "react";
+
 import { PlusOutlined } from "@ant-design/icons";
-
+import instance from "../../../../utils/axiosCustomize"
 const { TextArea } = Input;
-
 
 function ModalUpload  (){
   const [form] = Form.useForm();
@@ -14,10 +15,8 @@ function ModalUpload  (){
   const [isUploading, setIsUploading] = useState(false); 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [fileList, setFileList] = useState([
-   
-  ]);
-
+  const [fileList, setFileList] = useState([]);
+  const [categories,setCatgories]=useState([]);
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -25,29 +24,63 @@ function ModalUpload  (){
     console.log('Failed:', errorInfo);
   };
   
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
   
-  // const handlePreview = async (file) => {
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj);
-  //   }
-  //   setPreviewImage(file.url || file.preview);
-  //   setPreviewOpen(true);
-  // };
-
-  // const handleChange = ({ fileList: newFileList, file }) => {
-  //   console.log('Upload status:', file.status); // Kiểm tra trạng thái (e.g., 'uploading', 'done', 'error')
-  //   if (file.status === 'error') {
-  //     console.error('Upload failed:', file.response); // Log lỗi nếu upload thất bại
-  //   }
-  //   setFileList(newFileList);
-  // };
+    try {
+      const response = await instance.post('/api/v1/image/upload', formData);
+  
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+  
+      const result = await response.json();
+      console.log('Uploaded fileId:', result.file?.fileId);
+      return result.file?.fileId; 
+    } catch (error) {
+      console.error('Error during upload:', error);
+      return null;
+    }
+  };
+  
+  const uploadFiles = async () => {
+    const uploadedFileIds = [];
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i].originFileObj; 
+      const fileId = await uploadFile(file);
+      if (fileId) {
+        uploadedFileIds.push(fileId);
+      }
+    }
+    console.log('Uploaded fileIds:', uploadedFileIds);
+  
+    if (uploadedFileIds.length === fileList.length && fileList.length>0) {
+      form.setFieldsValue({
+        'product_images': uploadedFileIds, 
+      });
+      alert('All images product uploaded successfully');
+    } else {
+      alert('Some images might have failed to upload');
+    }
+  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await instance.get('/api/v1/category');
+        if (response.status === 200) {
+          setCatgories(response.data.data); 
+          console.log(categories)
+        } else {
+          console.error("Failed to fetch categories");
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+  
   const onChange = (e) => {
     console.log('Change:', e.target.value);
   };  
@@ -63,30 +96,26 @@ function ModalUpload  (){
 
   const handleSubmit = async () => {
     setIsUploading(true); 
-    const formData = new FormData();
-    fileList.forEach(file => {
-      formData.append("images", file.originFileObj); 
-    });
-
     try {
-      const response = await fetch("https://your-api-url.com/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("Upload successful!");
-        setFileList([]);
+      const formData = form.getFieldsValue();
+      const uploadedFileIds = await uploadFiles();
+      formData.product_images = uploadedFileIds; 
+      console.log(formData)
+      const response = await instance.post('/api/v1/product', formData);
+  
+      if (response?.status === 200) {
+        message.success('Form submitted successfully');
+        form.resetFields(); 
+        setFileList([]); 
       } else {
-        alert("Upload failed.");
+        message.warning('Failed to submit the form');
       }
     } catch (error) {
-      console.error("Error uploading:", error);
-      alert("An error occurred.");
-    } finally {
-      setIsUploading(false);
+      console.error('Error submitting form:', error);
+      alert('An error occurred while submitting');
     }
   };
+  
 
   const uploadButton = (
     <button
@@ -100,6 +129,29 @@ function ModalUpload  (){
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const handleFormChange = () => {
+    const formValues = form.getFieldsValue(); 
+    console.log("Form values:", formValues); 
+  
+    const requiredFields = ['product_name', 'price', 'stock', 'brand', 'category', 'value'];
+  
+    const allRequiredFieldsFilled = requiredFields.every(
+      (field) => formValues[field] !== undefined && formValues[field] !== null && formValues[field] !== ''
+    );
+  
+    const hasNoErrors = form
+      .getFieldsError()
+      .every(({ errors }) => errors.length === 0);
+  
+    setIsFormValid(allRequiredFieldsFilled && hasNoErrors);
+    console.log("Is form valid:", allRequiredFieldsFilled && hasNoErrors);
+  };
+  
+  
+  
   return (
     <div >
       <div className="modal-content">
@@ -130,9 +182,11 @@ function ModalUpload  (){
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
                   autoComplete="off"
+                  onValuesChange={handleFormChange} 
+                  form={form}
                 >
                    <Form.Item
-                    name="productName"
+                    name="product_name"
                     rules={[
                       {
                         required: true,
@@ -166,7 +220,7 @@ function ModalUpload  (){
                   </Form.Item>
                   <Form.Item
                     className="input-percent-sale margin-left8"
-                    name="percentSale"
+                    name="discount"
                     rules={[
                       {
                         required: false,
@@ -185,7 +239,7 @@ function ModalUpload  (){
                     
                     <Form.Item
                     label="Remain:"
-                    name="qty"
+                    name="stock"
                     rules={[
                       {
                         required: true,
@@ -239,7 +293,13 @@ function ModalUpload  (){
                         },
                       ]}
                     >
-                      <Select  />
+                      <Select style={{ width: '200px' }}>
+                      {categories.map((category) => (
+                        <Select.Option key={category._id} value={category._id}>
+                          {category.category_name}
+                        </Select.Option>
+                      ))}
+                      </Select>
                     </Form.Item>
                     <Form.Item
                       label="Unit"
@@ -259,7 +319,7 @@ function ModalUpload  (){
                           type="primary"
                           onClick={handleSubmit}
                           loading={isUploading}
-                          disabled={fileList.length === 0}
+                          disabled={!isFormValid || fileList.length === 0} 
                         >
                           Upload Product
                         </Button>
@@ -270,25 +330,4 @@ function ModalUpload  (){
   );
 };
 export default ModalUpload;
-    {/* <div class="info-1">
-                        <div class="product-info">
-                            <h2 class="product-name">Product Name</h2>
-                        </div>
-                        <div class="price-line">
-                           
-                        </div>
-                        <div class="brand-line">
-
-                        </div>
-                        <p class="grey discription">discription</p>
-                    </div> */}
-                    {/* <div class="info-2">
-                        <hr/>
-                        <div className="container-atc">
-
-                        </div>
-                        
-                        <hr/>
-                        <p class="cate"><b>Category: </b>category</p>
-  
-                    </div> */}
+// const {product_name, category, price, stock, value, discount, brand, description, product_images} = req.body;
