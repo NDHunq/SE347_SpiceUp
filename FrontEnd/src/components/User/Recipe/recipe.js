@@ -110,11 +110,13 @@ function Recipes({ search }) {
             })
           );
           console.log("recipesWithImages", recipesWithImages);
-          setResult(recipesWithImages.length);
-          setListDisplay_pending(recipesWithImages);
-          localStorage.setItem("allRecipes", JSON.stringify(recipesWithImages));
-          console.log("listDisplay_pending", listDisplay_pending);
-          console.log("allRecipes", localStorage.getItem("allRecipes"));
+          const filtered = recipesWithImages.filter(
+            (item) => item.status === "RS2"
+          );
+          console.log("filtered", filtered);
+          setResult(filtered.length);
+          setListDisplay_pending(filtered);
+          localStorage.setItem("allRecipes", JSON.stringify(filtered));
         } else {
           setListDisplay_pending([]);
           console.error("getAllRecipes() did not return an array");
