@@ -13,6 +13,9 @@ function Product(props) {
   const [hovered,setHovered]=useState(false);
   const [images, setImages] = useState([]);
   const [currentImage, setCurrentImage] = useState(images[0]);
+  useEffect(() => {
+    serPercentSale(props.discount);
+}, [props.discount]);
   const showModal = () => {
     setIsModalOpen(true);
   };

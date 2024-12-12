@@ -4,11 +4,11 @@ import {Image, Upload,Button,Form,Input,InputNumber,Select,message
 } from 'antd'
 import { useEffect } from "react";
 
-import { PlusOutlined } from "@ant-design/icons";
+import { ConsoleSqlOutlined, PlusOutlined } from "@ant-design/icons";
 import instance from "../../../../utils/axiosCustomize"
 const { TextArea } = Input;
 
-function ModalUpload  (){
+function ModalUpload  (props){
   const [form] = Form.useForm();
   const variant = Form.useWatch('variant', form);
 
@@ -29,13 +29,19 @@ function ModalUpload  (){
     formData.append('file', file);
   
     try {
-      const response = await instance.post('/api/v1/image/upload', formData);
+      const response = await instance.post('/api/v1/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
+      });
   
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (response.status !== 200) {
+        throw new Error(`Upload failed with status ${response.status}`);
       }
   
-      const result = await response.json();
+  
+      const result = await response.data;
+      console.log(result);
       console.log('Uploaded fileId:', result.file?.fileId);
       return result.file?.fileId; 
     } catch (error) {
@@ -45,25 +51,26 @@ function ModalUpload  (){
   };
   
   const uploadFiles = async () => {
-    const uploadedFileIds = [];
-    for (let i = 0; i < fileList.length; i++) {
-      const file = fileList[i].originFileObj; 
-      const fileId = await uploadFile(file);
-      if (fileId) {
-        uploadedFileIds.push(fileId);
-      }
-    }
-    console.log('Uploaded fileIds:', uploadedFileIds);
+    const uploadedFileIds = await Promise.all(fileList.map(async (fileItem) => {
+      const file = fileItem.originFileObj; 
+      return await uploadFile(file);
+    }));
   
-    if (uploadedFileIds.length === fileList.length && fileList.length>0) {
+    const successfulUploads = uploadedFileIds.filter(fileId => fileId !== null);
+    console.log('File list fileIds:', fileList.length);
+    console.log('Uploaded fileIds:', successfulUploads.length);
+
+    if (successfulUploads.length === fileList.length && fileList.length > 0) {
       form.setFieldsValue({
-        'product_images': uploadedFileIds, 
+        'product_images': successfulUploads, 
       });
-      alert('All images product uploaded successfully');
+      message.success('All product images uploaded successfully');
     } else {
-      alert('Some images might have failed to upload');
+      message.error('Some images might have failed to upload');
     }
+    return successfulUploads; 
   };
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -87,6 +94,9 @@ function ModalUpload  (){
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+  useEffect(() => {
+    console.log(fileList); 
+  }, [fileList]);
 
   const handlePreview = async (file) => {
     const reader = new FileReader();
@@ -103,16 +113,17 @@ function ModalUpload  (){
       console.log(formData)
       const response = await instance.post('/api/v1/product', formData);
   
-      if (response?.status === 200) {
-        message.success('Form submitted successfully');
-        form.resetFields(); 
-        setFileList([]); 
-      } else {
-        message.warning('Failed to submit the form');
+      message.success('Create product successfully');
+      setIsUploading(false); 
+      form.resetFields(); 
+      setFileList([]); 
+
+      if (props.onClose) {
+        props.onClose();
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('An error occurred while submitting');
+      message.error('An error occurred while submitting');
     }
   };
   
@@ -233,7 +244,7 @@ function ModalUpload  (){
                     addonAfter="%"
                     type='number'
                     min={0} 
-                    max={99} />
+                    max={1} />
                   </Form.Item>
                     </div>
                     
@@ -272,7 +283,7 @@ function ModalUpload  (){
                   </Form.Item>
                   
                   <Form.Item
-                    name="discription"
+                    name="description"
                   >
                   <Input.TextArea  className="discription"
                   showCount 

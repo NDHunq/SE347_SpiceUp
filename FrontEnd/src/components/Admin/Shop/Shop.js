@@ -104,7 +104,7 @@ function ShopAdmin(){
   const onChangeRangePrice = (newRange) => {
     setRange(newRange);
   };
-
+  const [changedProduct,setChangedProduct]=useState(false);
   useEffect(() => {
     console.log(productsFilter);
     const fetchData = async () => {
@@ -122,8 +122,10 @@ function ShopAdmin(){
     }
 
     fetchData();
-  }, [productsFilter]);
-
+    if(changedProduct)
+      setChangedProduct(false);
+  }, [productsFilter,changedProduct]);
+  
   const onClickSort = (condition) =>{
     if(condition===sort)
       return;
@@ -341,6 +343,9 @@ function ShopAdmin(){
                           stock={product.stock}
                           brand={product.brand}
                           categories={listCategory}
+                          refresh={() => {
+                            setChangedProduct(true);
+                          }}
                         />
                       </div>
                     ))}
@@ -399,6 +404,9 @@ function ShopAdmin(){
                       sold={product.sold}
                       brand={product.brand}
                       categories={listCategory}
+                      refresh={() => {
+                        setChangedProduct(true);
+                      }}
                   />
                 </div>
               ))
@@ -424,9 +432,13 @@ function ShopAdmin(){
                 setIsModalOpen(false);
             }}
             width={1200}
-            bodyStyle={{ height: '500px' }}  
+            styles={{ height: '500px' }}  
             footer={null}>
-              <ModalUpload />
+              <ModalUpload onClose={() => {
+                setIsModalOpen(false);
+                setChangedProduct(true);
+              }}
+            />
     </Modal>
     </ConfigProvider>
   );

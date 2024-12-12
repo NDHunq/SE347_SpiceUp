@@ -13,13 +13,22 @@ function ModalModify(props) {
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
   const [categories,setCategories]=useState(props.categories);
-  const confirmDeleteProduct  =  (e) => {
-    console.log(e);
-    
-    message.success('Delete successfull');
-    if (props.onClose) {
-      props.onClose();
+  const confirmDeleteProduct  =  async (e) => {
+    try {
+      const response = await instance.delete(`api/v1/product/${props.id}`);
+      if (response.status === 200 || response.status === 204) {
+        message.success('Delete successful');
+        if (props.refresh) {
+          props.refresh();
+        }
+      } else {
+        message.error('Delete failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      message.error('An error occurred');
     }
+  
 
   };
   useEffect(() => {
@@ -108,13 +117,19 @@ function ModalModify(props) {
     formData.append('file', file);
   
     try {
-      const response = await instance.post('/api/v1/image/upload', formData);
+      const response = await instance.post('/api/v1/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
+      });
   
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (response.status !== 200) {
+        throw new Error(`Upload failed with status ${response.status}`);
       }
   
-      const result = await response.json();
+  
+      const result = await response.data;
+      console.log(result);
       console.log('Uploaded fileId:', result.file?.fileId);
       return result.file?.fileId; 
     } catch (error) {
@@ -172,6 +187,9 @@ function ModalModify(props) {
       const response = await instance.patch(`/api/v1/product/${product.id}`, formData);
       if (response.status === 200) {
         message.success('Changes saved successfully!');
+        if(props.refresh){
+          props.refresh();
+        }
       } else {
         message.error('Failed to save changes');
       }
@@ -258,7 +276,7 @@ function ModalModify(props) {
                   className="input-price"
                   placeholder="Price"
                   addonAfter="đ"
-                  min={0}
+                  min={1}
                 />
               </Form.Item>
 
