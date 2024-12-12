@@ -9,4 +9,11 @@ const editRecipe = (recipeId, body) => {
     },
   });
 };
-export { editRecipe };
+const deleteRecipe = (recipeId) => {
+  return axios.delete("api/v1/recipe/delete/" + recipeId, {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+export { editRecipe, deleteRecipe };

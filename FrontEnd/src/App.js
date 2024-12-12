@@ -17,7 +17,7 @@ function App() {
     >
       <div className="app-container">
         <div className="header-container">
-          <Header2 />
+          <Header />
         </div>
         <div className="main-container">
           <Outlet />

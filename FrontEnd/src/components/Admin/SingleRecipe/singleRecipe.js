@@ -32,12 +32,10 @@ import {
   getComment,
   getUserInfo,
   postComment,
-  saveReicpe,
-  getAllRecipe,
   getImage,
 } from "../../../services/userServices";
 
-import { editRecipe } from "../../../services/adminServices";
+import { editRecipe, deleteRecipe } from "../../../services/adminServices";
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -88,7 +86,7 @@ function SingleRecipe() {
   const [discovers, setDiscovers] = useState([]);
   const [comments, setComments] = useState([]);
   const userId = "66f6cd4a06a448abe23763e0";
-  const [authorrole, setAuthorrole] = useState("user");
+  const [authorrole, setAuthorrole] = useState("");
 
   const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
 
@@ -121,7 +119,31 @@ function SingleRecipe() {
   }, [isApp, Apptxt]);
   const handleRefuse = () => {
     if (window.confirm("Are you sure you want to refuse this recipe?")) {
+      deleteRecipe(id);
+
       navigate("/admin/recipes");
+    }
+  };
+  const handlePost = async () => {
+    const comment = {
+      recipeId: id, // Replace with a valid recipe ID from your database
+      email: "example@gmail.com",
+      content: value, // Comment content
+      image: "675058267c54afebec3c5c00",
+      date: new Date().toLocaleDateString(), // Current date
+    };
+
+    try {
+      // Assuming you have a function to post the comment
+      await postComment(comment);
+      comment.image = await getImage(comment.image);
+      setComments([...comments, comment]);
+      setcmt(cmt + 1);
+
+      setValue(""); // Clear the text area after posting the comment
+      // Display a success toast message
+    } catch (error) {
+      console.error("Error posting the comment:", error);
     }
   };
 
@@ -317,7 +339,7 @@ function SingleRecipe() {
                               maxRows: 5,
                             }}
                           />
-                          <div className="button margin0">
+                          <div className="button margin0" onClick={handlePost}>
                             <p className="save post">Post Comments</p>
                           </div>
                         </div>
