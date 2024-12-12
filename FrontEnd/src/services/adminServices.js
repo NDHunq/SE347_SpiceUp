@@ -9,4 +9,8 @@ const editRecipe = (recipeId, body) => {
     },
   });
 };
-export { editRecipe };
+const getAnalysis = async (year) => {
+  const response = await axios.get(`api/v1/admin/analysis?year=${year}`);
+  return response ? response.data : null;
+};
+export { editRecipe, getAnalysis };
