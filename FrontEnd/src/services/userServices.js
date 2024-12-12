@@ -1,6 +1,7 @@
 import axios from "../utils/axiosCustomize";
 const token =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM4NDEzODgsImV4cCI6MTczMzg1OTM4OH0.d452oZ2peEQ4TJR4f74s9lOUZ7vwaN_uhZiVazYxYB8";
+
 const getARecipe = (id) => {
   return axios.get("api/v1/recipe/get/" + id, {
     headers: {
@@ -188,7 +189,18 @@ const getAllRecipes = async () => {
   });
   return response ? response.data : null;
 };
-
+const updateStatus = async (recipeId, status) => {
+  const response = await axios.put(
+    `api/v1/recipe/status/update/${recipeId}?status=${status}`,
+    {},
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return response ? response.data : null;
+};
 export {
   getARecipe,
   getUserInfo,
@@ -210,4 +222,5 @@ export {
   createRecipe,
   upload1Image,
   getAllRecipes,
+  updateStatus,
 };

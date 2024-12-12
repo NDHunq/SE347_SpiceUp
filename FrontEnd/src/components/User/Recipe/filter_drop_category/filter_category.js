@@ -46,10 +46,7 @@ function FilterCategory({ listname, listCategory, onTypeSelect }) {
                   }}>
                   <div htmlFor={category.name} className="category_labe">
                     <p className="category_name">{category.name}</p>
-                    <p className="category_number">
-                      &nbsp;
-                      {"   (" + category.number + ") "}
-                    </p>
+                    <p className="category_number">&nbsp;</p>
                   </div>
                 </Radio>
               </div>

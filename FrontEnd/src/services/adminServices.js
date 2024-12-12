@@ -9,6 +9,7 @@ const editRecipe = (recipeId, body) => {
     },
   });
 };
+<<<<<<< HEAD
 const deleteRecipe = (recipeId) => {
   return axios.delete("api/v1/recipe/delete/" + recipeId, {
     headers: {
@@ -17,3 +18,10 @@ const deleteRecipe = (recipeId) => {
   });
 };
 export { editRecipe, deleteRecipe };
+=======
+const getAnalysis = async (year) => {
+  const response = await axios.get(`api/v1/admin/analysis?year=${year}`);
+  return response ? response.data : null;
+};
+export { editRecipe, getAnalysis };
+>>>>>>> d5471e522f79405861062f78fcfcb0d95916f824
