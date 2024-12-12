@@ -27,10 +27,12 @@ const Home = (props) => {
   const [listProduct, setListProduct] = React.useState([]);
   const [year, setYear] = React.useState(2024);
   const onYearChange = (e) => {
+    if (e == null) return;
     setYear(e.year());
   };
   useEffect(() => {
     const fetchData = async () => {
+      if (year == null) return;
       const data = await getAnalysis(year);
       const recipes = data.map((item) => ({
         x: item.month,
@@ -46,8 +48,9 @@ const Home = (props) => {
       console.log("recipes", listRecipe);
       console.log("products", listProduct);
     };
-
-    fetchData();
+    if (year != null) {
+      fetchData();
+    }
   }, [year]);
 
   // Định dạng ngày theo định dạng "DD-MM-YYYY"
