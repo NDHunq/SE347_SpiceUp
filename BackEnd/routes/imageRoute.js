@@ -6,6 +6,6 @@ const authenticate = require("../middlewares/auth/auth");
 const router = express.Router();
 
 router.post('/upload', authenticate, upload, uploadFileToGridFS, uploadFile);
-router.get('/:fileId',  authenticate, getImage);
+router.get('/:fileId', authenticate, getImage);
 
 module.exports = router;

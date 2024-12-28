@@ -24,7 +24,7 @@ router.use('/step/create', authenticate, recipeController.createStep)
 router.use('/user/:user_id', authenticate, recipeController.getRecipe)
 
 router.use('/get/:recipe_id', authenticate, recipeController.getRecipe)
-router.use('/get',  recipeController.getRecipe)
+router.use('/get', authenticate, recipeController.getRecipe)
 
 router.use('/view/increase/:recipe_id', authenticate, recipeController.increaseView)
 router.use('/view/:recipe_id', authenticate, recipeController.getView)

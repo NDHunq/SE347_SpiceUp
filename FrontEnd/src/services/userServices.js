@@ -32,5 +32,30 @@ const getLastestRecipe = async (page, limit) => {
     }
 };
 
+const changePassword = async (userId,oldPassword, newPassword) => {
+    try {
+        const response = await axios.post(`/api/v1/user/change_password/${userId}`, {
+            method: "POST",
+            body: {
+                "oldPassword": oldPassword,
+                "newPassword": newPassword
+            }
+        })
+        return response
+    } catch (e) {
+        return e
+    }
+}
 
-export { getTopProducts,getLastestRecipe };
+const sendResetMail = async (email) => {
+    try {
+        const response = await axios.post(`/api/v1/user/reset_password/send?user_email=${email}`)
+        return response
+    } catch (e) {
+        return e
+    }
+}
+
+
+
+export { getTopProducts,getLastestRecipe, changePassword, sendResetMail };

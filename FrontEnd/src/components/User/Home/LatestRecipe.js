@@ -46,8 +46,8 @@ const LatestRecipe = (props) => {
     <div className="LR-container">
       <main className="main">
         <div className="container">
-          <div className="sub-title">RECIPE</div>
-          <div className="title">Latest Recipe</div>
+          <div className="sub-title">{!props.isAdmin?"RECIPE":null}</div>
+          <div className="title">{!props.isAdmin?"Latest recipes":null}</div>
           <div className="row">
             {lastestRecipes.map((item, index) => (
               <div key={index} className="col product">
