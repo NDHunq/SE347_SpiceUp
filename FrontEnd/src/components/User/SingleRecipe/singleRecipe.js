@@ -22,6 +22,7 @@ import {
   saveReicpe,
   getAllRecipe,
   getImage,
+  getUser,
 } from "../../../services/userServices";
 
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
@@ -141,7 +142,9 @@ function SingleRecipe() {
         } else {
           setIsBookmarked(false);
         }
-        const rawuser = await getUserInfo(recipe.userId);
+        const rawuser = await getUserInfo({
+          user_id: recipe.userId,
+        });
         const user = rawuser.data.userInfo;
 
         setUserName(user.firstname + " " + user.lastname);
@@ -239,7 +242,8 @@ function SingleRecipe() {
             colorPrimaryActive: "#00B207",
             colorPrimaryHover: "#00B207",
           },
-        }}>
+        }}
+      >
         <div className="recipes">
           <Header navItems={navItems} />
 
@@ -255,7 +259,8 @@ function SingleRecipe() {
                           backgroundImage: `url(${coverImage})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                        }}></div>
+                        }}
+                      ></div>
                       <div className="tag_chain">
                         <SlTag className="icon_chain"></SlTag>
                         <div className="txt_chain">{tags}</div>
@@ -275,7 +280,8 @@ function SingleRecipe() {
                             className="avatar_single"
                             style={{
                               backgroundImage: `url(${userAvatar})`,
-                            }}></div>
+                            }}
+                          ></div>
                           <div>
                             {" "}
                             <div className="name_single">{userName}</div>
@@ -296,7 +302,8 @@ function SingleRecipe() {
                               e.stopPropagation();
                               toggleBookmark();
                             }}
-                            className="bookmarksingle">
+                            className="bookmarksingle"
+                          >
                             {isBookmarked ? (
                               <FaBookmark
                                 onClick={handelSave}
@@ -360,7 +367,8 @@ function SingleRecipe() {
                                 className="cmt_icon"
                                 style={{
                                   backgroundImage: `url(${comment.image})`,
-                                }}></div>
+                                }}
+                              ></div>
                               <div>
                                 <div className="flex">
                                   {" "}
@@ -412,7 +420,8 @@ function SingleRecipe() {
                           className="flex clickable"
                           onClick={() =>
                             openLink(ingredient.link, ingredient.igredient)
-                          }>
+                          }
+                        >
                           <div className="ingredient-name">
                             {ingredient.name}
                           </div>

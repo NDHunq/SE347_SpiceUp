@@ -27,6 +27,26 @@ class UserController {
       console.log("Some errors happen", e);
     }
   }
+  async getInfo2(req, res) {
+    await connectToDb();
+    const { user_id } = req.body;
+
+    const userInfo = user_id
+      ? await User.findOne({ _id: user_id }, { password: 0 })
+      : await User.find();
+
+    try {
+      if (userInfo) {
+        res.status(200).json({
+          userInfo: userInfo,
+        });
+      } else {
+        res.status(404).send("email not found");
+      }
+    } catch (e) {
+      console.log("Some errors happen", e);
+    }
+  }
 
   async updateInfo(req, res) {
     try {

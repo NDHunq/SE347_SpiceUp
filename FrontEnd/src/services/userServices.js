@@ -1,7 +1,7 @@
 import axios from "../utils/axiosCustomize";
 
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzU1NjgxNTEsImV4cCI6MTczNTU4NjE1MX0.hac7ZQeyuQ_Dr6hdWvRYrNsj6jAxAoq-Uw-U2cCB66M";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzU1NzQ0NTYsImV4cCI6MTczNTU5MjQ1Nn0.tNw_itpmsHzY0IQsAKck-msNDVrQgikgBLrO0mqQfPc";
 
 const getARecipe = (id) => {
   return axios.get("api/v1/recipe/get/" + id, {
@@ -11,7 +11,7 @@ const getARecipe = (id) => {
   });
 };
 const getUserInfo = (id) => {
-  return axios.get("api/v1/user/info/" + id, {
+  return axios.post("api/v1/user/info2", id, {
     headers: {
       Authorization: token,
     },
@@ -38,8 +38,10 @@ const getComment = (id) => {
     },
   });
 };
+const mongoose = require("mongoose");
+
 const getUser = (id) => {
-  return axios.get("api/v1/user/info/" + id, {
+  return axios.get("api/v1/user/info/66f6cd4a06a448abe23763e0", {
     headers: {
       Authorization: token,
     },
