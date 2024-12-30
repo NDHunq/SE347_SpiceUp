@@ -26,6 +26,10 @@ router.use(
 router.use("/reset_password/send", userController.sendResetLink);
 router.use("/reset_password/:token", userController.resetPassword);
 
+router.use("/change_password/:user_id", userController.changePassword);
+
+router.use("/reset_password/post", userController.resetPassword);
+
 router.post(
   "/billingAddress/:user_id",
   authenticate,

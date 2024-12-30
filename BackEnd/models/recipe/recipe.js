@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 //console.log(orderId)
+
 mongoose.set("debug", true);
 
 const RecipeStep = require("./recipeStep");
+const User = require("../user");
 const SpiceUp = mongoose.connection.useDb("SpiceUp");
 
 const RecipeSchema = new mongoose.Schema({
@@ -15,22 +17,7 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  description: {
-    type: String,
-    require: true,
-  },
-  cookingTimeInSecond: {
-    type: Number,
-    require: true,
-  },
-  createdAt: {
-    type: Date,
-    require: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    require: true,
-  },
+
   status: {
     type: String,
     require: true,
@@ -48,10 +35,7 @@ const RecipeSchema = new mongoose.Schema({
     require: true,
     default: [],
   },
-  views: {
-    type: Number,
-    default: 0,
-  },
+
   ingredients: [
     {
       name: {
@@ -67,6 +51,24 @@ const RecipeSchema = new mongoose.Schema({
       },
     },
   ],
+
+  description: {
+    type: String,
+    require: true,
+  },
+  cookingTimeInSecond: {
+    type: Number,
+    require: true,
+  },
+  createdAt: {
+    type: Date,
+    require: true,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    require: true,
+  },
 
   step: [
     {

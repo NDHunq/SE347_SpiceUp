@@ -1,6 +1,7 @@
 import axios from "../utils/axiosCustomize";
+
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM5ODUwOTEsImV4cCI6MTczNDAwMzA5MX0.gGTELzTd_IIBfE4LNMMVL6-3HctSLruIkZp-DpTbWUA";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzU1NjgxNTEsImV4cCI6MTczNTU4NjE1MX0.hac7ZQeyuQ_Dr6hdWvRYrNsj6jAxAoq-Uw-U2cCB66M";
 
 const getARecipe = (id) => {
   return axios.get("api/v1/recipe/get/" + id, {
@@ -201,6 +202,69 @@ const updateStatus = async (recipeId, status) => {
   );
   return response ? response.data : null;
 };
+
+const getTopProducts = async (limit, field, order) => {
+  try {
+    const requestedBody = {
+      sort: {
+        field: field, //[created_at, price, average_ratings, discount]
+        order: order, // [asc, desc]
+      }, // || null
+      category: null, // || null
+      price: null, // || null
+      average_ratings: null, // || null
+      product_name: null, // || null
+    };
+    const response = await axios.post(
+      `/api/v1/product/filter?page=1&limit=${limit}`,
+      requestedBody
+    );
+    return response;
+  } catch (e) {
+    return e;
+  }
+};
+
+const getLastestRecipe = async (page, limit) => {
+  try {
+    const response = await axios.post(
+      `/api/v1/recipe/get?page=${page}&limit=${limit}`
+    );
+    return response;
+  } catch (e) {
+    return e;
+  }
+};
+
+const changePassword = async (userId, oldPassword, newPassword) => {
+  try {
+    const response = await axios.post(
+      `/api/v1/user/change_password/${userId}`,
+      {
+        method: "POST",
+        body: {
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+        },
+      }
+    );
+    return response;
+  } catch (e) {
+    return e;
+  }
+};
+
+const sendResetMail = async (email) => {
+  try {
+    const response = await axios.post(
+      `/api/v1/user/reset_password/send?user_email=${email}`
+    );
+    return response;
+  } catch (e) {
+    return e;
+  }
+};
+
 export {
   getARecipe,
   getUserInfo,
@@ -223,4 +287,8 @@ export {
   upload1Image,
   getAllRecipes,
   updateStatus,
+  getTopProducts,
+  getLastestRecipe,
+  changePassword,
+  sendResetMail,
 };

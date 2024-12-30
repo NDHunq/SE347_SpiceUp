@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 class LoginController {
     
+    
     // verify login
     async verify(req,res) {
         const JWT_SECRET = process.env.JWT_SECRET
@@ -24,6 +25,7 @@ class LoginController {
                         data: {
                             jwt: token,
                             role: user.role,
+                            user_id: user._id
                         },
                         errors: null
                     })
