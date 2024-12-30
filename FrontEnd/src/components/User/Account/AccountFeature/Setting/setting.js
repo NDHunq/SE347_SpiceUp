@@ -106,7 +106,7 @@ const Setting = () => {
       bsetPhoneStatus("none");
     }
   };
-  const userId = "674ec2e837f4b676e0f946fb";
+  const userId = "66f6cd4a06a448abe23763e0";
   const bhandlePhoneKeyPress = (e) => {
     const charCode = e.charCode;
     if (charCode < 48 || charCode > 57) {
@@ -162,7 +162,9 @@ const Setting = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getUserInfo(userId);
+        const response = await getUserInfo({
+          user_id: userId,
+        });
         const bresponse = await getBillingAddress(userId);
         const bresponseData = bresponse.data;
         const bdata = bresponseData.data;

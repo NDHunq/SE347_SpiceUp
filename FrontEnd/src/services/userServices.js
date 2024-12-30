@@ -11,7 +11,7 @@ const getARecipe = (id) => {
   });
 };
 const getUserInfo = (id) => {
-  return axios.get("api/v1/user/info/" + id, {
+  return axios.post("api/v1/user/info2", id, {
     headers: {
       Authorization: token,
     },
@@ -38,8 +38,10 @@ const getComment = (id) => {
     },
   });
 };
+const mongoose = require("mongoose");
+
 const getUser = (id) => {
-  return axios.get("api/v1/user/info/" + id, {
+  return axios.get("api/v1/user/info/66f6cd4a06a448abe23763e0", {
     headers: {
       Authorization: token,
     },
