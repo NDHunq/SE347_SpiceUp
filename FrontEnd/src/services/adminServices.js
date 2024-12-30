@@ -1,7 +1,7 @@
 import axios from "../utils/axiosCustomize";
 
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzU1NjgxNTEsImV4cCI6MTczNTU4NjE1MX0.hac7ZQeyuQ_Dr6hdWvRYrNsj6jAxAoq-Uw-U2cCB66M";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzU1NzMwNzcsImV4cCI6MTczNTU5MTA3N30.lKEFOvQgEx0Ze89keKB6nmHxX4kpJ1_HDtIBuAri8ZU";
 
 const editRecipe = (recipeId, body) => {
   return axios.put("api/v1/recipe/update/" + recipeId, body, {

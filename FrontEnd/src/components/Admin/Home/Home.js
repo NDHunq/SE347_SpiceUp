@@ -1,16 +1,17 @@
+import "./Home.scss";
 import React, { useEffect, useState } from "react";
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { getAnalysis, getAnalysis2 } from "../../../services/adminServices";
+import { getAnalysis } from "../../../services/adminServices";
 import LatestRecipe from "../../User/Home/LatestRecipe";
 import { useNavigate } from "react-router";
-
-var CanvasJSReact = require("@canvasjs/react-charts");
+//import CanvasJSReact from "@canvasjs/react-charts";
+//var CanvasJSReact = require('@canvasjs/react-charts');
 dayjs.extend(customParseFormat);
 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// var CanvasJS = CanvasJSReact.CanvasJS;
+// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const dateFormat = "DD-MM-YYYY";
 const { RangePicker } = DatePicker;
 
@@ -44,36 +45,6 @@ const Home = (props) => {
     .endOf("month");
   const dateFormat = "DD-MM-YYYY";
   const monthFormat = "MM-YYYY";
-  const yearFormat = "YYYY";
-  const [listRecipe, setListRecipe] = React.useState([]);
-  const [listProduct, setListProduct] = React.useState([]);
-  const [year, setYear] = React.useState(2024);
-  const onYearChange = (e) => {
-    if (e == null) return;
-    setYear(e.year());
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      if (year == null) return;
-      const data = await getAnalysis2(year);
-      const recipes = data.map((item) => ({
-        x: item.month,
-        y: item.totalRecipes,
-      }));
-      const products = data.map((item) => ({
-        x: item.month,
-        y: item.totalProducts,
-      }));
-      setListRecipe(recipes);
-      setListProduct(products);
-      console.log("data", data);
-      console.log("recipes", listRecipe);
-      console.log("products", listProduct);
-    };
-    if (year != null) {
-      fetchData();
-    }
-  }, [year]);
 
   // Định dạng ngày theo định dạng "DD-MM-YYYY"
   const formattedDate = lastDayOfPreviousMonth.format(dateFormat);
@@ -82,25 +53,46 @@ const Home = (props) => {
     exportEnabled: true,
     theme: "light1", // "light1", "dark1", "dark2"
     title: {
-      text: "Number of products and recipes in a years",
+      text: "Bounce Rate by Week of Year",
     },
     axisY: {
-      title: "Number",
+      title: "Bounce Rate",
+      suffix: "%",
     },
     axisX: {
       title: "Month",
-      interval: 1,
+      prefix: "T",
+      interval: 2,
     },
     data: [
       {
         type: "line",
-        toolTipContent: "{y} products",
-        dataPoints: listProduct,
-      },
-      {
-        type: "line",
-        toolTipContent: " {y} recipes",
-        dataPoints: listRecipe,
+        toolTipContent: "Week {x}: {y}%",
+        dataPoints: [
+          { x: 1, y: 64 },
+          { x: 2, y: 61 },
+          { x: 3, y: 64 },
+          { x: 4, y: 62 },
+          { x: 5, y: 64 },
+          { x: 6, y: 60 },
+          { x: 7, y: 58 },
+          { x: 8, y: 59 },
+          { x: 9, y: 53 },
+          { x: 10, y: 54 },
+          { x: 11, y: 61 },
+          { x: 12, y: 60 },
+          { x: 13, y: 55 },
+          { x: 14, y: 60 },
+          { x: 15, y: 56 },
+          { x: 16, y: 60 },
+          { x: 17, y: 59.5 },
+          { x: 18, y: 63 },
+          { x: 19, y: 58 },
+          { x: 20, y: 54 },
+          { x: 21, y: 59 },
+          { x: 22, y: 64 },
+          { x: 23, y: 59 },
+        ],
       },
     ],
   };
@@ -188,26 +180,23 @@ const Home = (props) => {
             <h2>
               <strong>Chart</strong>
             </h2>
-            <DatePicker
-              size={"large"}
+            <RangePicker
+              picker="month"
               className="date"
-              picker="year"
-              format={yearFormat}
-              defaultValue={dayjs(year.toString(), yearFormat)}
+              size={"large"}
               activeBg={"#00B207"}
-              onChange={(e) => onYearChange(e)}
+              format={monthFormat}
               maxDate={dayjs(formattedDate, dateFormat)}
             />
           </div>
 
-          <div className="chart">
+          {/* <div className="chart">
             <CanvasJSChart
               options={options}
-              onRef={(ref) => (this.chart = ref)}
+              onRef={ref => this.chart = ref} 
             />
-            You can get reference to the chart instance as shown above using
-            onRef. This allows you to access all chart properties and methods
-          </div>
+            You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods
+          </div> */}
           <div className="title">
             <h2>
               <strong>New recipes</strong>
@@ -221,8 +210,7 @@ const Home = (props) => {
                 color: "#00B207",
                 cursor: "pointer",
               }}
-              onClick={() => nav("/admin/recipes")}
-            >
+              onClick={() => nav("/admin/recipes")}>
               View All
             </div>
           </div>

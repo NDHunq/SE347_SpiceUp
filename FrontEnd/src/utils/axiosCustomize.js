@@ -13,7 +13,7 @@ instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     // Temporary solution for token (Neu chua lam login thi vao postman call API login de lay token roi quang no vao localStorage voi key la: 'token')
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     if (token) {
       console.log("token", token);
 
