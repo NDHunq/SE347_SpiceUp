@@ -1,6 +1,6 @@
 import axios from "../utils/axiosCustomize";
 const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM4MzM4MzUsImV4cCI6MTczMzg1MTgzNX0.dnNp_k6DwXn4WovsLMJvBB8LMgKxiupXIqLzACsdVK8";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDY3YWYxZjBjYjRhNTI3ZWFkNzVhYiIsImVtYWlsIjoiYWRhbTExQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzM5ODUwOTEsImV4cCI6MTczNDAwMzA5MX0.gGTELzTd_IIBfE4LNMMVL6-3HctSLruIkZp-DpTbWUA";
 
 const editRecipe = (recipeId, body) => {
   return axios.put("api/v1/recipe/update/" + recipeId, body, {
@@ -9,7 +9,7 @@ const editRecipe = (recipeId, body) => {
     },
   });
 };
-<<<<<<< HEAD
+
 const deleteRecipe = (recipeId) => {
   return axios.delete("api/v1/recipe/delete/" + recipeId, {
     headers: {
@@ -17,11 +17,8 @@ const deleteRecipe = (recipeId) => {
     },
   });
 };
-export { editRecipe, deleteRecipe };
-=======
 const getAnalysis = async (year) => {
   const response = await axios.get(`api/v1/admin/analysis?year=${year}`);
   return response ? response.data : null;
 };
-export { editRecipe, getAnalysis };
->>>>>>> d5471e522f79405861062f78fcfcb0d95916f824
+export { editRecipe, deleteRecipe, getAnalysis };
