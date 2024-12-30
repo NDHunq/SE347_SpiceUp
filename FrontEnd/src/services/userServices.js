@@ -192,6 +192,7 @@ const getAllRecipes = async () => {
   });
   return response ? response.data : null;
 };
+
 const updateStatus = async (recipeId, status) => {
   const response = await axios.put(
     `api/v1/recipe/status/update/${recipeId}?status=${status}`,

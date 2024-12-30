@@ -164,8 +164,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -186,8 +185,7 @@ function Recipes({ search }) {
                     <FilterCategory
                       listname={"Recipe Types"}
                       listCategory={listCategory}
-                      onTypeSelect={handleTypeSelect}
-                    ></FilterCategory>
+                      onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt">Recenty Saved</p>
 
@@ -230,8 +228,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
@@ -248,8 +245,7 @@ function Recipes({ search }) {
                       className="sort-by"
                       onChange={(e) => {
                         onSelectChange(e);
-                      }}
-                    >
+                      }}>
                       <option value="latest"> Latest </option>
                       <option value="best-seller"> View </option>
                     </select>
