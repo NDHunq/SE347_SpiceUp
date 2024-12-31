@@ -21,7 +21,7 @@ class RegisterController {
                 lastname: lastName,
                 //billingAddress: null,
                 role: role,
-                avatar: avatar,
+                avatar: "6774082b02832c2073356445",
                 createdAt: new Date()                
             })
 
