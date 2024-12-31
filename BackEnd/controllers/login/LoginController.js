@@ -25,7 +25,9 @@ class LoginController {
                         data: {
                             jwt: token,
                             role: user.role,
-                            user_id: user._id
+                            user_id: user._id,
+                            email: user.email,
+                            avatar: user.avatar
                         },
                         errors: null
                     })
