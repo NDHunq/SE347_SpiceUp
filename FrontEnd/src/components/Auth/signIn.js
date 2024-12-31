@@ -33,6 +33,7 @@ function SignIn() {
     localStorage.setItem("role", response.data.data.role);
 
     toast.success("Sign in successfully");
+
     navigate("/home");
   };
   return (
