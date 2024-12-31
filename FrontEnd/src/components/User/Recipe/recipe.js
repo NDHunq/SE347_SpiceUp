@@ -10,6 +10,7 @@ import { Pagination } from "antd";
 import DisplayItem from "./display_item/displayItem";
 import RecentItem from "./recent_Item/recent_item";
 import { getAllRecipes, getImage } from "../../../services/userServices";
+import { toast } from "react-toastify";
 const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
@@ -34,6 +35,12 @@ function Recipes({ search }) {
   const navigate = useNavigate();
 
   const handleUploadClick = () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      toast.warning("Please login to upload recipe");
+      navigate("/signin");
+      return;
+    }
     navigate("/newrecipe");
   };
 
@@ -87,7 +94,7 @@ function Recipes({ search }) {
               istrue={isTrue}
               ttime={time}
               ttag={item.type}
-              tby={item.userId}
+              tby={item.userId.firstName}
               tcomments={item.views}
               tname={item.recipeName}
               tlink={item.coverImageUrl}

@@ -16,20 +16,22 @@ function SignIn() {
     debugger;
 
     const response = await signIn({
-      "email": userName,
-      "password": password
-    })
+      email: userName,
+      password: password,
+    });
 
-    if(response.status !== 200) {
+    if (response.status !== 200) {
       toast.error("Wrong email or password");
-      return 
+      return;
     }
 
-    localStorage.setItem("jwt", response.data.data.jwt)
-    localStorage.setItem("user_id", response.data.data.user_id)
-    localStorage.setItem("email", response.data.data.email)
-    localStorage.setItem("avatar", response.data.data.avatar)
-    
+    localStorage.setItem("jwt", response.data.data.jwt);
+    localStorage.setItem("user_id", response.data.data.user_id);
+    localStorage.setItem("email", response.data.data.email);
+    localStorage.setItem("avatar", response.data.data.avatar);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("role", response.data.data.role);
+
     toast.success("Sign in successfully");
     navigate("/home");
   };
