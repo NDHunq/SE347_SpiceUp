@@ -26,10 +26,7 @@ router.use("/user/:user_id", recipeController.getRecipe);
 router.use("/get/:recipe_id", recipeController.getRecipe);
 router.use("/get", recipeController.getRecipe);
 
-router.use(
-  "/view/increase/:recipe_id",
-  recipeController.increaseView
-);
+router.use("/view/increase/:recipe_id", recipeController.increaseView);
 router.use("/view/:recipe_id", recipeController.getView);
 
 router.use(
@@ -48,10 +45,7 @@ router.use(
   authenticate,
   recipeCommentController.deleteComment
 );
-router.use(
-  "/comment/get/:recipe_id",
-  recipeCommentController.getComment
-);
+router.use("/comment/get/:recipe_id", recipeCommentController.getComment);
 router.use("/comment", authenticate, recipeCommentController.postComment);
 
 module.exports = router;

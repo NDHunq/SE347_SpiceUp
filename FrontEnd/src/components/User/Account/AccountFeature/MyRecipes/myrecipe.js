@@ -30,7 +30,7 @@ const MyRecipe = () => {
   const handlePageChange2 = (page) => {
     setCurrentPage2(page);
   };
-  const userId = "66f6cd4a06a448abe23763e0";
+  const userId = localStorage.getItem("user_id");
   useEffect(() => {
     const getData = async () => {
       try {
@@ -53,15 +53,15 @@ const MyRecipe = () => {
         const saveItems = [];
         for (const saveitem of response2.data) {
           const url = await getImage(saveitem.coverImageId);
-          if (saveItems.status === "RS2") {
-            const item = {
-              id: saveitem._id,
-              name: saveitem.recipeName,
-              image: url,
-            };
+          // if (saveItems.status === "RS2") {
+          const item = {
+            id: saveitem._id,
+            name: saveitem.recipeName,
+            image: url,
+          };
 
-            saveItems.push(item);
-          }
+          saveItems.push(item);
+          // }
         }
         setSaveitems(saveItems);
       } catch (error) {

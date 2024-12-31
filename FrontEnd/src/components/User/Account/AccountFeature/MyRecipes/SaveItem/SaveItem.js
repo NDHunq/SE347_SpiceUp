@@ -18,7 +18,7 @@ const SaveItem = ({ imagelink, name, istrue, issave, id, status }) => {
   const handleItemClick = () => {
     navigate(`/singlerecipe?id=${id}`);
   };
-  const userId = "66f6cd4a06a448abe23763e0";
+  const userId = localStorage.getItem("user_id");
   const handleSave = async () => {
     await saveReicpe(id, {
       user_id: userId,

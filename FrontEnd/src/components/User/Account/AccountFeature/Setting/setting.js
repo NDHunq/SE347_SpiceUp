@@ -106,7 +106,7 @@ const Setting = () => {
       bsetPhoneStatus("none");
     }
   };
-  const userId = "66f6cd4a06a448abe23763e0";
+  const userId = localStorage.getItem("user_id");
   const bhandlePhoneKeyPress = (e) => {
     const charCode = e.charCode;
     if (charCode < 48 || charCode > 57) {
@@ -165,6 +165,18 @@ const Setting = () => {
         const response = await getUserInfo({
           user_id: userId,
         });
+
+        const responseData = response.data;
+        const data = responseData.userInfo;
+        setFirstName(data.firstname);
+        setLastName(data.lastname);
+        setEmail(data.email);
+        setPhone(data.phone);
+        const avatarId = data.avatar;
+
+        const url = await getImage(avatarId);
+
+        setAvatar(url);
         const bresponse = await getBillingAddress(userId);
         const bresponseData = bresponse.data;
         const bdata = bresponseData.data;
@@ -175,17 +187,6 @@ const Setting = () => {
         bsetcity(bdata.province);
         bsetdistrict(bdata.district);
         bsetAddress(bdata.detailAddress);
-
-        const responseData = response.data;
-        const data = responseData.userInfo;
-        setFirstName(data.firstname);
-        setLastName(data.lastname);
-        setEmail(data.email);
-        setPhone(data.phone);
-        const avatarId = data.avatar;
-        const url = await getImage(avatarId);
-
-        setAvatar(url);
       } catch (error) {
         console.error(error);
       }
@@ -208,11 +209,12 @@ const Setting = () => {
         const url = await getImage(imageUrl);
 
         setAvatar(url);
+        localStorage.setItem("avatar", imageUrl);
         await changUserInfo(userId, {
           avatar: imageUrl,
         });
 
-        message.info("Image uploaded successfully!");
+        message.success("Image uploaded successfully!");
       }
     };
     input.click();
@@ -269,7 +271,6 @@ const Setting = () => {
               onBlur={handlePhoneBlur}
               onKeyPress={handlePhoneKeyPress}
               pattern="[0-9]*"
-              readOnly
             />
           </div>
           <div className="div02">

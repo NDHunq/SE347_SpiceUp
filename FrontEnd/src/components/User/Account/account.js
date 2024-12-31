@@ -27,6 +27,11 @@ function Account() {
   ]);
 
   useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      navigate("/signin");
+    }
+
     const currentPath = location.pathname;
     let currentText = "Settings";
 
@@ -80,7 +85,8 @@ function Account() {
                 to="settings"
                 onClick={() =>
                   handleNavItemClick("Settings", "/account/settings")
-                }>
+                }
+              >
                 <IoMdSettings className="imgacc" />
                 <p className="txtnaa">Setting</p>
               </Link>
@@ -91,7 +97,8 @@ function Account() {
                 to="myrecipes"
                 onClick={() =>
                   handleNavItemClick("My Recipes", "/account/myrecipes")
-                }>
+                }
+              >
                 <MdDashboard className="imgacc" />
                 <p className="txtnaa">My Recipes</p>
               </Link>
@@ -102,7 +109,8 @@ function Account() {
                 to="order"
                 onClick={() =>
                   handleNavItemClick("Order History", "/account/order")
-                }>
+                }
+              >
                 <MdHistory className="imgacc" />
                 <p className="txtnaa">Order History</p>
               </Link>

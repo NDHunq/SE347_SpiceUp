@@ -50,7 +50,7 @@ function SingleRecipe() {
     { link: "/recipes", text: "Recipes" },
     { link: `/singlerecipe?id=${id}`, text: "Single Recipe" },
   ]);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(null);
   const [tags, setTags] = useState("");
   const [by, setBy] = useState("");
   const [cmt, setcmt] = useState();
@@ -67,12 +67,16 @@ function SingleRecipe() {
   const [discovers, setDiscovers] = useState([]);
   const [status, setStatus] = useState("RS2");
   const [authorrole, setAuthorrole] = useState("");
+  const [islogin, setisLogin] = useState(false);
+  const handleSingin = () => {
+    navigate("/signin");
+  };
   const handlePost = async () => {
     const comment = {
       recipeId: id, // Replace with a valid recipe ID from your database
-      email: "example@gmail.com",
+      email: localStorage.getItem("email"), // Comment author email
       content: value, // Comment content
-      image: "675058267c54afebec3c5c00",
+      image: localStorage.getItem("avatar"), // Comment author avatar
       date: new Date().toLocaleDateString(), // Current date
     };
 
@@ -89,7 +93,7 @@ function SingleRecipe() {
       console.error("Error posting the comment:", error);
     }
   };
-  const userId = "66f6cd4a06a448abe23763e0";
+  const userId = localStorage.getItem("user_id");
   const handelSave = async () => {
     await saveReicpe(id, {
       user_id: userId,
@@ -109,6 +113,10 @@ function SingleRecipe() {
   useEffect(() => {
     const getRecipe = async () => {
       try {
+        const jwt = localStorage.getItem("jwt");
+        if (jwt) {
+          setisLogin(true);
+        }
         const idd = queryParams.get("id");
         await increaseView(idd);
 
@@ -143,22 +151,28 @@ function SingleRecipe() {
         }
         setSteps(steps);
         setIgredients(recipe.ingredients);
-
-        if (recipe.savedUserId.includes(userId)) {
-          setIsBookmarked(true);
-        } else {
-          setIsBookmarked(false);
+        if (islogin) {
+          if (recipe.savedUserId.includes(userId)) {
+            setIsBookmarked(true);
+          } else {
+            setIsBookmarked(false);
+          }
         }
-        const rawuser = await getUserInfo({
-          user_id: recipe.userId,
-        });
-        const user = rawuser.data.userInfo;
+        if (recipe.userId !== null) {
+          const recipeUserId = recipe.userId;
 
-        setUserName(user.firstname + " " + user.lastname);
-        if (user.role === "R1") {
-          setAuthorrole("Admin");
-        } else {
-          setAuthorrole("User");
+          const rawuser = await getUserInfo({
+            user_id: recipeUserId,
+          });
+          const user = rawuser.data.userInfo;
+          setUserName(user.firstname + " " + user.lastname);
+          if (user.role === "R1") {
+            setAuthorrole("Admin");
+          } else {
+            setAuthorrole("User");
+          }
+          const urlAvatar = await getImage(user.avatar);
+          setUserAvatar(urlAvatar);
         }
 
         const rawcomments = await getComment(id);
@@ -177,10 +191,6 @@ function SingleRecipe() {
         // setcmt(comments);
         setcmt(rawcomments.data.comments.length);
         setComments(comments);
-
-        const urlAvatar = await getImage(user.avatar);
-
-        setUserAvatar(urlAvatar);
 
         const rawallRecipe = await getAllRecipe();
         const allReciperes = [];
@@ -305,26 +315,27 @@ function SingleRecipe() {
                             className="link_icon"
                             onClick={handleCopyLink}
                           />
-
-                          <div
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleBookmark();
-                            }}
-                            className="bookmarksingle"
-                          >
-                            {isBookmarked ? (
-                              <FaBookmark
-                                onClick={handelSave}
-                                className="bookmark-icon-single active"
-                              />
-                            ) : (
-                              <FaRegBookmark
-                                onClick={handelSave}
-                                className="bookmark-icon-single"
-                              />
-                            )}
-                          </div>
+                          {isBookmarked !== null && islogin === true ? (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleBookmark();
+                              }}
+                              className="bookmarksingle"
+                            >
+                              {isBookmarked ? (
+                                <FaBookmark
+                                  onClick={handelSave}
+                                  className="bookmark-icon-single active"
+                                />
+                              ) : (
+                                <FaRegBookmark
+                                  onClick={handelSave}
+                                  className="bookmark-icon-single"
+                                />
+                              )}
+                            </div>
+                          ) : null}
                         </div>
                       </div>
                       <div className="description">{description}</div>
@@ -352,7 +363,7 @@ function SingleRecipe() {
                           </div>
                         ))}
                       </div>
-                      {status === "RS2" ? (
+                      {status === "RS2" && islogin === true ? (
                         <div>
                           <div className="leaveacomment">Leave a comment</div>
                           <div className="message">Message</div>
@@ -369,6 +380,20 @@ function SingleRecipe() {
                             <p className="save post">Post Comments</p>
                           </div>
                         </div>
+                      ) : null}
+                      {islogin === false ? (
+                        <>
+                          <div className="leaveacomment">
+                            Please Sign in to leave a comment
+                          </div>
+                          <div
+                            className="button margin0"
+                            onClick={handleSingin}
+                          >
+                            {" "}
+                            <p className="save post">Sign In Now</p>
+                          </div>
+                        </>
                       ) : null}
 
                       <div className="cmt">Comments</div>

@@ -15,7 +15,7 @@ router.use("/reset_password/:token", userController.resetPassword);
 router.use(express.json());
 router.use("/info/update/:user_id", authenticate, userController.updateInfo);
 router.use("/info/:user_id", authenticate, userController.getInfo);
-router.post("/info2", authenticate, userController.getInfo2);
+router.post("/info2", userController.getInfo2);
 
 router.use(
   "/change_password/:user_id",
