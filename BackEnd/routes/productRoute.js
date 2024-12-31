@@ -6,10 +6,10 @@ const {createProduct, getAllProducts, getProductByID, deleteProduct, updateProdu
 const authenticate = require("../middlewares/auth/auth");
 
 // Get all products with pagination, sorting and filtering
-router.get('', authenticate,getAllProducts);
+router.get('', getAllProducts);
 
 // Get a product by ID
-router.get('/id/:id', authenticate, getProductByID);
+router.get('/id/:id', getProductByID);
 
 // Create a product
 router.post('', authenticate, createProduct);
@@ -21,9 +21,9 @@ router.delete('/:id', authenticate, deleteProduct);
 router.patch('/:id', authenticate, updateProduct);
 
 // Get a product by name
-router.get('/name/:product_name', authenticate, getProductByName);
+router.get('/name/:product_name', getProductByName);
 
 // Find all products with pagination, sorting and filtering
-router.post('/filter', authenticate, findProductsWithFilter);
+router.post('/filter', findProductsWithFilter);
 
 module.exports = router;

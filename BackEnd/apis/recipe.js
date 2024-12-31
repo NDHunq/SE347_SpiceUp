@@ -21,17 +21,16 @@ router.use("/step/update/:step_id", authenticate, recipeController.updateStep);
 router.use("/step/delete/:step_id", authenticate, recipeController.deleteStep);
 router.use("/step/create", authenticate, recipeController.createStep);
 
-router.use("/user/:user_id", authenticate, recipeController.getRecipe);
+router.use("/user/:user_id", recipeController.getRecipe);
 
-router.use("/get/:recipe_id", authenticate, recipeController.getRecipe);
-router.use("/get", authenticate, recipeController.getRecipe);
+router.use("/get/:recipe_id", recipeController.getRecipe);
+router.use("/get", recipeController.getRecipe);
 
 router.use(
   "/view/increase/:recipe_id",
-  authenticate,
   recipeController.increaseView
 );
-router.use("/view/:recipe_id", authenticate, recipeController.getView);
+router.use("/view/:recipe_id", recipeController.getView);
 
 router.use(
   "/status/update/:recipe_id",
@@ -51,7 +50,6 @@ router.use(
 );
 router.use(
   "/comment/get/:recipe_id",
-  authenticate,
   recipeCommentController.getComment
 );
 router.use("/comment", authenticate, recipeCommentController.postComment);

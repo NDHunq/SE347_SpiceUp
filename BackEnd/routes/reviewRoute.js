@@ -9,7 +9,7 @@ const authenticate = require("../middlewares/auth/auth");
 Router.get('/:product_id', authenticate, getReviewsByProductId);
 
 // Get user review about a specific product
-Router.get('', authenticate, getUserReview);
+Router.get('', getUserReview);
 
 // Create a new review
 Router.post('', authenticate, createReview);
