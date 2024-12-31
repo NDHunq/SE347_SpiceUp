@@ -13,11 +13,10 @@ function App() {
         token: {
           colorPrimary: "#00b207",
         },
-      }}
-    >
+      }}>
       <div className="app-container">
         <div className="header-container">
-          <Header2 />
+          <Header1 />
         </div>
         <div className="main-container">
           <Outlet />

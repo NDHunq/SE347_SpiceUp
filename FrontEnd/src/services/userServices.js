@@ -38,7 +38,6 @@ const getComment = (id) => {
     },
   });
 };
-const mongoose = require("mongoose");
 
 const getUser = (id) => {
   return axios.get("api/v1/user/info/66f6cd4a06a448abe23763e0", {
@@ -83,11 +82,7 @@ const saveReicpe = (recipeId, body) => {
   });
 };
 const getAllRecipe = () => {
-  return axios.get("api/v1/recipe/get", {
-    headers: {
-      Authorization: token,
-    },
-  });
+  return axios.get("api/v1/recipe/get");
 };
 const changUserInfo = (userId, obj) => {
   return axios.put("api/v1/user/info/update/" + userId, obj, {
@@ -103,12 +98,14 @@ const getImage = async (avatarId) => {
       Authorization: token,
     },
   });
+
   const blob = new Blob([res.data], {
     type: `${res.headers["content-type"]}`,
   });
   const url = URL.createObjectURL(blob);
   return url;
 };
+
 const pushImage = (formData) => {
   return axios.post("api/v1/image/upload", formData, {
     headers: {
@@ -120,20 +117,11 @@ const pushImage = (formData) => {
 
 const createStep = async (data) => {
   console.log("data", data);
-
-  const response = await axios.post("api/v1/recipe/step/create", data, {
-    headers: {
-      Authorization: token,
-    },
-  });
+  const response = await axios.post("api/v1/recipe/step/create", data);
   return response ? response.data.recipeIds : null;
 };
 const createRecipe = async (data) => {
-  const response = await axios.post("api/v1/recipe/create", data, {
-    headers: {
-      Authorization: token,
-    },
-  });
+  const response = await axios.post("api/v1/recipe/create", data);
   return response ? response.data.id : null;
 };
 const uploadImage = async (imageArr) => {
@@ -146,7 +134,6 @@ const uploadImage = async (imageArr) => {
         const response = await axios.post("api/v1/image/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: token,
           },
         });
 
@@ -171,7 +158,6 @@ const upload1Image = async (image) => {
       headers: {
         "Content-Type":
           "multipart/form-data; boundary=<calculated when request is sent>",
-        Authorization: token,
       },
     });
     // console.log("response", response);
@@ -185,12 +171,9 @@ const upload1Image = async (image) => {
   }
 };
 const getAllRecipes = async () => {
-  const response = await axios.get("api/v1/recipe/get", {
-    headers: {
-      Authorization: token,
-    },
-  });
-  return response ? response.data : null;
+  const response = await axios.get("api/v1/recipe/get", {});
+  console.log("response", response);
+  return response ? response.data.recipes : null;
 };
 
 const updateStatus = async (recipeId, status) => {

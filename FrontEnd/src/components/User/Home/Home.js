@@ -23,8 +23,7 @@ const Home = (props) => {
         arrows
         arrowSize={50}
         //autoplay
-        infinite={true}
-      >
+        infinite={true}>
         <div className="banner1">
           <div className="col-2 banner1-1"></div>
           <div className="col-4 banner1-2"></div>

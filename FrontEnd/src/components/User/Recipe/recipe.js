@@ -187,7 +187,7 @@ function Recipes({ search }) {
                       listCategory={listCategory}
                       onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
-                    <p className="recenttxt">Recenty Saved</p>
+                    {/* <p className="recenttxt">Recenty Saved</p>
 
                     <RecentItem
                       tname={"Smoothie xoài chuối kiwi"}
@@ -214,7 +214,7 @@ function Recipes({ search }) {
                       tname={"Smoothie xoài chuối kiwi"}
                       ttime={"Apr 25, 2024"}
                       id={"1234"}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

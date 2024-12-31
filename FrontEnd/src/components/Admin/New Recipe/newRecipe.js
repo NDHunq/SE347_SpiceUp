@@ -216,13 +216,14 @@ function SingleRecipe() {
       name,
       quantity,
     }));
+    const userId = localStorage.getItem("user_id");
 
     //API create recipe
     const data = {
       recipeName: recipeName,
       description: value,
       cookingTimeInSecond: cookingTime * 60,
-      userId: "66f6cd4a06a448abe23763e0",
+      userId: userId,
       coverImageId: coverImageId,
       recipeIds: recipeIds,
       type: selectedType,

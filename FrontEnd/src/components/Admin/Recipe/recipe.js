@@ -16,32 +16,8 @@ function Recipes({ search }) {
   //radio
   const [value, setValue] = useState(1);
   const [searchInput, setSearchInput] = useState("");
-  const [listDisplay_app, setlistapp] = useState([
-    // {
-    //   id: "67516e44378a160ce4b02c79",
-    //   istrue: true,
-    //   ttime: 140,
-    //   ttag: "Vietnamese Food",
-    //   tby: "Admin",
-    //   tcomments: 65,
-    //   tname: "Cá đuối hấp xả1",
-    //   tlink:
-    //     "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    // },
-  ]);
-  const [listDisplay_pending, setListDisplay_pending] = useState([
-    // {
-    // id: "67516e44378a160ce4b02c79",
-    // istrue: true,
-    // ttime: 140,
-    // ttag: "Vietnamese Food",
-    // tby: "Admin",
-    // tcomments: 65,
-    // tname: "Trứng cuộn hàn quốc1",
-    // tlink:
-    //   "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    //},
-  ]);
+  const [listDisplay_app, setlistapp] = useState([]);
+  const [listDisplay_pending, setListDisplay_pending] = useState([]);
   const [total_pages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [result, setResult] = useState(0);
@@ -135,7 +111,7 @@ function Recipes({ search }) {
               istrue: isTrue,
               ttime: time,
               ttag: item.type,
-              tby: item.userId,
+              tby: item.userId.firstname, // Ensure to access the firstname property
               tcomments: item.views,
               tname: item.recipeName,
               tlink: item.coverImageUrl,
@@ -154,7 +130,7 @@ function Recipes({ search }) {
               istrue: isTrue,
               ttime: time,
               ttag: item.type,
-              tby: item.userId,
+              tby: item.userId.firstname, // Ensure to access the firstname property
               tcomments: item.views,
               tname: item.recipeName,
               tlink: item.coverImageUrl,
@@ -258,8 +234,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -281,8 +256,7 @@ function Recipes({ search }) {
                     <Radio.Group
                       onChange={onChange}
                       value={value}
-                      className="radio_div"
-                    >
+                      className="radio_div">
                       <Radio className={"pentxt"} value={1}>
                         Pending
                       </Radio>
@@ -296,8 +270,7 @@ function Recipes({ search }) {
                     <FilterCategory
                       listname={"Recipe Types"}
                       listCategory={listCategory}
-                      onTypeSelect={handleTypeSelect}
-                    ></FilterCategory>
+                      onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
                     <p className="recenttxt bot5px">Recenty Saved</p>
 
@@ -340,8 +313,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
@@ -358,8 +330,7 @@ function Recipes({ search }) {
                       className="sort-by"
                       onChange={(e) => {
                         onSelectChange(e);
-                      }}
-                    >
+                      }}>
                       <option value="latest"> Latest </option>
                       <option value="best-seller"> View </option>
                     </select>
@@ -385,8 +356,7 @@ function Recipes({ search }) {
                           }
                           tname={listDisplay_app[(currentPage - 1) * 8].tname}
                           tlink={listDisplay_app[(currentPage - 1) * 8].tlink}
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 1] ? (
                         <DisplayItemApp
@@ -434,8 +404,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 2].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 3] ? (
                         <DisplayItemApp
@@ -483,8 +452,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItemApp
@@ -533,8 +501,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_app[(currentPage - 1) * 8 + 6].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItemApp>
+                          handleDelete={handleDelete}></DisplayItemApp>
                       ) : null}
                       {listDisplay_app[(currentPage - 1) * 8 + 7] ? (
                         <DisplayItemApp
@@ -585,8 +552,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 1] ? (
                         <DisplayItem
@@ -646,8 +612,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 2].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 3] ? (
                         <DisplayItem
@@ -707,8 +672,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItem
@@ -768,8 +732,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 4].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 5] ? (
                         <DisplayItem
@@ -829,8 +792,7 @@ function Recipes({ search }) {
                           tlink={
                             listDisplay_pending[(currentPage - 1) * 8 + 6].tlink
                           }
-                          handleDelete={handleDelete}
-                        ></DisplayItem>
+                          handleDelete={handleDelete}></DisplayItem>
                       ) : null}
                       {listDisplay_pending[(currentPage - 1) * 8 + 7] ? (
                         <DisplayItem
