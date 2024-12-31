@@ -27,6 +27,8 @@ function SignIn() {
 
     localStorage.setItem("jwt", response.data.data.jwt)
     localStorage.setItem("user_id", response.data.data.user_id)
+    localStorage.setItem("email", response.data.data.email)
+    localStorage.setItem("avatar", response.data.data.avatar)
     
     toast.success("Sign in successfully");
     navigate("/home");
