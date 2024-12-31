@@ -12,7 +12,8 @@ import DisplayItem from "../Recipe/display_item/displayItem";
 import { MdOpenInNew } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 import {
   getARecipe,
   increaseView,
@@ -28,6 +29,12 @@ import {
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
 function SingleRecipe() {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageClick = (img) => {
+    setSelectedImage(img);
+    setIsLightboxOpen(true);
+  };
   const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
 
   const onSearch = (value) => {
@@ -255,8 +262,10 @@ function SingleRecipe() {
                     <div className="col">
                       <div
                         className="cover_image"
+                        onClick={() => handleImageClick(coverImage)}
                         style={{
                           backgroundImage: `url(${coverImage})`,
+
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                         }}
@@ -332,6 +341,10 @@ function SingleRecipe() {
                                     key={imgIndex}
                                     src={img}
                                     className="image"
+                                    onClick={() => handleImageClick(img)} // Thêm sự kiện click
+                                    alt={`Step ${index + 1} image ${
+                                      imgIndex + 1
+                                    }`}
                                   />
                                 ))}
                               </div>
@@ -464,6 +477,12 @@ function SingleRecipe() {
             </div>
           </main>
         </div>
+        {isLightboxOpen && (
+          <Lightbox
+            mainSrc={selectedImage}
+            onCloseRequest={() => setIsLightboxOpen(false)}
+          />
+        )}
       </ConfigProvider>
     );
   }

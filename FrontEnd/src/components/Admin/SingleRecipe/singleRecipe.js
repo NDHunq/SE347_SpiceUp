@@ -1,39 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Input, ConfigProvider, Space } from "antd"; // Import Input and ConfigProvider from antd
-import { AudioOutlined } from "@ant-design/icons"; // Import AudioOutlined from antd icons
+
 import Header from "../widget/top";
-import {
-  FaClock,
-  FaTag,
-  FaRegBookmark,
-  FaBookmark,
-  FaLess,
-} from "react-icons/fa6";
+
 import { SlTag } from "react-icons/sl";
 import { FaRegClock } from "react-icons/fa6";
 import { IoLinkOutline } from "react-icons/io5";
 import { LuEye } from "react-icons/lu";
 import { LiaUser, LiaCommentAltSolid } from "react-icons/lia";
 import "./singleRecipe.css";
-import DisplayItem from "../Recipe/display_item/displayItem";
+
 import { MdOpenInNew } from "react-icons/md";
 import { message } from "antd";
 import { IoMdSearch } from "react-icons/io";
-import {
-  Link,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   getARecipe,
-  increaseView,
   getComment,
   getUserInfo,
   postComment,
   getImage,
 } from "../../../services/userServices";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 import { editRecipe, deleteRecipe } from "../../../services/adminServices";
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
@@ -41,6 +30,12 @@ const { TextArea, Search } = Input; // Destructure TextArea and Search from Inpu
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 function SingleRecipe() {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageClick = (img) => {
+    setSelectedImage(img);
+    setIsLightboxOpen(true);
+  };
   const [Apptxt, setApptxt] = useState("Recipe");
   const handleCopyLink = () => {
     const link = window.location.href;
@@ -254,6 +249,7 @@ function SingleRecipe() {
                     <div className="col">
                       <div
                         className="cover_image"
+                        onClick={() => handleImageClick(coverImage)}
                         style={{
                           backgroundImage: `url(${coverImage})`,
                           backgroundSize: "cover",
@@ -318,6 +314,10 @@ function SingleRecipe() {
                                     key={imgIndex}
                                     src={img}
                                     className="image"
+                                    onClick={() => handleImageClick(img)} // Thêm sự kiện click
+                                    alt={`Step ${index + 1} image ${
+                                      imgIndex + 1
+                                    }`}
                                   />
                                 ))}
                               </div>
@@ -449,6 +449,12 @@ function SingleRecipe() {
             </div>
           </main>
         </div>
+        {isLightboxOpen && (
+          <Lightbox
+            mainSrc={selectedImage}
+            onCloseRequest={() => setIsLightboxOpen(false)}
+          />
+        )}
       </ConfigProvider>
     );
   }
