@@ -150,8 +150,7 @@ function SingleRecipe() {
   useEffect(() => {
     const getRecipe = async () => {
       try {
-        const idd = "67516e44378a160ce4b02c79";
-        await increaseView(idd);
+        const idd = queryParams.get("id");
 
         const response = await getARecipe(idd);
 
@@ -190,7 +189,7 @@ function SingleRecipe() {
         setSteps(steps);
         setIgredients(recipe.ingredients);
 
-        const rawuser = await getUserInfo(recipe.userId);
+        const rawuser = await getUserInfo({ user_id: recipe.userId });
         const user = rawuser.data.userInfo;
 
         setUserName(user.firstname + " " + user.lastname);
