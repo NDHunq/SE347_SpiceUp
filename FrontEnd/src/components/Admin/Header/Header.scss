@@ -1,134 +1,147 @@
 .header-admin {
-    .phone-navi {
-        font-family    : "Poppins", sans-serif;
-        font-size      : 14px;
-        align-self     : center;
-        margin-top     : 22px;
-        color          : var(--Gren-Gray-Scale-900, #002603);
-        text-decoration: none;
-        margin-right   : 15px;
+  .phone-navi {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    align-self: center;
+    margin-top: 22px;
+    color: var(--Gren-Gray-Scale-900, #002603);
+    text-decoration: none;
+    margin-right: 15px;
+  }
+
+  .feature-navi {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    align-self: center;
+    margin-top: 22px;
+    color: var(--Gren-Gray-Scale-900, #002603);
+    text-decoration: none;
+  }
+
+  .display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-navi {
+    margin-top: 12px;
+    color: var(--Gren-Gray-Scale-900, #002603);
+    font-family: Poppins;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 38px;
+    /* 118.75% */
+    letter-spacing: -0.96px;
+    cursor: pointer;
+  }
+
+  .logo {
+    background-size: contain;
+    /* Đảm bảo hình ảnh không bị cắt */
+    background-repeat: no-repeat;
+    /* Không lặp lại hình ảnh */
+    width: 35px;
+    /* Đặt chiều rộng cho logo */
+    height: 35px;
+  }
+
+  .logo {
+    background-image: url("../../../assets/images/plant1.svg");
+    /* Đường dẫn đến hình ảnh */
+    margin-right: 8px;
+    /* Đặt khoảng cách giữa logo và chữ */
+  }
+
+  .contact {
+    margin-right: 3px;
+    margin-top: 5px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .conta {
+    color: #000000;
+    text-decoration: none;
+    margin-right: 15px;
+  }
+
+  .SignIn-btn {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    width: 112px;
+    height: 45px;
+    padding: 10px 24px;
+    font-weight: 600;
+    user-select: none;
+  }
+
+  .SignUp-btn {
+    border-radius: 43px;
+    border: 2px solid var(--Main-Green, #00b207);
+    background: var(--Gray-Scale-White, #fff);
+    text-align: center;
+    color: var(--Main-Green, #00b207);
+    margin-right: 13px;
+  }
+
+  .SignIn-btn {
+    border-radius: 43px;
+    border: 2px solid var(--Main-Green, #00b207);
+    background: var(--Main-Green, #00b207);
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: white;
+    color: white;
+  }
+  .Logout-btn {
+    transform: translateY(10px);
+    border-radius: 43px;
+    border: 2px solid #ff423e;
+    background: white;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #ff423e;
+    cursor: pointer;
+
+    &:hover {
+      background: #ff423e;
+      color: white;
+    }
+  }
+
+  .icon-group {
+    display: flex;
+    padding-left: 50px;
+
+    .link-acc {
+      color: #000000;
     }
 
-    .feature-navi {
-        font-family    : "Poppins", sans-serif;
-        font-size      : 14px;
-        align-self     : center;
-        margin-top     : 22px;
-        color          : var(--Gren-Gray-Scale-900, #002603);
-        text-decoration: none;
+    .icon {
+      height: 30px;
+      width: 30px;
+      cursor: pointer;
+
+      .icon-1 {
+        height: 30px;
+        width: 30px;
+      }
     }
+  }
 
-    .display {
-        display        : flex;
-        align-items    : center;
-        justify-content: center;
-
-    }
-
-    .app-navi {
-        margin-top    : 12px;
-        color         : var(--Gren-Gray-Scale-900, #002603);
-        font-family   : Poppins;
-        font-size     : 25px;
-        font-style    : normal;
-        font-weight   : 500;
-        line-height   : 38px;
-        /* 118.75% */
-        letter-spacing: -0.96px;
-        cursor        : pointer;
-    }
-
-    .logo {
-        background-size  : contain;
-        /* Đảm bảo hình ảnh không bị cắt */
-        background-repeat: no-repeat;
-        /* Không lặp lại hình ảnh */
-        width            : 35px;
-        /* Đặt chiều rộng cho logo */
-        height           : 35px;
-    }
-
-
-    .logo {
-        background-image: url("../../../assets/images/plant1.svg");
-        /* Đường dẫn đến hình ảnh */
-        margin-right    : 8px;
-        /* Đặt khoảng cách giữa logo và chữ */
-    }
-
-    .contact {
-        margin-right: 3px;
-        margin-top  : 5px;
-        height      : 30px;
-        width       : 30px;
-    }
-
-    .conta {
-        color          : #000000;
-        text-decoration: none;
-        margin-right   : 15px;
-
-    }
-
-
-    .SignIn-btn {
-        font-family: "Poppins", sans-serif;
-        font-size  : 14px;
-        width      : 112px;
-        height     : 45px;
-        padding    : 10px 24px;
-        font-weight: 600;
-        user-select: none;
-    }
-
-    .SignUp-btn {
-        border-radius: 43px;
-        border       : 2px solid var(--Main-Green, #00b207);
-        background   : var(--Gray-Scale-White, #fff);
-        text-align   : center;
-        color        : var(--Main-Green, #00b207);
-        margin-right : 13px;
-    }
-
-    .SignIn-btn {
-        border-radius  : 43px;
-        border         : 2px solid var(--Main-Green, #00b207);
-        background     : var(--Main-Green, #00b207);
-        text-align     : center;
-        padding        : 10px 20px;
-        text-decoration: white;
-        color          : white;
-    }
-
-    .icon-group {
-        display     : flex;
-        padding-left: 50px;
-
-        .link-acc {
-            color: #000000;
-        }
-
-        .icon {
-            height: 30px;
-            width : 30px;
-            cursor: pointer;
-
-            .icon-1 {
-                height: 30px;
-                width : 30px;
-            }
-        }
-    }
-
-    .App-footer {
-        background-color: var(--Gray-Scale-White, #000000);
-        padding         : 20px 0;
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
-        font-family     : "Poppins", sans-serif;
-        font-size       : 14px;
-        color           : var(--Gren-Gray-Scale-900, #002603);
-        height          : 333px;
-    }
+  .App-footer {
+    background-color: var(--Gray-Scale-White, #000000);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: var(--Gren-Gray-Scale-900, #002603);
+    height: 333px;
+  }
 }
