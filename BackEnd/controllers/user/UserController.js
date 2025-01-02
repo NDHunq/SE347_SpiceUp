@@ -211,7 +211,7 @@ class UserController {
       const resetUrl = `http://127.0.0.1:5000/api/v1/user/reset_password/${resetToken}`;
 
       const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL,
         to: user_email,
         subject: "Password Reset Request",
         html: `<p>Hi ${user.email},</p>
@@ -244,13 +244,128 @@ class UserController {
         res.status(400).send("Invalid token");
       }
 
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      user.password = hashedPassword;
+      user.password = newPassword;
       user.resetPasswordToken = undefined;
 
       await user.save();
 
       res.status(200).send("Reset password successfully");
+    } catch (e) {
+      console.error("Error resetting password:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async resetPasswordForm(req, res) {
+    try {
+      await connectToDb();
+
+      const { token } = req.params;
+
+      res.send(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Reset Password</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            background-color: #f4f4f9;
+                        }
+                        .form-container {
+                            background: #fff;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            width: 300px;
+                            text-align: center;
+                        }
+                        input {
+                            width: calc(100% - 20px);
+                            padding: 10px;
+                            margin: 10px 0;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                        }
+                        button {
+                            width: 100%;
+                            padding: 10px;
+                            background: #007bff;
+                            color: #fff;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                        }
+                        button:hover {
+                            background: #0056b3;
+                        }
+                        .error-message, .success-message {
+                            color: red;
+                            margin-top: 10px;
+                            display: none;
+                        }
+                        .success-message {
+                            color: green;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="form-container">
+                        <h2>Reset Password</h2>
+                        <form id="resetPasswordForm">
+                            <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" required />
+                            <input type="hidden" id="resetToken" name="token" value="${token}" />
+                            <button type="submit">Reset Password</button>
+                        </form>
+                        <p id="responseMessage" class="error-message"></p>
+                        <p id="successMessage" class="success-message"></p>
+                    </div>
+                    <script>
+                        document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
+                            event.preventDefault();
+    
+                            const newPassword = document.getElementById('newPassword').value;
+                            const token = document.getElementById('resetToken').value;
+                            const responseMessage = document.getElementById('responseMessage');
+                            const successMessage = document.getElementById('successMessage');
+    
+                            try {
+                                const response = await fetch('http://127.0.0.1:5000/api/v1/user/reset_password/post', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ token, newPassword })
+                                });
+    
+                                if (response.ok) {
+                                    responseMessage.style.display = 'none';
+                                    successMessage.textContent = "Password reset successfully!";
+                                    successMessage.style.display = 'block';
+                                } else {
+                                    const errorData = await response.json();
+                                    responseMessage.textContent = errorData.message || 'Failed to reset password.';
+                                    responseMessage.style.display = 'block';
+                                    successMessage.style.display = 'none';
+                                }
+                            } catch (error) {
+                                responseMessage.textContent = 'Something went wrong. Please try again later.';
+                                responseMessage.style.display = 'block';
+                                successMessage.style.display = 'none';
+                            }
+                        });
+                    </script>
+                </body>
+                </html>
+            `);
     } catch (e) {
       console.error("Error resetting password:", error);
       res.status(500).json({ message: "Internal server error" });
