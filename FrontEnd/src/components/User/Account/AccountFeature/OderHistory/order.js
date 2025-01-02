@@ -10,18 +10,29 @@ const { Text } = Typography;
 const OrderHistory = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const decodedData = jwtDecode(token);
-  const user_id = decodedData.id;
-
+  
+  const [userId,setUserId]=useState(null);
   const [orders, setOrders] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
   const [totalPages, setTotalPages] = useState(0);
-
+  useEffect(() => {
+    if (!token) {
+      navigate("/signin"); 
+    } else {
+      try {
+        const decodedData = jwtDecode(token);
+        setUserId(decodedData.id); 
+      } catch (error) {
+        console.error("Invalid token:", error);
+        navigate("/signin"); 
+      }
+    }
+  }, [token, navigate]);
   const fetchOrders = async (page) => {
     try {
       const response = await instance.get("api/v1/order", {
-        params: { user_id, page, limit },
+        params: { userId, page, limit },
       });
       setOrders(response.data.data.orders);
 

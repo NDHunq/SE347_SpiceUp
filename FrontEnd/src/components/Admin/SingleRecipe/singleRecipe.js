@@ -1,30 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { Input, ConfigProvider, Space } from "antd"; // Import Input and ConfigProvider from antd
-import { AudioOutlined } from "@ant-design/icons"; // Import AudioOutlined from antd icons
+
 import Header from "../widget/top";
-import { FaClock, FaTag, FaRegBookmark, FaBookmark } from "react-icons/fa6";
+
 import { SlTag } from "react-icons/sl";
 import { FaRegClock } from "react-icons/fa6";
 import { IoLinkOutline } from "react-icons/io5";
 import { LuEye } from "react-icons/lu";
 import { LiaUser, LiaCommentAltSolid } from "react-icons/lia";
 import "./singleRecipe.css";
-import DisplayItem from "../Recipe/display_item/displayItem";
-import { MdOpenInNew } from "react-icons/md";
-import { IoMdSearch } from "react-icons/io";
-import {
-  Link,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
 
+import { MdOpenInNew } from "react-icons/md";
+import { message } from "antd";
+import { IoMdSearch } from "react-icons/io";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  getARecipe,
+  getComment,
+  getUserInfo,
+  postComment,
+  getImage,
+} from "../../../services/userServices";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
+
+import { editRecipe, deleteRecipe } from "../../../services/adminServices";
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 function SingleRecipe() {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageClick = (img) => {
+    setSelectedImage(img);
+    setIsLightboxOpen(true);
+  };
+  const [Apptxt, setApptxt] = useState("Recipe");
+  const handleCopyLink = () => {
+    const link = window.location.href;
+    navigator.clipboard.writeText(link).then(
+      () => {
+        message.info("Link copied to clipboard!");
+      },
+      (err) => {
+        message.error("Failed to copy the link: ", err);
+      }
+    );
+  };
+  const handleStop = async () => {
+    setApp(false);
+    await editRecipe(id, { status: "RS1" });
+
+    setApptxt("Pending Recipe");
+  };
   const [value, setValue] = useState("");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -34,17 +63,25 @@ function SingleRecipe() {
     { link: "/admin/recipes", text: "Recipes" },
     { link: `/admin/singlerecipe?id=${id}`, text: "Single Recipe" },
   ]);
-  const [isBookmarked, setIsBookmarked] = useState(true);
-  const [tags, setTags] = useState("Vietnamese Food");
-  const [by, setBy] = useState("Admin");
-  const [cmt, setcmt] = useState(65);
-  const [views, setViews] = useState(100);
-  const [mins, setMins] = useState(140);
-  const [userName, setUserName] = useState("Chuyên gia ẩm thực");
-  const [date, setDate] = useState("Apr 25, 2024");
-  const [userAvatar, setUserAvatar] = useState(
-    "https://staticg.sportskeeda.com/editor/2024/09/57ffe-17256814729148-1920.jpg"
-  );
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [tags, setTags] = useState("");
+  const [by, setBy] = useState("");
+  const [cmt, setcmt] = useState();
+  const [views, setViews] = useState(0);
+  const [mins, setMins] = useState(0);
+  const [userName, setUserName] = useState("");
+  const [date, setDate] = useState("");
+  const [recipeName, setRecipeName] = useState("");
+  const [description, setDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [steps, setSteps] = useState([]);
+  const [igredients, setIgredients] = useState([]);
+  const [discovers, setDiscovers] = useState([]);
+  const [comments, setComments] = useState([]);
+  const userId = "66f6cd4a06a448abe23763e0";
+  const [authorrole, setAuthorrole] = useState("");
 
   const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
 
@@ -56,88 +93,6 @@ function SingleRecipe() {
     setIsBookmarked(!isBookmarked);
   };
 
-  const coverImage =
-    "https://cdn.tgdd.vn/Files/2021/07/31/1372124/smoothie-la-gi-cong-thuc-che-bien-smoothie-trai-cay-thom-ngon-ngot-mat-202112301817432823.jpg";
-  const [steps, setSteps] = useState([
-    {
-      content:
-        "Loại bỏ vỏ chuối, vỏ kiwi, vỏ xoài chín. Sau đó, cắt trái cây thành từng khoanh mỏng. Cho vào ngăn đá tủ lạnh ít nhất 2 tiếng.",
-      image1:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image2:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image3:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image4:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image5:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-    {
-      content:
-        "Củ dền gọt bỏ vỏ, cắt khối vuông. Yến mạch bạn có thể sử dụng loại nguyên chất hoặc rang đường nâu đều được.",
-      image1:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image2:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image3:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image4:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image5:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-    {
-      content:
-        "Hãy bảo quản món ăn này trong ngăn đông để chúng tươi lâu hơn nhé. Bây giờ thưởng thức thôi. Trái cây chua ngọt đậm đà tự nhiên không cần đường, hòa cùng trái cây tươi mát lạnh, thêm ít yến mạch và hạt chia bổ dưỡng mát lạnh. Hãy sáng tạo và duy trì thói quen ăn món smoothie này để có một vóc dáng đẹp và một sức khỏe tốt nhé! Chúc các bạn thành công!",
-      image1:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image2:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image3:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image4:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-      image5:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-  ]);
-  const [comments, setComments] = useState([
-    {
-      name: "User 1",
-      content: "Comment 1",
-      date: "2024-04-25",
-      linkavatar:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-    {
-      name: "User 2",
-      content: "Comment 2",
-      date: "2024-04-25",
-      linkavatar:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-    {
-      name: "User 3",
-      content: "Comment 3",
-      date: "2024-04-25",
-      linkavatar:
-        "https://elmich.vn/wp-content/uploads/2024/01/sinh-to-xoai-chuoi-2.jpg",
-    },
-  ]);
-  const [igredients, setIgredients] = useState([
-    {
-      igredient: "Chuối",
-      quantity: "1 trái",
-      link: "https://ant.design/components/input",
-    },
-    { igredient: "Chuối", quantity: "1 trái", link: "" },
-    { igredient: "Chuối", quantity: "1 trái", link: "" },
-    { igredient: "Chuối", quantity: "1 trái", link: "" },
-    { igredient: "Chuối", quantity: "1 trái", link: "" },
-    { igredient: "Chuối", quantity: "1 trái", link: "" },
-  ]);
-
   const openLink = (link, ingredient) => {
     if (link === "") {
       navigate(`/admin/shop?search=${ingredient}`);
@@ -146,11 +101,12 @@ function SingleRecipe() {
     }
   };
   const [isApp, setApp] = useState(false);
-  const handelAccept = () => {
+  const handelAccept = async () => {
     setApp(true);
+    await editRecipe(id, { status: "RS2" });
     setApptxt("Recipe Approved");
   };
-  const [Apptxt, setApptxt] = useState("Recipe");
+
   useEffect(() => {
     if (isApp !== true) {
       setApptxt("Pending Recipe");
@@ -158,9 +114,112 @@ function SingleRecipe() {
   }, [isApp, Apptxt]);
   const handleRefuse = () => {
     if (window.confirm("Are you sure you want to refuse this recipe?")) {
+      deleteRecipe(id);
+
       navigate("/admin/recipes");
     }
   };
+  const handlePost = async () => {
+    const comment = {
+      recipeId: id, // Replace with a valid recipe ID from your database
+      email: "example@gmail.com",
+      content: value, // Comment content
+      image: "675058267c54afebec3c5c00",
+      date: new Date().toLocaleDateString(), // Current date
+    };
+
+    try {
+      // Assuming you have a function to post the comment
+      await postComment(comment);
+      comment.image = await getImage(comment.image);
+      setComments([...comments, comment]);
+      setcmt(cmt + 1);
+
+      setValue(""); // Clear the text area after posting the comment
+      // Display a success toast message
+    } catch (error) {
+      console.error("Error posting the comment:", error);
+    }
+  };
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      try {
+        const idd = queryParams.get("id");
+
+        const response = await getARecipe(idd);
+
+        const recipe = response.data;
+        const url = await getImage(recipe.coverImageId);
+        setCoverImage(url);
+
+        setTags(recipe.type);
+
+        setViews(recipe.views);
+        if (recipe.status === "RS1") {
+          setApp(false);
+        } else {
+          setApp(true);
+          setApptxt("Recipe Approved");
+        }
+
+        setRecipeName(recipe.recipeName);
+        setDate(recipe.createdAt);
+        setMins(Math.floor(recipe.cookingTimeInSecond / 60));
+        setDescription(recipe.description);
+
+        const steps = [];
+        for (const step of recipe.step) {
+          const url = [];
+          for (const img of step.image) {
+            const urlImg = await getImage(img);
+            url.push(urlImg);
+          }
+          steps.push({
+            description: step.description,
+            image: url,
+            stepNumber: step.stepNumber,
+          });
+        }
+        setSteps(steps);
+        setIgredients(recipe.ingredients);
+
+        const rawuser = await getUserInfo({ user_id: recipe.userId });
+        const user = rawuser.data.userInfo;
+
+        setUserName(user.firstname + " " + user.lastname);
+        if (user.role === "R1") {
+          setAuthorrole("Admin");
+        } else {
+          setAuthorrole("User");
+        }
+
+        const rawcomments = await getComment(id);
+        const comments = [];
+        for (const comment of rawcomments.data.comments) {
+          const url = await getImage(comment.image);
+
+          comments.push({
+            recipeId: comment.recipeId,
+            email: comment.email,
+            content: comment.content,
+            date: new Date(comment.createdAt).toLocaleDateString(),
+            image: url,
+          });
+        }
+        // setcmt(comments);
+        setcmt(rawcomments.data.comments.length);
+        setComments(comments);
+
+        const urlAvatar = await getImage(user.avatar);
+
+        setUserAvatar(urlAvatar);
+      } catch (error) {
+        console.error("Error fetching the recipe:", error);
+      }
+    };
+    getRecipe();
+  }, []);
   {
     return (
       <ConfigProvider
@@ -177,8 +236,7 @@ function SingleRecipe() {
             colorPrimaryActive: "#00B207",
             colorPrimaryHover: "#00B207",
           },
-        }}
-      >
+        }}>
         <div className="recipes">
           <Header navItems={navItems} />
 
@@ -190,17 +248,17 @@ function SingleRecipe() {
                     <div className="col">
                       <div
                         className="cover_image"
+                        onClick={() => handleImageClick(coverImage)}
                         style={{
                           backgroundImage: `url(${coverImage})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                        }}
-                      ></div>
+                        }}></div>
                       <div className="tag_chain">
                         <SlTag className="icon_chain"></SlTag>
                         <div className="txt_chain">{tags}</div>
                         <LiaUser className="icon_chain"></LiaUser>
-                        <div className="txt_chain">{by}</div>
+                        <div className="txt_chain">{authorrole}</div>
                         <LiaCommentAltSolid className="icon_chain"></LiaCommentAltSolid>
                         <div className="txt_chain"> {cmt} comments</div>
                         <LuEye className="icon_chain"></LuEye>
@@ -208,18 +266,14 @@ function SingleRecipe() {
                         <FaRegClock className="icon_chain"></FaRegClock>
                         <div className="txt_chain">{mins} mins</div>
                       </div>
-                      <div className="title_single">
-                        Smothiee xoài chuối trộn bún đậu mắm tôm chan sữa ông
-                        thọ
-                      </div>
+                      <div className="title_single">{recipeName}</div>
                       <div className="space_between topbot20px">
                         <div className="tag_chain">
                           <div
                             className="avatar_single"
                             style={{
-                              backgroundImage: `url(${coverImage})`,
-                            }}
-                          ></div>
+                              backgroundImage: `url(${userAvatar})`,
+                            }}></div>
                           <div>
                             {" "}
                             <div className="name_single">{userName}</div>
@@ -230,82 +284,61 @@ function SingleRecipe() {
                           </div>
                         </div>
                         <div className="tag_chain2">
-                          <IoLinkOutline className="link_icon" />
+                          <IoLinkOutline
+                            className="link_icon"
+                            onClick={handleCopyLink}
+                          />
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleBookmark();
                             }}
-                            className="bookmarksingle"
-                          ></div>
+                            className="bookmarksingle"></div>
                         </div>
                       </div>
-                      <div className="description">
-                        Smoothie Healthy Bowl là một món ăn sáng hỗ trợ giảm
-                        cân, chăm sóc sức đẹp phổ biến ở các nước Châu Âu và dần
-                        đang được ưa chuộng tại Việt Nam. Đây mà món ăn có thể
-                        giúp bạn thỏa sức sáng tạo với nhiều loại trái cây, các
-                        loại hạt khác nhau. Với vẻ ngoài vô cùng đẹp mắt và
-                        hương vị tươi mát, cách làm đơn giản, combo Smoothie
-                        Xoài Chuối Kiwi sẽ làm bạn thích thú.
-                      </div>
-                      <div className="hd ">Hướng dẫn</div>
+                      <div className="description">{description}</div>
+                      <div className="hd ">Cooking instructions</div>
                       <div className="steps">
                         {steps.map((step, index) => (
                           <div className="step_container">
                             <div className="step_icon">{index + 1}</div>
                             <div className="step" key={index}>
-                              <div className="content">{step.content}</div>
+                              <div className="content">{step.description}</div>
                               <div className="images">
-                                <div
-                                  className="image"
-                                  style={{
-                                    backgroundImage: `url(${step.image1})`,
-                                  }}
-                                ></div>
-                                <div
-                                  className="image"
-                                  style={{
-                                    backgroundImage: `url(${step.image2})`,
-                                  }}
-                                ></div>
-                                <div
-                                  className="image"
-                                  style={{
-                                    backgroundImage: `url(${step.image3})`,
-                                  }}
-                                ></div>
-                                <div
-                                  className="image"
-                                  style={{
-                                    backgroundImage: `url(${step.image4})`,
-                                  }}
-                                ></div>
-                                <div
-                                  className="image"
-                                  style={{
-                                    backgroundImage: `url(${step.image5})`,
-                                  }}
-                                ></div>
+                                {step.image.map((img, imgIndex) => (
+                                  <img
+                                    key={imgIndex}
+                                    src={img}
+                                    className="image"
+                                    onClick={() => handleImageClick(img)} // Thêm sự kiện click
+                                    alt={`Step ${index + 1} image ${
+                                      imgIndex + 1
+                                    }`}
+                                  />
+                                ))}
                               </div>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <div className="leaveacomment">Leave a comment</div>
-                      <div className="message">Message</div>
-                      <TextArea
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        placeholder="Write your comment here..."
-                        autoSize={{
-                          minRows: 3,
-                          maxRows: 5,
-                        }}
-                      />
-                      <div className="button margin0">
-                        <p className="save post">Post Comments</p>
-                      </div>
+                      {isApp === true ? (
+                        <div>
+                          <div className="leaveacomment">Leave a comment</div>
+                          <div className="message">Message</div>
+                          <TextArea
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Write your comment here..."
+                            autoSize={{
+                              minRows: 3,
+                              maxRows: 5,
+                            }}
+                          />
+                          <div className="button margin0" onClick={handlePost}>
+                            <p className="save post">Post Comments</p>
+                          </div>
+                        </div>
+                      ) : null}
                       <div className="cmt">Comments</div>
                       <div className="comments">
                         {comments.map((comment, index) => (
@@ -314,13 +347,12 @@ function SingleRecipe() {
                               <div
                                 className="cmt_icon"
                                 style={{
-                                  backgroundImage: `url(${comment.linkavatar})`,
-                                }}
-                              ></div>
+                                  backgroundImage: `url(${comment.image})`,
+                                }}></div>
                               <div>
                                 <div className="flex">
                                   {" "}
-                                  <p className="cmt_name">{comment.name} - </p>
+                                  <p className="cmt_name">{comment.email} - </p>
                                   <p className="cmt_date"> {comment.date}</p>
                                 </div>
 
@@ -331,9 +363,7 @@ function SingleRecipe() {
                           </div>
                         ))}
                       </div>
-                      <div className="button_sv margin0 width0">
-                        <p className="save post">Load more</p>
-                      </div>
+
                       <br />
                       <br />
                       <br />
@@ -344,23 +374,32 @@ function SingleRecipe() {
                 </div>
 
                 <div className="col scot2 ">
-                  <div className="ccontainer newcon">
-                    {" "}
-                    <div className="rcapp">{Apptxt}</div>
-                    {isApp === false ? (
+                  {isApp === false ? (
+                    <div className="ccontainer newcon">
+                      {" "}
+                      <div className="rcapp">{Apptxt}</div>
                       <div className="flex bot30px">
                         <div className="upload_btn " onClick={handelAccept}>
                           Accept
                         </div>
                         <div
                           className="refuse_btn newbtn"
-                          onClick={handleRefuse}
-                        >
+                          onClick={handleRefuse}>
                           Refuse
                         </div>
                       </div>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="ccontainer newcon">
+                      {" "}
+                      <div className="rcapp">{Apptxt}</div>
+                      <div className="flex bot30px">
+                        <div className="stop_btn newbtn " onClick={handleStop}>
+                          Stop publishing
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <Search
                     placeholder="Find more recipes..."
@@ -379,12 +418,12 @@ function SingleRecipe() {
                           className="flex clickable"
                           onClick={() =>
                             openLink(ingredient.link, ingredient.igredient)
-                          }
-                        >
+                          }>
                           <div className="ingredient-name">
-                            {ingredient.igredient}
+                            {ingredient.name}
                           </div>
-                          {ingredient.link === "" ? (
+                          {ingredient.link === "" ||
+                          ingredient.link === undefined ? (
                             <IoMdSearch className="ingredient-icon" />
                           ) : (
                             <MdOpenInNew className="ingredient-icon" />
@@ -398,38 +437,17 @@ function SingleRecipe() {
                     ))}
                   </div>
                   <div className="line topbotl"></div>
-                  <div className="igre">Discover Others</div>
-
-                  <DisplayItem
-                    id={"1234"}
-                    istrue={true}
-                    ttime={140}
-                    ttag={"Vietnamese Food"}
-                    tby={"Admin"}
-                    tcomments={65}
-                    tname={"Trứng cuộn Hàn Quốc"}
-                    tlink={
-                      "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                    }
-                  ></DisplayItem>
-                  <br />
-                  <DisplayItem
-                    id={"1234"}
-                    istrue={true}
-                    ttime={140}
-                    ttag={"Vietnamese Food"}
-                    tby={"Admin"}
-                    tcomments={65}
-                    tname={"Trứng cuộn Hàn Quốc"}
-                    tlink={
-                      "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png"
-                    }
-                  ></DisplayItem>
                 </div>
               </div>
             </div>
           </main>
         </div>
+        {isLightboxOpen && (
+          <Lightbox
+            mainSrc={selectedImage}
+            onCloseRequest={() => setIsLightboxOpen(false)}
+          />
+        )}
       </ConfigProvider>
     );
   }

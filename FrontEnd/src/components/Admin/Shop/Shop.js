@@ -5,7 +5,7 @@ import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
 import FilterCategoryShop from "../../User/Recipe/filter_drop_category/filter_category";
 import FilterRate from "../../User/Shop/filter_rate/filter_rate";
-
+import { useNavigate } from "react-router";
 import '../../User/Recipe/filter_drop_category/filter_category.css'
 import {Modal, Slider ,ConfigProvider, Dropdown, Menu ,Radio, Button,Pagination,Empty,Typography} from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
@@ -15,8 +15,14 @@ import ModalUpload from "./Modal/ModalUpload";
 import Product from "./AdminProduct/Product";
 import instance from "../../../utils/axiosCustomize";
 import { useEffect } from "react";
+import {jwtDecode} from "jwt-decode";
+
 function ShopAdmin(){
-  const [applyButtonColor, setApplyButtonColor] = useState("#00b207");
+   const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+
+  const [applyButtonColor, setApplyButtonColor] = useState('#00b207');
   const navItems=[{link:"/admin/shop",text:"Shop"}];
 
   const [numFound, setNumFound]=useState(0);
@@ -58,6 +64,12 @@ function ShopAdmin(){
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
   const [totalPages, setTotalPages] = useState(0);
+  useEffect(() => {
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+  }, [token, navigate]);
   const onChangePage = (page) => {
     setPage(page);
 

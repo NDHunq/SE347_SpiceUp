@@ -6,10 +6,10 @@ const authenticate = require('../middlewares/auth/auth');
 const {getAllCategories, getCategoryByID, createCategory} = require('../controllers/CategoryController.js');
 
 //GET all categories
-router.get('', authenticate, getAllCategories);
+router.get('', getAllCategories);
 
 //GET a category by ID
-router.get('/:id', authenticate, getCategoryByID);
+router.get('/:id', getCategoryByID);
 
 //CREATE a category
 router.post('', authenticate, createCategory);

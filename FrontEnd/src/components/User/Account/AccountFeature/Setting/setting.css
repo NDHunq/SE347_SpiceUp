@@ -110,7 +110,8 @@
   width: 190px;
   height: 190px;
   border-radius: 600px;
-  border: 1px solid var(--Gray-Scale-Gray-100, #e6e6e6);
+
+  border: 2px solid var(--Gray-Scale-Gray-100, #e6e6e6);
 }
 .imgframe_container {
   width: 100%;

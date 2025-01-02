@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./filter_category.css";
 import { Radio } from "antd";
 import { RiArrowDropDownLine } from "react-icons/ri";
-function FilterCategory({ listname, listCategory }) {
+function FilterCategory({ listname, listCategory, onTypeSelect }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isRotated, setIsRotated] = useState(true);
   const Name = listname;
@@ -14,6 +14,9 @@ function FilterCategory({ listname, listCategory }) {
   const onChange = (e) => {
     setSelectedCategory(e.target.value);
   };
+  const handleTypeSelect = (e, name) => {
+    onTypeSelect(name);
+  };
 
   return (
     <div>
@@ -21,8 +24,7 @@ function FilterCategory({ listname, listCategory }) {
         <p className="txt">{Name}</p>
         <div
           onClick={toggleDropdown}
-          className={`img_frame ${isRotated ? "rotated" : ""}`}
-        >
+          className={`img_frame ${isRotated ? "rotated" : ""}`}>
           <RiArrowDropDownLine className="img"></RiArrowDropDownLine>
         </div>
       </div>
@@ -32,21 +34,19 @@ function FilterCategory({ listname, listCategory }) {
           <Radio.Group
             value={selectedCategory}
             onChange={onChange}
-            className="selectedCategory"
-          >
+            className="selectedCategory">
             {listCategory.map((category) => (
               <div key={category.name} className="category">
                 <Radio
                   key={category.name}
                   value={category.id}
                   className="category_radi"
-                >
+                  onChange={(e) => {
+                    handleTypeSelect(e, category.name);
+                  }}>
                   <div htmlFor={category.name} className="category_labe">
                     <p className="category_name">{category.name}</p>
-                    <p className="category_number">
-                      &nbsp;
-                      {"   (" + category.number + ") "}
-                    </p>
+                    <p className="category_number">&nbsp;</p>
                   </div>
                 </Radio>
               </div>

@@ -47,8 +47,7 @@ const DisplayItem = ({
           backgroundImage: `url(${tlink})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-        }}
-      >
+        }}>
         <div className="time" onClick={handleItemClick}>
           <FaClock className="clock" />
           <div className="timetxt">{ttime} min</div>
@@ -63,17 +62,12 @@ const DisplayItem = ({
             <span style={{ color: "#B3B3B3" }}>By</span> {tby}
           </div>
           <LiaCommentAltSolid className="tagicon3" />
-          <div className="tagtxt">{tcomments} Comments</div>
+          <div className="tagtxt">{tcomments} Views</div>
         </div>
         <div className="height" onClick={handleItemClick}></div>
         <div className="bot_row3">
           <div className="bot_row txt_name" onClick={handleItemClick}>
             {tname}
-          </div>
-
-          <div className="flex">
-            <p className="cancelX" onClick={handleRefuse}></p>
-            <p className="acceptV" onClick={handleAccept}></p>
           </div>
         </div>
       </div>

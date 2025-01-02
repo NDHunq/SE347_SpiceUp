@@ -1,44 +1,39 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 //console.log(orderId)
-mongoose.set('debug', true)
+mongoose.set("debug", true);
 
-const SpiceUp = mongoose.connection.useDb('SpiceUp');
+const SpiceUp = mongoose.connection.useDb("SpiceUp");
 
-const FeedBackSchema = new mongoose.Schema({
+const FeedBackSchema = new mongoose.Schema(
+  {
     email: {
-        type: String,
-        require: true,  
+      type: String,
+      require: true,
     },
     content: {
-        type: String,
-        require: true,
+      type: String,
+      require: true,
     },
     image: {
-        type: String,
+      type: String,
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
     },
     updatedAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
     },
     isDeleted: {
-        type: Boolean,
-        default: false
-    }
-}, {discriminatorKey: 'type'})
+      type: Boolean,
+      default: false,
+    },
+  },
+  { discriminatorKey: "type" }
+);
 
-const FeedBack = SpiceUp.model('FeedBack', FeedBackSchema)
+const FeedBack = SpiceUp.model("FeedBack", FeedBackSchema);
 
-module.exports = FeedBack
-
-
-
-
-
-
-
-
+module.exports = FeedBack;

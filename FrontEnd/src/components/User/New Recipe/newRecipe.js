@@ -7,28 +7,68 @@ import "./newRecipe.css";
 import { Dropdown, Button, Space, message, ConfigProvider, Input } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import NewIngredient from "./newIgredient/newIgredient";
+import {
+  createStep,
+  uploadImage,
+  createRecipe,
+  upload1Image,
+} from "../../../services/userServices";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
 const handleMenuClick = (e, setSelectedType) => {
-  message.info(`Clicked on menu item: ${e.key}`);
-  setSelectedType(e.item.props.children);
-  console.log("click", e);
+  //message.info(`Clicked on menu item: ${e.key}`);
+  setSelectedType(e.item.props.children[0][1].props.children);
+  //console.log("click", e.item.props.children[0][1].props.children);
 };
 
 const menuProps = (setSelectedType) => ({
   items: [
     {
-      label: "Vietnamese Food",
+      label: "Sauce",
       key: "1",
     },
     {
-      label: "Option 2",
+      label: "Dessert",
       key: "2",
     },
     {
-      label: "Option 3",
+      label: "Beverages",
       key: "3",
+    },
+    {
+      label: "Snack",
+      key: "4",
+    },
+    {
+      label: "Soup",
+      key: "5",
+    },
+    {
+      label: "Baking",
+      key: "6",
+    },
+    {
+      label: "Breakfast",
+      key: "7",
+    },
+    {
+      label: "Lunch",
+      key: "8",
+    },
+    {
+      label: "Dinner",
+      key: "9",
+    },
+    {
+      label: "Salad",
+      key: "10",
+    },
+    {
+      label: "Vietnamese Food",
+      key: "11",
     },
   ],
   onClick: (e) => handleMenuClick(e, setSelectedType),
@@ -45,18 +85,37 @@ function SingleRecipe() {
   const [steps, setSteps] = useState([]);
   const [value, setValue] = useState("");
   const [selectedType, setSelectedType] = useState("");
-
+  const [recipeName, setRecipeName] = useState("");
+  const [cookingTime, setCookingTime] = useState("");
+  const handleStepChange = (id, newValue) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step) =>
+        step.id === id ? { ...step, content: newValue } : step
+      )
+    );
+  };
+  const handleStepImageChange = (id, newValue) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step) =>
+        step.id === id ? { ...step, images: newValue } : step
+      )
+    );
+  };
   const addNewStep = () => {
     setSteps([
       ...steps,
       {
         id: steps.length,
+        content: "",
+        images: [],
         component: (
           <NewStep
             txt={""}
             key={steps.length}
             id={steps.length}
             onDelete={deleteStep}
+            onChange={handleStepChange}
+            onImageChange={handleStepImageChange}
           />
         ),
       },
@@ -70,12 +129,15 @@ function SingleRecipe() {
       return newSteps.map((step, index) => ({
         ...step,
         id: index,
+
         component: (
           <NewStep
             text={step.txt}
             key={index}
             id={index}
             onDelete={deleteStep}
+            onChange={handleStepChange}
+            onImageChange={handleStepImageChange}
           />
         ),
       }));
@@ -87,6 +149,8 @@ function SingleRecipe() {
     { link: "/recipes", text: "Recipes" },
     { link: "/newrecipe", text: "New Recipe" },
   ];
+  const nav = useNavigate();
+
   const [nameigre, setName] = useState("");
   const [quantityigre, setQuantity] = useState("");
   const [linkin, setLinkin] = useState("");
@@ -100,20 +164,79 @@ function SingleRecipe() {
         tlinh: linkin,
       },
     ]);
+    setName("");
+    setQuantity("");
+    setLinkin("");
   };
   const [coverImage, setCoverImage] = useState(null);
+  const [fileCoverImage, setFileCoverImage] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setCoverImage(imageUrl);
+      setFileCoverImage(file);
     }
   };
 
   const triggerFileInput = () => {
     document.getElementById("fileInput").click();
   };
+  const handleSubmit = async () => {
+    if (
+      !recipeName ||
+      !cookingTime ||
+      !selectedType ||
+      !value ||
+      !fileCoverImage ||
+      steps.length === 0 ||
+      ingredients.length === 0
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    //API upload cover image
+    let coverImageId = await upload1Image(fileCoverImage);
+    //API create step
+    const stepsArr = await Promise.all(
+      steps.map(async (step) => {
+        const uploadedImages = await uploadImage(step.images);
+        return {
+          stepNumber: step.id + 1,
+          description: step.content,
+          image: uploadedImages,
+        };
+      })
+    );
+    console.log("stepsArr", stepsArr);
+    let recipeIds = await createStep(stepsArr);
+    const ingredientsArr = ingredients.map(({ name, quantity }) => ({
+      name,
+      quantity,
+    }));
+    const userId = localStorage.getItem("user_id");
+
+    //API create recipe
+    const data = {
+      recipeName: recipeName,
+      description: value,
+      cookingTimeInSecond: cookingTime * 60,
+      userId: userId,
+      coverImageId: coverImageId,
+      recipeIds: recipeIds,
+      type: selectedType,
+      ingredients: ingredientsArr,
+    };
+    console.log("data", data);
+
+    let recipeId = await createRecipe(data);
+    console.log("recipeId", recipeId);
+    toast.success("Recipe created successfully");
+    const url = `/singlerecipe?id=${recipeId}`;
+    nav(url);
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -129,8 +252,7 @@ function SingleRecipe() {
           colorPrimaryActive: "#00B207",
           colorPrimaryHover: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
         <main className="content">
@@ -142,8 +264,7 @@ function SingleRecipe() {
                 <div
                   className="coverImage"
                   onClick={triggerFileInput}
-                  style={{ backgroundImage: `url(${coverImage})` }}
-                >
+                  style={{ backgroundImage: `url(${coverImage})` }}>
                   {coverImage ? "" : "Click to add cover image"}
                 </div>
                 <input
@@ -156,12 +277,20 @@ function SingleRecipe() {
                 <div className="flex3 ">
                   <div className="div11">
                     <p className="newtxt"> Name</p>
-                    <Input placeholder="Name" />
+                    <Input
+                      placeholder="Name"
+                      value={recipeName}
+                      onChange={(e) => setRecipeName(e.target.value)}
+                    />
                   </div>
                   <div className="flex4">
                     <div className="div13">
                       <p className="newtxt">Cooking time (min)</p>
-                      <Input placeholder="Cooking time" />
+                      <Input
+                        placeholder="Cooking time"
+                        value={cookingTime}
+                        onChange={(e) => setCookingTime(e.target.value)}
+                      />
                     </div>
                     <div className="div12">
                       <p className="newtxt">Type</p>
@@ -225,23 +354,22 @@ function SingleRecipe() {
                     <Input
                       placeholder="Name"
                       value={nameigre}
-                      onChange={(e) => setName(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setName(e.target.value)}></Input>
                     <Input
                       placeholder="Quantity"
                       value={quantityigre}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    ></Input>
+                      onChange={(e) => setQuantity(e.target.value)}></Input>
                   </div>
 
                   <Input
                     placeholder="Link (optional)"
                     className="gap"
                     value={linkin}
-                    onChange={(e) => setLinkin(e.target.value)}
-                  ></Input>
+                    onChange={(e) => setLinkin(e.target.value)}></Input>
                 </div>
-                <div className="upload_btn width100">Upload</div>
+                <div className="upload_btn width100" onClick={handleSubmit}>
+                  Upload
+                </div>
                 <br />
                 <br />
               </div>

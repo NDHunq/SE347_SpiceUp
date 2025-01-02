@@ -9,6 +9,8 @@ import FilterCategory from "./filter_drop_category/filter_category";
 import { Pagination } from "antd";
 import DisplayItem from "./display_item/displayItem";
 import RecentItem from "./recent_Item/recent_item";
+import { getAllRecipes, getImage } from "../../../services/userServices";
+import { toast } from "react-toastify";
 const onChange = (pageNumber) => {
   console.log("Page: ", pageNumber);
 };
@@ -22,242 +24,47 @@ function Recipes({ search }) {
       handleSearch();
     }
   }, []);
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    const allRecipes = JSON.parse(localStorage.getItem("allRecipes") || "[]");
+    const filtered = allRecipes.filter((item) =>
+      item.recipeName.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setListDisplay_pending(filtered);
+  };
 
   const navigate = useNavigate();
 
   const handleUploadClick = () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      toast.warning("Please login to upload recipe");
+      navigate("/signin");
+      return;
+    }
     navigate("/newrecipe");
   };
 
   const navItems = [{ link: "/recipes", text: "Recipes" }];
   const listCategory = [
-    { name: "Cate1", number: 10, id: 1 },
-    { name: "Cate2", number: 20, id: 2 },
-    { name: "Cate3", number: 30, id: 3 },
-    { name: "Cate4", number: 40, id: 4 },
-    { name: "Cate5", number: 50, id: 5 },
-    { name: "Cate6", number: 60, id: 6 },
-    { name: "Cate7", number: 70, id: 7 },
-    { name: "Cate8", number: 80, id: 8 },
-    { name: "Cate9", number: 90, id: 9 },
-    { name: "Cate10", number: 100, id: 10 },
+    { name: "All", number: 10, id: 1 },
+    { name: "Sauce", number: 20, id: 2 },
+    { name: "Dessert", number: 30, id: 3 },
+    { name: "Beverages", number: 40, id: 4 },
+    { name: "Snack", number: 50, id: 5 },
+    { name: "Soup", number: 60, id: 6 },
+    { name: "Baking", number: 70, id: 7 },
+    { name: "Breakfast", number: 80, id: 8 },
+    { name: "Lunch", number: 90, id: 9 },
+    { name: "Dinner", number: 100, id: 10 },
+    { name: "Salad", number: 10, id: 11 },
+    { name: "Vietnamese Food", number: 90, id: 12 },
   ];
-  const listDisplay_pending = [
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn hàn quốc1",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc2",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc3",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc4",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc5",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc6",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc7",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc8",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc9",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc10",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc11",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc12",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc13",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc14",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc15",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc16",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc17",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc18",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
 
-    {
-      id: "1234",
-      istrue: true,
-      ttime: 140,
-      ttag: "Vietnamese Food",
-      tby: "Admin",
-      tcomments: 65,
-      tname: "Trứng cuộn Hàn Quốc19",
-      tlink:
-        "https://img.tastykitchen.vn/resize/764x-/2022/04/15/cach-lam-trung-cuon-han-quoc-01-62e3.png",
-    },
-  ];
   const [currentPage, setCurrentPage] = useState(1);
   const [total_pages, setTotalPages] = useState(1);
-
+  const [result, setResult] = useState(0);
+  const [listDisplay_pending, setListDisplay_pending] = useState([]);
+  let listDisplay_pending_all = [];
   const handlePageChange = (page) => {
     setCurrentPage(page);
     renderDisplayItems(page, 1);
@@ -265,29 +72,92 @@ function Recipes({ search }) {
 
   useEffect(() => {
     setTotalPages(Math.ceil(listDisplay_pending.length / 8) * 10);
+    setResult(listDisplay_pending.length);
   }, [listDisplay_pending]);
   const renderDisplayItems = (page, row) => {
     const startIndex = (page - 1) * 8 + (row - 1) * 2;
     let itemsToRender = listDisplay_pending.slice(startIndex, startIndex + 2);
+
     return (
       <div style={{ display: "flex", gap: "20px" }}>
-        {itemsToRender.map((item, index) => (
-          <DisplayItem
-            key={index}
-            id={item.id}
-            istrue={item.istrue}
-            ttime={item.ttime}
-            ttag={item.ttag}
-            tby={item.tby}
-            tcomments={item.tcomments}
-            tname={item.tname}
-            tlink={item.tlink}
-          />
-        ))}
+        {itemsToRender.map((item, index) => {
+          let time = item.cookingTimeInSecond / 60;
+          let isTrue = false;
+          if (item.savedUserId.includes("userId")) {
+            isTrue = true;
+          }
+
+          return (
+            <DisplayItem
+              key={index}
+              id={item._id}
+              istrue={isTrue}
+              ttime={time}
+              ttag={item.type}
+              tby={item.userId.firstName}
+              tcomments={item.views}
+              tname={item.recipeName}
+              tlink={item.coverImageUrl}
+            />
+          );
+        })}
       </div>
     );
   };
 
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const recipes = await getAllRecipes();
+        if (Array.isArray(recipes)) {
+          const recipesWithImages = await Promise.all(
+            recipes.map(async (item) => {
+              const url = await getImage(item.coverImageId);
+              return { ...item, coverImageUrl: url };
+            })
+          );
+          console.log("recipesWithImages", recipesWithImages);
+          const filtered = recipesWithImages.filter(
+            (item) => item.status === "RS2"
+          );
+          console.log("filtered", filtered);
+          setResult(filtered.length);
+          setListDisplay_pending(filtered);
+          localStorage.setItem("allRecipes", JSON.stringify(filtered));
+        } else {
+          setListDisplay_pending([]);
+          console.error("getAllRecipes() did not return an array");
+        }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+  const onSelectChange = (e) => {
+    const value = e.target.value;
+    let sorted = [];
+    if (value === "latest") {
+      sorted = [...listDisplay_pending].sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    } else if (value === "best-seller") {
+      sorted = [...listDisplay_pending].sort((a, b) => {
+        return b.views - a.views;
+      });
+    }
+    setListDisplay_pending(sorted);
+  };
+  const handleTypeSelect = (typeName) => {
+    const allRecipes = JSON.parse(localStorage.getItem("allRecipes") || "[]");
+    if (typeName === "All") {
+      setListDisplay_pending(allRecipes);
+    } else {
+      const filtered = allRecipes.filter((item) => item.type === typeName);
+      setListDisplay_pending(filtered);
+    }
+  };
   return (
     <ConfigProvider
       theme={{
@@ -301,8 +171,7 @@ function Recipes({ search }) {
         token: {
           colorPrimary: "#00B207",
         },
-      }}
-    >
+      }}>
       <div className="recipes">
         <Header navItems={navItems} />
 
@@ -323,9 +192,9 @@ function Recipes({ search }) {
                     <FilterCategory
                       listname={"Recipe Types"}
                       listCategory={listCategory}
-                    ></FilterCategory>
+                      onTypeSelect={handleTypeSelect}></FilterCategory>
                     <hr className="line"></hr>
-                    <p className="recenttxt">Recenty Saved</p>
+                    {/* <p className="recenttxt">Recenty Saved</p>
 
                     <RecentItem
                       tname={"Smoothie xoài chuối kiwi"}
@@ -352,7 +221,7 @@ function Recipes({ search }) {
                       tname={"Smoothie xoài chuối kiwi"}
                       ttime={"Apr 25, 2024"}
                       id={"1234"}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -366,8 +235,7 @@ function Recipes({ search }) {
                       className="txt_search"
                       placeholder="Search"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                    ></input>
+                      onChange={(e) => setSearchInput(e.target.value)}></input>
 
                     <div className="search_i2" onClick={handleSearch}>
                       <p className="txt_search2">Search</p>
@@ -380,13 +248,18 @@ function Recipes({ search }) {
                 <div className="div2">
                   <div className="flex">
                     <p className="txt_Sortby"> Sort by:</p>
-                    <select className="sort-by">
+                    <select
+                      className="sort-by"
+                      onChange={(e) => {
+                        onSelectChange(e);
+                      }}>
                       <option value="latest"> Latest </option>
                       <option value="best-seller"> View </option>
                     </select>
                   </div>
                   <p className="txt2">
-                    <span className="txt-bold txt2">52</span> Results Found
+                    <span className="txt-bold txt2">{result}</span> Results
+                    Found
                   </p>
                 </div>
                 <div className="display_row">

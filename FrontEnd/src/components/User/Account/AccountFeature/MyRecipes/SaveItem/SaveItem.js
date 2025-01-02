@@ -5,8 +5,9 @@ import { SlTag } from "react-icons/sl";
 import { LiaUser, LiaCommentAltSolid } from "react-icons/lia";
 import { IoArrowForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { saveReicpe } from "../../../../../../services/userServices";
 import "./SaveItem.css";
-const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
+const SaveItem = ({ imagelink, name, istrue, issave, id, status }) => {
   const [isBookmarked, setIsBookmarked] = useState(istrue);
   const navigate = useNavigate();
 
@@ -16,6 +17,12 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
 
   const handleItemClick = () => {
     navigate(`/singlerecipe?id=${id}`);
+  };
+  const userId = localStorage.getItem("user_id");
+  const handleSave = async () => {
+    await saveReicpe(id, {
+      user_id: userId,
+    });
   };
 
   return (
@@ -29,9 +36,28 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
         }}
       ></div>
       <div className="sbot sbot2">
-        <p className="txtbot" data-tooltip="Your tooltip text here">
+        <p className="txtbot " data-tooltip="Your tooltip text here">
           {name}
         </p>
+        {istrue && status === "RS1" && (
+          <p
+            className="txtbot bold"
+            data-tooltip="Your tooltip text here"
+            style={{ color: "red" }}
+          >
+            Pending
+          </p>
+        )}
+        {istrue && status === "RS2" && (
+          <p
+            className="txtbot bold"
+            data-tooltip="Your tooltip text here"
+            style={{ color: "green" }}
+          >
+            Approved
+          </p>
+        )}
+
         {issave && (
           <div
             onClick={(e) => {
@@ -41,9 +67,12 @@ const SaveItem = ({ imagelink, name, istrue, issave, id }) => {
             className="bookmark"
           >
             {isBookmarked ? (
-              <FaBookmark className="bookmark-icon active" />
+              <FaBookmark
+                className="bookmark-icon active"
+                onClick={handleSave}
+              />
             ) : (
-              <FaRegBookmark className="bookmark-icon" />
+              <FaRegBookmark className="bookmark-icon" onClick={handleSave} />
             )}
           </div>
         )}

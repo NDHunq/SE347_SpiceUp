@@ -27,33 +27,34 @@ function Account() {
   ]);
 
   useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      navigate("/signin");
+    }
+
     const currentPath = location.pathname;
     let currentText = "Settings";
 
     if (currentPath.includes("myrecipes")) {
       currentText = "My Recipes";
-    }else if (currentPath.includes("order")) {
+    } else if (currentPath.includes("order")) {
       currentText = "Order History";
     }
-    
-    const isDetailOrder = /\/account\/order\/\d+/.test(currentPath); 
-    console.log(navItems)
+
+    const isDetailOrder = /\/account\/order\/\d+/.test(currentPath);
+    console.log(navItems);
 
     if (isDetailOrder) {
       setNavItems((prevItems) => {
-        const updatedItems = prevItems.filter(item => !item.link.includes('/account/order/'));
-        return [
-          ...updatedItems,
-          { link: currentPath, text: 'Detail Order' },
-        ];
+        const updatedItems = prevItems.filter(
+          (item) => !item.link.includes("/account/order/")
+        );
+        return [...updatedItems, { link: currentPath, text: "Detail Order" }];
       });
-    }
-    else
+    } else
       setNavItems((prevItems) => {
-        return [
-          prevItems[0],
-        { link: currentPath, text: currentText },
-      ]});
+        return [prevItems[0], { link: currentPath, text: currentText }];
+      });
   }, [location.pathname]);
 
   const handleNavItemClick = (text, path) => {
@@ -62,6 +63,10 @@ function Account() {
       { link: path, text: text },
     ]);
     navigate(path);
+  };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/signin");
   };
 
   return (
@@ -99,7 +104,7 @@ function Account() {
               </Link>
               <Link
                 className={`Navi ${
-                  location.pathname.includes("/account/order")  ? "active" : ""
+                  location.pathname.includes("/account/order") ? "active" : ""
                 }`}
                 to="order"
                 onClick={() =>
@@ -109,7 +114,7 @@ function Account() {
                 <MdHistory className="imgacc" />
                 <p className="txtnaa">Order History</p>
               </Link>
-              <div className="Navi bot10px">
+              <div className="Navi bot10px" onClick={handleLogout}>
                 <LuLogOut className="imgacc" />
                 <p className="txtnaa">Log-out</p>
               </div>
@@ -120,7 +125,7 @@ function Account() {
                 <Route path="settings" element={<Settings />} />
                 <Route path="myrecipes" element={<MyRecipe />} />
                 <Route path="order" element={<OrderHistory />} />
-                <Route path="order/:id" element={<DetailOrder />} /> 
+                <Route path="order/:id" element={<DetailOrder />} />
               </Routes>
             </div>
           </div>

@@ -24,8 +24,7 @@ const DetailOrder = () => {
   const { id } = useParams();
   const navigate = useNavigate(); 
   const token = localStorage.getItem("token");
-  const decodedData = jwtDecode(token);
-  const user_id = decodedData.id;
+
   // State variables
   const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,6 +34,7 @@ const DetailOrder = () => {
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [rateError, setRateError] = useState(false);
+  const [userId,setUserId]=useState(null);
 
   // Additional State for Order Details
   const [orderDetails, setOrderDetails] = useState({
@@ -51,12 +51,24 @@ const DetailOrder = () => {
     payment: "",
     subTotal: 0,
   });
-
+  useEffect(() => {
+    if (!token) {
+      navigate("/signin"); 
+    } else {
+      try {
+        const decodedData = jwtDecode(token);
+        setUserId(decodedData.id); 
+      } catch (error) {
+        console.error("Invalid token:", error);
+        navigate("/signin"); 
+      }
+    }
+  }, [token, navigate]);
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         const response = await instance.get(`/api/v1/order/${id}`);
-
+        
         setDataSource(
           response.data.data.order_items_post.map((item) => ({
             key: item._id,
@@ -165,7 +177,7 @@ const DetailOrder = () => {
       setLoading(true);
   
       const response = await instance.get("/api/v1/review", {
-        params: { user_id, product_id },
+        params: { userId, product_id },
       });
   
       if (response?.data?.status === "success" && response?.data?.data) {
@@ -207,7 +219,7 @@ const DetailOrder = () => {
       return;
     }
     const payload = {
-      user_id,
+      userId,
       product_id: selectedProduct.id,
       content: contentRate,
       rating: ratee,

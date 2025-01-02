@@ -47,7 +47,7 @@ const DisplayItem = ({
             <span style={{ color: "#B3B3B3" }}>By</span> {tby}
           </div>
           <LiaCommentAltSolid className="tagicon3" />
-          <div className="tagtxt">{tcomments} Comments</div>
+          <div className="tagtxt">{tcomments} Views</div>
         </div>
         <div className="height"></div>
         <div className="bot_row3">

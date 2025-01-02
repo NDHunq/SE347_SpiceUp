@@ -5,10 +5,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
+import { sendResetMail } from "../../services/userServices";
 function ForgetPass() {
   const [userName, setUserName] = useState();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    const response = await sendResetMail(userName)
+
+    if(response.status !== 200) {
+      toast.error("Cannot send mail. Check your email again");
+      return
+    }
     toast.success("Send email successfully");
   };
   return (

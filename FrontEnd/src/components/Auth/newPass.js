@@ -5,14 +5,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
+import { changePassword } from "../../services/userServices";
+import { useNavigate } from "react-router-dom";
 function NewPass() {
-  const [otp, setOTP] = useState();
+  const [oldPassword, setOldPassword] = useState();
   const [password, setPassword] = useState();
   const [cf_password, setCFPassword] = useState();
+  const nav = useNavigate()
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (event) => {
-    toast.success("Change Password successfully");
+  const handleSubmit = async (event) => {
+    const userId = localStorage.getItem("user_id")
+    if(password !== cf_password) {
+      toast.error("Confirmed passsword doesn't match");
+      return 
+    }
+    
+    const response = await changePassword(userId, oldPassword, password)
+
+    if(response.status !== 200) {
+      toast.error("Wrong old password")
+      return
+    }
+
+    toast.success("Change password succesfully")
+    nav("/home")
   };
   return (
     <>
@@ -27,10 +44,10 @@ function NewPass() {
             <input
               className="password"
               type="text"
-              name="Otp"
-              placeholder="OTP Code"
-              value={otp}
-              onChange={(event) => setOTP(event.target.value)}
+              name="oldPassword"
+              placeholder="Old Password"
+              value={oldPassword}
+              onChange={(event) => setOldPassword(event.target.value)}
             />
           </div>
           <div>
