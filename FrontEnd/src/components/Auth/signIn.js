@@ -33,8 +33,11 @@ function SignIn() {
     localStorage.setItem("role", response.data.data.role);
 
     toast.success("Sign in successfully");
-
-    navigate("/home");
+    if (response.data.data.role === "RS2") {
+      navigate("/admin/home");
+    } else {
+      navigate("/home");
+    }
   };
   return (
     <>

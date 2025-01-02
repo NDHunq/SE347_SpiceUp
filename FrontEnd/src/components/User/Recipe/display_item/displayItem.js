@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./displayItem.css";
 import { FaClock, FaTag, FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { SlTag } from "react-icons/sl";
@@ -27,6 +27,13 @@ const DisplayItem = ({
     navigate(`/singlerecipe?id=${id}`);
     window.location.reload();
   };
+  const [role, setRole] = useState("");
+  useEffect(() => {
+    const lrole = localStorage.getItem("role");
+    if (lrole === "RS1") {
+      setRole("RS1");
+    }
+  }, []);
 
   // Đảm bảo tby là chuỗi (nếu là đối tượng, lấy giá trị cần hiển thị)
   const displayBy =
@@ -75,7 +82,7 @@ const DisplayItem = ({
         <div className="bot_row3">
           <div className="bot_row txt_name">{tname || "Unnamed Recipe"}</div>
 
-          {isbook && (
+          {isbook && role === "RS1" && (
             <div
               onClick={(e) => {
                 e.stopPropagation(); // Ngăn chặn sự kiện click lan lên cha

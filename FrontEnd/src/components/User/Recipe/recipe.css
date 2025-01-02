@@ -149,21 +149,18 @@
 .txt-bold {
   font-weight: 700;
 }
-.filter_btn {
-  transform: translateY(-5px);
+
+.filter_btn2 {
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  width: 120px;
-  height: 40px;
-  padding: 10px 24px;
+  font-size: 24px;
+
   font-weight: 600;
   user-select: none;
-  border-radius: 43px;
+  transform: translateX(10px) translateY(10px);
 
-  background: var(--Gray-Scale-White, #00b207);
-  text-align: center;
-  color: white;
-  max-lines: 1;
+  background: transparent;
+
+  color: var(--Gray-Scale-White, #00b207);
 }
 .img {
   width: 25px;

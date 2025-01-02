@@ -1,9 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { LiaHeadsetSolid, LiaSearchSolid, LiaUser } from "react-icons/lia";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const handelLOgout = () => {
+    localStorage.clear();
+    navigate("/signin");
+  };
   return (
     <div className="header-admin">
       <main className="content">
@@ -31,19 +36,12 @@ const Header = () => {
             <div className="col-4">
               <div className="row display">
                 <Link to="/contact" className="col conta ">
-                  <div className="display">
-                    <LiaHeadsetSolid className="contact"></LiaHeadsetSolid>
-                    <p className="phone-navi" style={{ fontWeight: 500 }}>
-                      Contact Us
-                    </p>
-                    <Link to="/contact"></Link>
-                  </div>
+                  <div className="display"></div>
                 </Link>
                 <div className="col icon-group">
                   <div className="col icon"> </div>
-                  <div className="col icon">
-                    {" "}
-                    <LiaSearchSolid className="icon-1" />
+                  <div className=" Logout-btn " onClick={handelLOgout}>
+                    Đăng xuất
                   </div>
                 </div>
               </div>
