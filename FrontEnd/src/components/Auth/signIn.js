@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./signIn.scss";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
@@ -10,6 +9,7 @@ function SignIn() {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -60,21 +60,29 @@ function SignIn() {
           <div>
             <input
               className="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
+          <div className="show-password">
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={(event) => setShowPassword(event.target.checked)}
+            />
+            Show Password
+          </div>
           <div>
-            <label class="custom-checkbox">
+            <label className="custom-checkbox">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(event) => setRememberMe(event.target.checked)}
               />
-              <span class="checkmark"></span>
+              <span className="checkmark"></span>
               Remember Me
             </label>
             <Link to="/forget-password" className="forget-pass">

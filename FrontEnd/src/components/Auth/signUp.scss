@@ -15,7 +15,7 @@
         box-shadow     : 0 0 10px 0 rgba(0, 0, 0, 0.09);
         border         : solid 1px #F2F2F2;
         width          : 370px;
-        height         : 370px;
+        height         : 400px;
 
         .title {
             text-align    : center;
@@ -30,6 +30,15 @@
             border       : solid 1px #E6E6E6;
             padding      : 8px;
             font-size    : 14px;
+        }
+
+        .password-container {
+            position: relative;
+
+            .password {
+                width  : 100%;
+                display: inline-block;
+            }
         }
 
         .password {
@@ -70,59 +79,49 @@
             font-size    : 15px;
             color        : #666666;
             user-select  : none;
+
+            input {
+                position: absolute;
+                opacity : 0;
+                cursor  : pointer;
+            }
+
+            .checkmark {
+                position        : absolute;
+                top             : 1px;
+                left            : 0;
+                height          : 16px;
+                width           : 16px;
+                background-color: #ffffff;
+                border          : 2px solid #ccc;
+                border-radius   : 3px;
+            }
+
+            input:checked~.checkmark {
+                background-color: #00B207;
+                border-color    : #00B207;
+            }
+
+            .checkmark:after {
+                content : "";
+                position: absolute;
+                display : none;
+            }
+
+            input:checked~.checkmark:after {
+                display: block;
+            }
+
+            .checkmark:after {
+                left        : 4px;
+                top         : 0px;
+                width       : 5px;
+                height      : 10px;
+                border      : solid white;
+                border-width: 0 2px 2px 0;
+                transform   : rotate(45deg);
+            }
         }
-
-        /* Ẩn checkbox mặc định */
-        .custom-checkbox input {
-            position: absolute;
-            opacity : 0;
-            cursor  : pointer;
-        }
-
-        /* Thiết kế phần checkmark (ô vuông nhỏ) */
-        .custom-checkbox .checkmark {
-            position        : absolute;
-            top             : 1px;
-            left            : 0;
-            height          : 16px;
-            width           : 16px;
-            background-color: #ffffff;
-            border          : 2px solid #ccc;
-            border-radius   : 3px;
-        }
-
-
-
-        /* Khi checkbox được chọn, thay đổi màu nền */
-        .custom-checkbox input:checked~.checkmark {
-            background-color: #00B207;
-            border-color    : #00B207;
-        }
-
-        /* Tạo dấu tick khi checkbox được chọn */
-        .custom-checkbox .checkmark:after {
-            content : "";
-            position: absolute;
-            display : none;
-        }
-
-        /* Hiển thị dấu tick */
-        .custom-checkbox input:checked~.checkmark:after {
-            display: block;
-        }
-
-        /* Kiểu cho dấu tick */
-        .custom-checkbox .checkmark:after {
-            left        : 4px;
-            top         : 0px;
-            width       : 5px;
-            height      : 10px;
-            border      : solid white;
-            border-width: 0 2px 2px 0;
-            transform   : rotate(45deg);
-        }
-
-
 
         .sign-upp {
             text-align: center;

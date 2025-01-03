@@ -10,11 +10,11 @@ function ForgetPass() {
   const [userName, setUserName] = useState();
 
   const handleSubmit = async (event) => {
-    const response = await sendResetMail(userName)
+    const response = await sendResetMail(userName);
 
-    if(response.status !== 200) {
+    if (response.status !== 200) {
       toast.error("Cannot send mail. Check your email again");
-      return
+      return;
     }
     toast.success("Send email successfully");
   };
@@ -41,9 +41,9 @@ function ForgetPass() {
             Send Email
           </button>
 
-          <div className="sign-up">
+          <div className="sign-upppp">
             Already have account{" "}
-            <Link className="link" to="/signin">
+            <Link className="linkkkk" to="/signin">
               {" "}
               Sign In
             </Link>
