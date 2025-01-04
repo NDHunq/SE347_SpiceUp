@@ -43,7 +43,21 @@ const Setting = () => {
   const [bphoneWarning, bsetPhoneWarning] = useState("");
   const [bphoneStatus, bsetPhoneStatus] = useState("none");
   const [avatar, setAvatar] = useState("");
+  
 
+  useEffect(()=> {
+
+    const loadDefaultAvatar = async () => {
+      const defaultAvatar = localStorage.getItem("avatar")
+      const url = await getImage(defaultAvatar);
+      await changUserInfo(userId, {
+          avatar: url,
+        }); 
+    }
+
+    loadDefaultAvatar()
+    
+  },[])
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };

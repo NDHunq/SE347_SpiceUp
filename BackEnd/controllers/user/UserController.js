@@ -190,7 +190,7 @@ class UserController {
   async sendResetLink(req, res) {
     try {
       await connectToDb();
-
+      
       const { user_email } = req.query;
       const user = await User.findOne({ email: user_email });
 

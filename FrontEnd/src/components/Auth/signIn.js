@@ -93,14 +93,14 @@ function SignIn() {
           <button className="submit" onClick={handleSubmit}>
             Sign In
           </button>
-          <div className="group-icon">
+          {/* <div className="group-icon">
             <Link to="/signin/google">
               <div className="gg"></div>
             </Link>
             <Link to="/signin/facebook">
               <div className="fb"></div>
             </Link>
-          </div>
+          </div> */}
           <div className="sign-upp">
             Do you have any account?{" "}
             <Link className="linkk" to="/signup">

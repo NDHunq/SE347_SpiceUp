@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+//import { useLocation } from "react-router-dom";
 import "../../Recipe/filter_drop_category/filter_category.css";
 import { Radio } from "antd";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 function FilterCategoryShop(props) {
+    // const location = useLocation();
+    // useEffect(() => {
+    //     debugger;
+    //     if (location.state?.selectedCategory) {
+    //         setSelectedCategory(location.state.selectedCategory);
+    //         props.onCategoryChange(location.state.selectedCategory);
+    //       }
+    // }, [location.state]);
     const [isOpen, setIsOpen] = useState(true);
     const [isRotated, setIsRotated] = useState(true);
     const Name = props.listname;
@@ -13,6 +22,7 @@ function FilterCategoryShop(props) {
         setIsRotated(!isRotated);
     };
     const onChange = (e) => {
+        debugger;
         setSelectedCategory(e.target.value);
         props.onCategoryChange(e.target.value);
     };
