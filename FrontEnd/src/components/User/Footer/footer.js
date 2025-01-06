@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router";
 import "./footer.scss";
 function Footer() {
+  const nav = useNavigate();
   return (
     <div className="footer-container">
       <div className="col-5 top">
@@ -26,11 +28,58 @@ function Footer() {
             <div>
               <b className="title">My Account</b>
             </div>
-            <div>My Account</div>
-            <div>Order History</div>
-            <div>Shopping cart</div>
+            <div
+              onClick={() => {
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
+                if (isLoggedIn === "false" || isLoggedIn === null) {
+                  nav("/signin");
+                  window.scrollTo(0, 0);
+                } else {
+                  nav("/account/settings");
+                  window.scrollTo(0, 0);
+                }
+              }}>
+              My Account
+            </div>
+            <div
+              onClick={() => {
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
+                if (isLoggedIn === "false" || isLoggedIn === null) {
+                  nav("/signin");
+                  window.scrollTo(0, 0);
+                } else {
+                  nav("/account/order");
+                  window.scrollTo(0, 0);
+                }
+              }}>
+              Order History
+            </div>
+            <div
+              onClick={() => {
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
+                if (isLoggedIn === "false" || isLoggedIn === null) {
+                  nav("/signin");
+                  window.scrollTo(0, 0);
+                } else {
+                  nav("/shopping-cart");
+                  window.scrollTo(0, 0);
+                }
+              }}>
+              Shopping cart
+            </div>
           </div>
-          <div className="col cc">
+          <div
+            className="col cc"
+            onClick={() => {
+              const isLoggedIn = localStorage.getItem("isLoggedIn");
+              if (isLoggedIn === "false" || isLoggedIn === null) {
+                nav("/signin");
+                window.scrollTo(0, 0);
+              } else {
+                nav("/contact");
+                window.scrollTo(0, 0);
+              }
+            }}>
             <div>
               <b className="title">Helps</b>
             </div>
@@ -38,7 +87,18 @@ function Footer() {
             <div>Terms & Condition</div>
             {/* <div>Privacy Policy</div> */}
           </div>
-          <div className="col cc">
+          <div
+            className="col cc"
+            onClick={() => {
+              const isLoggedIn = localStorage.getItem("isLoggedIn");
+              if (isLoggedIn === "false" || isLoggedIn === null) {
+                nav("/signin");
+                window.scrollTo(0, 0);
+              } else {
+                nav("/shop");
+                window.scrollTo(0, 0);
+              }
+            }}>
             <div>
               <b className="title">Categories</b>
             </div>

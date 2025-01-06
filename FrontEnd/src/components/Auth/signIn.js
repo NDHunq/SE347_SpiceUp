@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./signIn.scss";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
@@ -14,6 +13,7 @@ function SignIn() {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -37,21 +37,26 @@ function SignIn() {
     localStorage.setItem("role", response.data.data.role);
 
     toast.success("Sign in successfully");
-    const fetchCart = async () => {
-      try {
-        const cartResponse = await instance.get(`api/v1/cartItem/user/${response.data.data.user_id}`);
-        console.log(cartResponse.data.data);
-        const {total}=cartResponse.data.data;
-        dispatch(setTotalCartItem(total));
 
-        // Dispatch to Redux or handle cart data as required
-      } catch (error) {
-        console.error("Error fetching cart:", error);
-      }
-    };
-
-    await fetchCart();
-    navigate("/home");
+    if (response.data.data.role === "RS2") {
+      navigate("/admin/home");
+    } else {
+      const fetchCart = async () => {
+        try {
+          const cartResponse = await instance.get(`api/v1/cartItem/user/${response.data.data.user_id}`);
+          console.log(cartResponse.data.data);
+          const {total}=cartResponse.data.data;
+          dispatch(setTotalCartItem(total));
+  
+          // Dispatch to Redux or handle cart data as required
+        } catch (error) {
+          console.error("Error fetching cart:", error);
+        }
+      };
+  
+      await fetchCart();
+      navigate("/home");
+    }
   };
   return (
     <>
@@ -74,21 +79,29 @@ function SignIn() {
           <div>
             <input
               className="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
+          <div className="show-password">
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={(event) => setShowPassword(event.target.checked)}
+            />
+            Show Password
+          </div>
           <div>
-            <label class="custom-checkbox">
+            <label className="custom-checkbox">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(event) => setRememberMe(event.target.checked)}
               />
-              <span class="checkmark"></span>
+              <span className="checkmark"></span>
               Remember Me
             </label>
             <Link to="/forget-password" className="forget-pass">

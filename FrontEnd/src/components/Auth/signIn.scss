@@ -2,7 +2,7 @@
     display        : flex;
     justify-content: center;
     align-items    : center;
-    height         : 450px;
+    height         : 500px;
 
     .container {
         font-family: "Roboto",
@@ -15,7 +15,7 @@
         box-shadow     : 0 0 10px 0 rgba(0, 0, 0, 0.09);
         border         : solid 1px #F2F2F2;
         width          : 370px;
-        height         : 365px;
+        height         : 400px;
 
         .title {
             text-align    : center;
@@ -40,6 +40,18 @@
             border       : solid 1px #E6E6E6;
             font-size    : 14px;
 
+        }
+
+        .show-password {
+            display      : flex;
+            align-items  : center;
+            font-size    : 14px;
+            color        : #666666;
+            margin-bottom: 10px;
+
+            input {
+                margin-right: 5px;
+            }
         }
 
         .email:focus,

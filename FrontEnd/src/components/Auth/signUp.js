@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./signUp.scss";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
@@ -11,27 +10,28 @@ function SignUp() {
   const [password, setPassword] = useState();
   const [cf_password, setCFPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     debugger;
-    if(password !== cf_password) {
-      toast.error("confirmed password doesn't match")
-      return 
+    if (password !== cf_password) {
+      toast.error("confirmed password doesn't match");
+      return;
     }
 
-    if(password.length<8) {
-      toast.error("password must be at least 8 character long")
-      return 
+    if (password.length < 8) {
+      toast.error("password must be at least 8 character long");
+      return;
     }
 
     const response = await signUp({
-      "email": userName,
-      "password": password
-    })
+      email: userName,
+      password: password,
+    });
 
-    if(response.status !== 200) {
-      toast.error("Email already existed")
-      return 
+    if (response.status !== 200) {
+      toast.error("Email already existed");
+      return;
     }
 
     toast.success("Sign up successfully");
@@ -55,25 +55,36 @@ function SignUp() {
               onChange={(event) => setUserName(event.target.value)}
             />
           </div>
-          <div>
+          <div className="password-container">
             <input
               className="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-          <div>
+          <div className="password-container">
             <input
               className="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Confirm Password"
               value={cf_password}
               onChange={(event) => setCFPassword(event.target.value)}
             />
+          </div>
+          <div>
+            <label className="custom-checkbox">
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <span className="checkmark"></span>
+              Show Password
+            </label>
           </div>
           <div>
             <label class="custom-checkbox">

@@ -247,7 +247,6 @@ function Recipes({ search }) {
                   <div className="div2">
                     <div className="filter_btn flex flexgap">
                       <p>Filter</p>
-                      <LiaFilterSolid className="img"></LiaFilterSolid>
                     </div>
                   </div>
                   <hr className="line"></hr>
@@ -271,35 +270,6 @@ function Recipes({ search }) {
                       listname={"Recipe Types"}
                       listCategory={listCategory}
                       onTypeSelect={handleTypeSelect}></FilterCategory>
-                    <hr className="line"></hr>
-                    <p className="recenttxt bot5px">Recenty Saved</p>
-
-                    <RecentItem
-                      tname={"Smoothie xoài chuối kiwi"}
-                      ttime={"Apr 25, 2024"}
-                      tlink={
-                        "https://file.hstatic.net/1000361915/article/sinh-to-chuoi-xoai-giam-can_9ad409cb707d438689515eeb643275ea.jpg"
-                      }
-                      id={"1234"}
-                    />
-                    <br />
-                    <RecentItem
-                      tlink={
-                        "https://file.hstatic.net/1000361915/article/sinh-to-chuoi-xoai-giam-can_9ad409cb707d438689515eeb643275ea.jpg"
-                      }
-                      tname={"Smoothie xoài chuối kiwi trộn dâu tây Đà Lạt"}
-                      ttime={"Apr 25, 2024"}
-                      id={"1234"}
-                    />
-                    <br />
-                    <RecentItem
-                      tlink={
-                        "https://file.hstatic.net/1000361915/article/sinh-to-chuoi-xoai-giam-can_9ad409cb707d438689515eeb643275ea.jpg"
-                      }
-                      tname={"Smoothie xoài chuối kiwi"}
-                      ttime={"Apr 25, 2024"}
-                      id={"1234"}
-                    />
                   </div>
                 </div>
               </div>

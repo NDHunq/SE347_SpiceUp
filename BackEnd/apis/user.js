@@ -9,12 +9,9 @@ router.use("/info/update/:user_id", authenticate, userController.updateInfo);
 router.use("/info/:user_id", authenticate, userController.getInfo);
 router.use("/info", authenticate, userController.getInfo);
 
-router.use("/reset_password/send", userController.sendResetLink);
-router.use("/reset_password/:token", userController.resetPassword);
-
-router.use(express.json());
-router.use("/info/update/:user_id", authenticate, userController.updateInfo);
-router.use("/info/:user_id", authenticate, userController.getInfo);
+router.use('/reset_password/send', userController.sendResetLink)
+router.use('/reset_password/post', userController.resetPassword)
+router.use('/reset_password/:token', userController.resetPasswordForm)
 router.post("/info2", userController.getInfo2);
 
 router.use(
@@ -23,12 +20,7 @@ router.use(
   userController.changePassword
 );
 
-router.use("/reset_password/send", userController.sendResetLink);
-router.use("/reset_password/:token", userController.resetPassword);
-
 router.use("/change_password/:user_id", userController.changePassword);
-
-router.use("/reset_password/post", userController.resetPassword);
 
 router.post(
   "/billingAddress/:user_id",

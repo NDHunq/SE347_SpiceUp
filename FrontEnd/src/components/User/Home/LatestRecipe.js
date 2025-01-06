@@ -54,6 +54,7 @@ const LatestRecipe = (props) => {
               <div key={index} className="col product">
                 <DisplayItem
                   istrue={true}
+                  isbook={false}
                   ttime={`${item.cookingTimeInSecond / 60}`}
                   ttag={item.type}
                   tby={`${item.userId.firstname} ${item.userId.lastname}`}

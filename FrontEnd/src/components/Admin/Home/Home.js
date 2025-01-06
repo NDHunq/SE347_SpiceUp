@@ -6,8 +6,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { getAnalysis } from "../../../services/adminServices";
 import LatestRecipe from "../../User/Home/LatestRecipe";
 import { useNavigate } from "react-router";
-//import CanvasJSReact from "@canvasjs/react-charts";
-//var CanvasJSReact = require('@canvasjs/react-charts');
+// import CanvasJSReact from "@canvasjs/react-charts";
 dayjs.extend(customParseFormat);
 
 // var CanvasJS = CanvasJSReact.CanvasJS;
@@ -176,7 +175,7 @@ const Home = (props) => {
               </div>
             </div>
           </div>
-          <div className="title">
+          {/* <div className="title">
             <h2>
               <strong>Chart</strong>
             </h2>
@@ -190,12 +189,13 @@ const Home = (props) => {
             />
           </div>
 
-          {/* <div className="chart">
+          <div className="chart">
             <CanvasJSChart
               options={options}
-              onRef={ref => this.chart = ref} 
+              onRef={(ref) => (this.chart = ref)}
             />
-            You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods
+            You can get reference to the chart instance as shown above using
+            onRef. This allows you to access all chart properties and methods
           </div> */}
           <div className="title">
             <h2>
