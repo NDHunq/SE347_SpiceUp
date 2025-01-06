@@ -2,10 +2,8 @@ import React, {useEffect} from "react";
 import Header from "../../widget/top";
 import { useState } from "react";
 import { Radio,Button,AutoComplete ,  Card,message, Space, Select,Input  } from 'antd';
-import {toast} from "react-toastify";
 import "./Checkout.css"
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import instance from "../../../../utils/axiosCustomize";
 import { useDispatch } from 'react-redux';
 import {setTotalCartItem} from "../../../../redux/reducer/qtyInCart"
@@ -44,9 +42,7 @@ function Checkout() {
     const [provinces,setProvinces]=useState([]);
     const [communes,setCommunes]=useState([]);
     const apiKey ="a84f0896-7c1a-11ef-8e53-0a00184fe694";
-    const token = localStorage.getItem('token');
-    const decodedData = jwtDecode(token);
-    const user_id = decodedData.id;
+    const user_id = localStorage.getItem('user_id');
 
     const [cartItems, setCartItems] = useState([]);
     const [productImages, setProductImages] = useState([]);
@@ -264,22 +260,24 @@ function Checkout() {
                 order_notes: orderNotes,
             }
 
-            await Promise.all(
-                instance.post('api/v1/order', order),
-                instance.patch(`api/v1/user/billingAddress/${user_id}`, {
-                  firstName: firstName,
-                  lastName: lastName,
-                  companyName: companyName,
-                  province: province,
-                  district: district,
-                  commune: commune,
-                  detailAddress: detailAddress,
-                  email: email,
-                  phone: phone
-                })
-            )
+            // await Promise.all(
+            //     instance.post('api/v1/order', order),
+            //     instance.patch(`api/v1/user/billingAddress/${user_id}`, {
+            //       firstName: firstName,
+            //       lastName: lastName,
+            //       companyName: companyName,
+            //       province: province,
+            //       district: district,
+            //       commune: commune,
+            //       detailAddress: detailAddress,
+            //       email: email,
+            //       phone: phone
+            //     })
+            // )
+
+            await instance.post('api/v1/order', order);
             dispatch(setTotalCartItem(0));
-            toast.success("Order placed successfully");
+            message.success("Order placed successfully");
             navigate(-1);
           }
           catch (error) {
