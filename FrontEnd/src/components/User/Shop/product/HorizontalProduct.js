@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { Rate ,Card, Button, Modal, Carousel,Avatar, Divider, List, Skeleton } from 'antd';
+import {Rate, Card, Button, Modal, Carousel, Avatar, Divider, List, Skeleton, message} from 'antd';
 import { useState } from "react";
 import './HorizontalProduct.css'
 import {
@@ -11,6 +11,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
 import instance from "../../../../utils/axiosCustomize";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 function HorizontalProduct(props){
     // format number with dots
@@ -25,6 +26,7 @@ function HorizontalProduct(props){
     }
 
     const user_id = localStorage.getItem('user_id');
+    const navigate = useNavigate();
 
     const qtyInCart = useSelector(state=>state.qtyInCart.count);
     const dispatch=useDispatch();
@@ -158,25 +160,32 @@ function HorizontalProduct(props){
       };
 
     const handleAddToCart = async () => {
-        dispatch({ type: 'plus', payload: currentQty });
+        if (!user_id) {
+            toast.error("Please login to add product to cart");
+            navigate('/signin');
+        }
+        else {
+            dispatch({ type: 'plus', payload: currentQty });
 
-        // Call API to add product to cart
-        try {
-            let body = {
-                user_id: user_id,
-                product_id: props.id,
-                quantities: currentQty
+            // Call API to add product to cart
+            try {
+                let body = {
+                    user_id: user_id,
+                    product_id: props.id,
+                    quantities: currentQty
+                }
+                await instance.post('api/v1/cartItem', body);
             }
-            await instance.post('api/v1/cartItem', body);
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+                message.success("Add to cart successfully");
+                setCurrentQty(1);
+                setIsModalOpen(false);
+            }
         }
-        catch (error) {
-            console.log(error);
-        }
-        finally {
-            toast.success("Add to cart successfully");
-            setCurrentQty(1);
-            setIsModalOpen(false);
-        }
+
     }
     return (
         <Card
