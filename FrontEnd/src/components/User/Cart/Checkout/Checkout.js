@@ -132,7 +132,7 @@ function Checkout() {
       }
       setCommune(null); 
     }, [district, apiKey]);
-    
+
 
     const [orderItems, setOrderItems]  = useState([]);
     useEffect(() => {
@@ -260,22 +260,22 @@ function Checkout() {
                 order_notes: orderNotes,
             }
 
-            await Promise.all(
-                [instance.post('api/v1/order', order),
+
+            await Promise.all([
+                instance.post('api/v1/order', order),
                 instance.post(`api/v1/user/billingAddress/${user_id}`, {
                   firstName: firstName,
                   lastName: lastName,
                   companyName: companyName,
-                  province: province,
-                  district: district,
-                  commune: commune,
+                  province: province.label,
+                  district: district.label,
+                  commune: commune.label,
                   detailAddress: detailAddress,
                   email: email,
                   phone: phone
-                })]
-            )
+                })
+            ])
 
-            //await instance.post('api/v1/order', order);
             dispatch(setTotalCartItem(0));
             message.success("Order placed successfully");
             navigate(-1);
@@ -344,7 +344,7 @@ function Checkout() {
                                     defaultValue="Select Province"
                                     value={province}
                                     onChange={setProvince}
-                                    options={provinces} 
+                                    options={provinces}
                                     status={errors.province?"error":""}
                                     />
                                     {errors.province && <p className="error">{errors.province}</p>}
