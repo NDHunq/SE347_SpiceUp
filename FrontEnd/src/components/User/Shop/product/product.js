@@ -1,5 +1,5 @@
 import React from "react";
-import { Rate ,Card, Button, Modal, Carousel,Avatar, Divider, List, Skeleton } from 'antd';
+import {Rate, Card, Button, Modal, Carousel, Avatar, Divider, List, Skeleton, message} from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useState, useEffect } from "react";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import './product.css'
 import { useSelector, useDispatch } from 'react-redux';
 import instance from "../../../../utils/axiosCustomize";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 function Product(props){
     // format number with dots
@@ -27,6 +28,7 @@ function Product(props){
 
     console.log("img url", props.urls_img)
     const user_id = localStorage.getItem('user_id');
+    const navigate = useNavigate();
 
     const [soldCount, setSoldCount] = useState(props.sold);
     const [soldOut, setSoldOut] = useState(props.stock === 0);
@@ -162,26 +164,33 @@ function Product(props){
         setIsModalOpen(false);
       };
 
-    const handleAddToCart = async () => {
-        dispatch({ type: 'plus', payload: currentQty });
+    const handleAddToCart = async (quantity) => {
+        if (!user_id) {
+            message.error("Please login to add product to cart!");
+            navigate('/signin');
+        }
+        else {
+            dispatch({ type: 'plus', payload: quantity });
 
-        // Call API to add product to cart
-        try {
-            let body = {
-                user_id: user_id,
-                product_id: props.id,
-                quantities: currentQty
+            // Call API to add product to cart
+            try {
+                let body = {
+                    user_id: user_id,
+                    product_id: props.id,
+                    quantities: quantity
+                }
+                await instance.post('api/v1/cartItem', body);
             }
-            await instance.post('api/v1/cartItem', body);
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+                message.success("Add to cart successfully");
+                setCurrentQty(1);
+                setIsModalOpen(false);
+            }
         }
-        catch (error) {
-            console.log(error);
-        }
-        finally {
-            toast.success("Add to cart successfully");
-            setCurrentQty(1);
-            setIsModalOpen(false);
-        }
+
     }
 
     return (
@@ -225,10 +234,10 @@ function Product(props){
                     <Button        
                     onMouseEnter={() => setHoveredButton(true)}   
                     onMouseLeave={() => setHoveredButton(false)}  
-                    onClick={(event) => {
+                    onClick={async (event) => {
                         event.stopPropagation(); 
-                        dispatch({ type: 'plus', payload: 1 })
-                        //add 1 to cart 
+                        //add 1 to cart
+                        await handleAddToCart(currentQty);
                     }}
                     >
                         <img width="24" height="24" src={hoveredButton?"https://img.icons8.com/?size=100&id=21821&format=png&color=00b207":"https://img.icons8.com/ios/50/bag-front-view.png"} alt="bag-front-view"/>
@@ -386,7 +395,7 @@ function Product(props){
                                 <Button onClick={increaseQty} type="primary" className="qty-btn" shape="circle">+</Button>
                             </div>
                             <Button type="primary" className="add-to-cart-btn"
-                                onClick={handleAddToCart}><b>Add to Cart</b></Button>
+                                onClick={() => handleAddToCart (currentQty)}><b>Add to Cart</b></Button>
                         </div>
                         <hr/>
                         <p class="cate"><b>Category: </b>{category}</p>
