@@ -260,22 +260,22 @@ function Checkout() {
                 order_notes: orderNotes,
             }
 
-            // await Promise.all(
-            //     instance.post('api/v1/order', order),
-            //     instance.patch(`api/v1/user/billingAddress/${user_id}`, {
-            //       firstName: firstName,
-            //       lastName: lastName,
-            //       companyName: companyName,
-            //       province: province,
-            //       district: district,
-            //       commune: commune,
-            //       detailAddress: detailAddress,
-            //       email: email,
-            //       phone: phone
-            //     })
-            // )
+            await Promise.all(
+                [instance.post('api/v1/order', order),
+                instance.post(`api/v1/user/billingAddress/${user_id}`, {
+                  firstName: firstName,
+                  lastName: lastName,
+                  companyName: companyName,
+                  province: province,
+                  district: district,
+                  commune: commune,
+                  detailAddress: detailAddress,
+                  email: email,
+                  phone: phone
+                })]
+            )
 
-            await instance.post('api/v1/order', order);
+            //await instance.post('api/v1/order', order);
             dispatch(setTotalCartItem(0));
             message.success("Order placed successfully");
             navigate(-1);
