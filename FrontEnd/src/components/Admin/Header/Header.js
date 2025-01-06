@@ -41,7 +41,7 @@ const Header = () => {
                 <div className="col icon-group">
                   <div className="col icon"> </div>
                   <div className=" Logout-btn " onClick={handelLOgout}>
-                    Đăng xuất
+                    Log out
                   </div>
                 </div>
               </div>

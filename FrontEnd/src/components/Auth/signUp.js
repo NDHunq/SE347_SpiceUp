@@ -86,7 +86,7 @@ function SignUp() {
               Show Password
             </label>
           </div>
-          <div>
+          {/* <div>
             <label class="custom-checkbox">
               <input
                 type="checkbox"
@@ -96,7 +96,7 @@ function SignUp() {
               <span class="checkmark"></span>
               Accept all terms & Conditions
             </label>
-          </div>
+          </div> */}
 
           <button className="submit" onClick={handleSubmit}>
             Sign Up

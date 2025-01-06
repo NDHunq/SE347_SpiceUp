@@ -131,7 +131,7 @@ const Home = (props) => {
           <div className="number">
             <div className="col-4 left">
               <div className="tex">{data.totalCustomers}</div>
-              <div className="per">+30%</div>
+              <div className="per">{data.totalCustomers!==0?"+30%":null}</div>
               <div className="num">Customer</div>
             </div>
             <div className="col-8 right">
@@ -139,23 +139,23 @@ const Home = (props) => {
                 <div className="col top-right-child">
                   {" "}
                   <div className="num">Income</div>{" "}
-                  <div className="tex">{`${data.profit / 1000000}M $`}</div>
+                  <div className="tex">{`${data.profit / 1000000} $`}</div>
                 </div>
                 <div className="col top-right-child">
                   {" "}
                   <div className="num">Products sold</div>{" "}
-                  <div className="tex">{`${data.productsSoldOut}K`}</div>
+                  <div className="tex">{`${data.productsSoldOut}`}</div>
                 </div>
                 <div className="col top-right-child">
                   {" "}
                   <div className="num">Recipe views</div>{" "}
-                  <div className="tex">{`${data.recipeViews}K`}</div>
+                  <div className="tex">{`${data.recipeViews}`}</div>
                 </div>
               </div>
               <div className="bot-right">
                 <div className="col bot-right1">
                   <div className=" image">
-                    <div className="numb">{`${data.totalRecipes}K`}</div>
+                    <div className="numb">{`${data.totalRecipes}`}</div>
                   </div>
                   <div className=" name">
                     <div className="text1">Recipes</div>
@@ -165,7 +165,7 @@ const Home = (props) => {
                 <div className="col bot-right2">
                   {" "}
                   <div className=" image">
-                    <div className="numb">{`${data.totalProducts}K`}</div>
+                    <div className="numb">{`${data.totalProducts}`}</div>
                   </div>
                   <div className=" name">
                     <div className="text1">Products</div>

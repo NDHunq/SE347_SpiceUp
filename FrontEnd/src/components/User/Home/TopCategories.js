@@ -2,6 +2,7 @@ import "./TopCategories.scss";
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsCheck2Circle } from "react-icons/bs";
+
 import topCate1 from "../../../assets/images/Home/topCate1.svg";
 import topCate2 from "../../../assets/images/Home/topCate2.svg";
 import topCate3 from "../../../assets/images/Home/topCate3.svg";
@@ -53,7 +54,9 @@ const TopCategories = (props) => {
                 <div className="col product">
                   <div className="col productt">
                     <image className="img">
-                      <Link to="/product/id">
+                      <Link to={{
+                        pathname: "/shop",
+                      }} >
                         <img src={item.image} alt="product" />
                       </Link>
                     </image>
