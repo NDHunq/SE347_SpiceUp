@@ -260,6 +260,7 @@ function Checkout() {
                 order_notes: orderNotes,
             }
 
+
             await Promise.all([
                 instance.post('api/v1/order', order),
                 instance.post(`api/v1/user/billingAddress/${user_id}`, {
