@@ -8,12 +8,14 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import instance from "../../../utils/axiosCustomize";
 import {toast} from "react-toastify";
+import {setTotalCartItem} from "../../../redux/reducer/qtyInCart";
+import {useDispatch} from "react-redux";
 
 function Cart() {
     // format number with dots
+    const dispatch = useDispatch();
     const formatNumberWithDots = (number) => {
         // Convert the number to a string
         let numberStr = number?.toString();
@@ -37,9 +39,7 @@ function Cart() {
     navigate(path);  
 };
 
-    const token = localStorage.getItem('token');
-    const decodedData = jwtDecode(token);
-    const user_id = decodedData.id;
+    const user_id = localStorage.getItem('user_id');
 
     const [cartItems, setCartItems] = useState([]);
     const [productImages, setProductImages] = useState([]);
@@ -55,8 +55,11 @@ function Cart() {
         const deleteCartItem = async () => {
             try {
                 await instance.delete(`api/v1/cartItem/${key}`);
+                const thisQuantity = dataSource.find(item => item.key === key).product.qty;
+                const totalQuantity = dataSource.reduce((acc, item) => acc + item.product.qty, 0);
                 const newData = dataSource.filter(item => item.key !== key);
                 setDataSource(newData);
+                dispatch(setTotalCartItem(totalQuantity - thisQuantity));
             }
             catch (error) {
                 console.log("error", error);

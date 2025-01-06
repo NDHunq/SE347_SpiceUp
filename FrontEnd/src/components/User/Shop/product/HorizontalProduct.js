@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import { Rate ,Card, Button, Modal, Carousel,Avatar, Divider, List, Skeleton } from 'antd';
 import { useState } from "react";
-import {jwtDecode} from "jwt-decode";
 import './HorizontalProduct.css'
 import {
     LinkOutlined,
@@ -25,8 +24,6 @@ function HorizontalProduct(props){
         return formattedStr;
     }
 
-    const token = localStorage.getItem('token');
-    //const decodedData = jwtDecode(token);
     const user_id = localStorage.getItem('user_id');
 
     const qtyInCart = useSelector(state=>state.qtyInCart.count);

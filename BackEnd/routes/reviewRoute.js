@@ -6,7 +6,7 @@ const { getReviewsByProductId, getUserReview, createReview} = require('../contro
 const authenticate = require("../middlewares/auth/auth");
 
 // Get all reviews about a specific product
-Router.get('/:product_id', authenticate, getReviewsByProductId);
+Router.get('/:product_id', getReviewsByProductId);
 
 // Get user review about a specific product
 Router.get('', getUserReview);
