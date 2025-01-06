@@ -67,7 +67,7 @@ const getSavedRecipe = (id) => {
   });
 };
 const change_password = (userId, obj) => {
-  return axios.get("api/v1/user/change_password/" + userId, obj, {
+  return axios.post("api/v1/user/change_password/" + userId, obj, {
     headers: {
       Authorization: token,
     },
