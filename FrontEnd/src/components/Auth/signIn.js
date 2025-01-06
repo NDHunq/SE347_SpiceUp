@@ -17,7 +17,6 @@ function SignIn() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    debugger;
 
     const response = await signIn({
       email: userName,
@@ -28,7 +27,7 @@ function SignIn() {
       toast.error("Wrong email or password");
       return;
     }
-
+    console.log(response.data)
     localStorage.setItem("jwt", response.data.data.jwt);
     localStorage.setItem("user_id", response.data.data.user_id);
     localStorage.setItem("email", response.data.data.email);
@@ -44,8 +43,13 @@ function SignIn() {
       const fetchCart = async () => {
         try {
           const cartResponse = await instance.get(`api/v1/cartItem/user/${response.data.data.user_id}`);
-          console.log(cartResponse.data.data);
-          const {total}=cartResponse.data.data;
+          console.log(cartResponse.data.data.data);
+          const cartItems=cartResponse.data.data.cartItems;
+          let total = 0;
+          cartItems.map(item => {
+            total += item.quantities;
+          });
+          console.log(total);
           dispatch(setTotalCartItem(total));
   
           // Dispatch to Redux or handle cart data as required

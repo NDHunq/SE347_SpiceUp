@@ -69,16 +69,13 @@ const OrderHistory = () => {
     },
     {
       title: "TOTAL",
-      dataIndex: "total_numProduct",
+      dataIndex: "order_items_post",
       width: "30%",
-      render: (text) => {
-        if (!Array.isArray(text)) {
-          return <a><b>${text}</b> (1 Product)</a>;  
-        }
-        const [total, numProduct] = text;  
+      render: (order_items_post) => {
+        const numProduct = Array.isArray(order_items_post) ? order_items_post.length : 0; // Kiểm tra nếu là mảng, lấy length
         return (
           <a>
-            <b>${total}</b> ({numProduct} Product{numProduct > 1 ? "s" : ""})
+            <b>{numProduct}</b> Product{numProduct > 1 ? "s" : ""}
           </a>
         );
       },

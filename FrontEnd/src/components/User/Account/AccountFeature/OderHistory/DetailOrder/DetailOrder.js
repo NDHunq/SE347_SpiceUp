@@ -13,6 +13,7 @@ import {
   Rate,
   Input,
   message,
+  Skeleton
 } from "antd";
 import instance from "../../../../../../utils/axiosCustomize";
 import "./DetailOrder.css";
@@ -31,6 +32,7 @@ const DetailOrder = () => {
   const [contentRate, setContentRate] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productImages, setProductImages] = useState([]);
   const [rateError, setRateError] = useState(false);
   const [userId,setUserId]=useState(null);
   const [date,setDate]=useState(null);
@@ -96,7 +98,14 @@ const DetailOrder = () => {
           subTotal: response.data.data.total_cost,
         });
 
-
+        for (let i = 0; i < response.data.data.order_items_post.length; i++) {
+          const res = await instance.get(`api/v1/image/${response.data.data.order_items_post[i]?.product_id.product_images[0]}`, {
+              responseType: 'arraybuffer'
+          })
+          const blob = new Blob([res.data], { type: `${res.headers["content-type"]}` });
+          const url = URL.createObjectURL(blob);
+          setProductImages((prevImages) => [...prevImages, url]);
+      }
       } catch (err) {
         console.error(err);
       }
@@ -110,18 +119,24 @@ const DetailOrder = () => {
       title: "PRODUCT",
       dataIndex: "product",
       key: "product",
-      render: (product) => (
+      render: (_, record, index) => (
         <div className="flex jtf-ct-fs align-vertical">
-          <img
-            src={product.url_img}
-            width={60}
-            height={60}
-            className="mgr-8"
-            alt={product.name}
-          />
-          <p>{product.name}</p>
+          {productImages[index] ? (
+            <img
+              src={productImages[index]}
+              width={60}
+              height={60}
+            />
+          ) : (
+            <Skeleton.Image
+              active={true}
+              style={{ width: 60, height: 60, marginRight: 8 }}
+            />
+          )}
+          <p>{record.product.name}</p>
         </div>
       ),
+    
     },
     {
       title: "PRICE",
@@ -164,15 +179,19 @@ const DetailOrder = () => {
       ),
     },
   ];
-
+  const [selectedImage,setSelectedImage]=useState();
   const showModal = async (product) => {
     const product_id = product.id;
     const foundProduct = dataSource.find(item => item.product.id === product.id);
 
-    if (foundProduct) 
-      setSelectedProduct(foundProduct.product);  
-  
-    
+    if (foundProduct) {
+      setSelectedProduct(foundProduct.product); 
+      
+      const imageIndex = dataSource.findIndex(item => item.product.id === product_id);
+      if (imageIndex !== -1) {
+        setSelectedImage(productImages[imageIndex]); 
+      }
+    }
     try {
       setOpen(true);
       const user_id=userId;
@@ -297,7 +316,7 @@ const DetailOrder = () => {
         {selectedProduct && (
           <div>
             <div className="row-product">
-              <img src={selectedProduct.url_img} alt={selectedProduct.name} width={100} />
+              <img src={selectedImage} alt={selectedProduct.name} width={100} />
               <p><h3>{selectedProduct.name}</h3></p>
               <p>${selectedProduct.price}</p>
               <p>x{selectedProduct.qty}</p>
