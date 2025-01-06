@@ -27,15 +27,13 @@ const DetailOrder = () => {
 
   // State variables
   const [dataSource, setDataSource] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [ratee, setRatee] = useState(0);
   const [contentRate, setContentRate] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [rateError, setRateError] = useState(false);
   const [userId,setUserId]=useState(null);
-
+  const [date,setDate]=useState(null);
   // Additional State for Order Details
   const [orderDetails, setOrderDetails] = useState({
     date: "",
@@ -68,7 +66,7 @@ const DetailOrder = () => {
     const fetchOrderDetails = async () => {
       try {
         const response = await instance.get(`/api/v1/order/${id}`);
-        
+        console.log(response.data)
         setDataSource(
           response.data.data.order_items_post.map((item) => ({
             key: item._id,
@@ -83,7 +81,8 @@ const DetailOrder = () => {
             },
           }))
         );
-
+        const tmp = new Date(response.data.data.date_ordered);
+        setDate(tmp.toLocaleString())
         setOrderDetails({
           date: response.data.data.date_ordered || "Unknown Date",
           num: response.data.data.order_items_post.length || 0,
@@ -96,13 +95,10 @@ const DetailOrder = () => {
           payment: response.data.data.payment_method,
           subTotal: response.data.data.total_cost,
         });
-        
 
-        setLoading(false);
+
       } catch (err) {
-        setError("Failed to load order details.");
         console.error(err);
-        setLoading(false);
       }
     };
 
@@ -171,13 +167,17 @@ const DetailOrder = () => {
 
   const showModal = async (product) => {
     const product_id = product.id;
+    const foundProduct = dataSource.find(item => item.product.id === product.id);
+
+    if (foundProduct) 
+      setSelectedProduct(foundProduct.product);  
   
+    
     try {
       setOpen(true);
-      setLoading(true);
-  
+      const user_id=userId;
       const response = await instance.get("/api/v1/review", {
-        params: { userId, product_id },
+        params: { user_id, product_id },
       });
   
       if (response?.data?.status === "success" && response?.data?.data) {
@@ -200,7 +200,6 @@ const DetailOrder = () => {
         setSelectedProduct(updatedProduct);
         setRatee(0);
         setContentRate("");
-        message.error("Failed to fetch review or no review exists.");
       }
     } catch (error) {
       console.error("Error during API request:", error);
@@ -208,9 +207,7 @@ const DetailOrder = () => {
       setSelectedProduct(product);
       setRatee(0);
       setContentRate("");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
   
   const handleOk = async () => {
@@ -219,7 +216,7 @@ const DetailOrder = () => {
       return;
     }
     const payload = {
-      userId,
+      user_id:userId,
       product_id: selectedProduct.id,
       content: contentRate,
       rating: ratee,
@@ -238,6 +235,8 @@ const DetailOrder = () => {
         setDataSource(updatedDataSource);
         setOpen(false);
         message.success("Review submitted successfully!");
+        setRatee(0);
+        setContentRate("");
       } else {
         message.error("Something went wrong. Please try again.");
       }
@@ -252,13 +251,12 @@ const DetailOrder = () => {
     setOpen(false);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+
 
   return (
     <div>
       <Card
-        title={`Order Details - ${orderDetails.date} - ${orderDetails.num} Product${
+        title={`Order Details - ${date} - ${orderDetails.num} Product${
           orderDetails.num > 1 ? "s" : ""
         }`}
         className="margint20px"
@@ -291,7 +289,7 @@ const DetailOrder = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={!(selectedProduct && selectedProduct.rate[0]) && (
-          <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+          <Button key="submit" type="primary"  onClick={handleOk}>
             Submit
           </Button>
         )}

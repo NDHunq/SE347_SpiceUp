@@ -147,7 +147,7 @@ function ModalUpload  (props){
     const formValues = form.getFieldsValue(); 
     console.log("Form values:", formValues); 
   
-    const requiredFields = ['product_name', 'price', 'stock', 'brand', 'category', 'value'];
+    const requiredFields = ['product_name', 'price', 'stock', 'brand', 'category', 'value','description'];
   
     const allRequiredFieldsFilled = requiredFields.every(
       (field) => formValues[field] !== undefined && formValues[field] !== null && formValues[field] !== ''

@@ -11,29 +11,33 @@ const OrderHistory = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("jwt");
   
-  const [userId,setUserId]=useState(null);
+  const [userId,setUserId]=useState(localStorage.getItem("user_id"));
   const [orders, setOrders] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
-    if (!token) {
-      navigate("/signin"); 
-    } else {
-      try {
-        const decodedData = jwtDecode(token);
-        setUserId(decodedData.id); 
-      } catch (error) {
-        console.error("Invalid token:", error);
-        navigate("/signin"); 
-      }
-    }
+    // try {
+    //   const decodedData = jwtDecode(token);
+    //   setUserId(decodedData.id); 
+    //   strToken += token;
+
+    // } catch (error) {
+    //   console.error("Invalid token:", error);
+    //   navigate("/signin"); 
+    // }
+
+    if(!token)
+      navigate("/signin")
   }, [token, navigate]);
   const fetchOrders = async (page) => {
     try {
-      const response = await instance.get("api/v1/order", {
-        params: { userId, page, limit },
+      const response = await instance.get(`api/v1/order?user_id=${userId}&page=${page}&limit=${limit}`, {
+        headers: { 
+          Authorization: `Bearer ${token}` 
+        }
       });
+      console.log(response.data.data)
       setOrders(response.data.data.orders);
 
       setTotalPages(response.data.totalPages);
@@ -49,33 +53,43 @@ const OrderHistory = () => {
   const columns = [
     {
       title: "ORDER ID",
-      dataIndex: "id",
+      dataIndex: "_id",
       render: (text) => <a>{text}</a>,
       width: "15%",
     },
     {
       title: "DATE",
-      dataIndex: "date",
+      dataIndex: "date_ordered",
       width: "20%",
-      render: (text) => <a>{text}</a>,
+      render: (text) => {
+        const date = new Date(text); // Convert string to Date object
+        const readableDate = date.toLocaleString(); // Format the date into a readable string
+        return <a>{readableDate}</a>;
+      }
     },
     {
       title: "TOTAL",
       dataIndex: "total_numProduct",
       width: "30%",
-      render: ([total, numProduct]) => (
-        <a>
-          <b>${total}</b> ({numProduct} Product{numProduct > 1 ? "s" : ""})
-        </a>
-      ),
+      render: (text) => {
+        if (!Array.isArray(text)) {
+          return <a><b>${text}</b> (1 Product)</a>;  
+        }
+        const [total, numProduct] = text;  
+        return (
+          <a>
+            <b>${total}</b> ({numProduct} Product{numProduct > 1 ? "s" : ""})
+          </a>
+        );
+      },
     },
     {
-      dataIndex: "id",
+      dataIndex: "_id",
       key: "action",
       align: "right",
       width: "35%",
-      render: (id) => (
-        <Text type="success" onClick={() => navigate(`/account/order/${id}`)}>
+      render: (_id) => (
+        <Text type="success" onClick={() => navigate(`/account/order/${_id}`)}>
           View Details
         </Text>
       ),
