@@ -23,7 +23,7 @@ const { TextArea } = Input;
 const DetailOrder = () => {
   const { id } = useParams();
   const navigate = useNavigate(); 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("jwt");
 
   // State variables
   const [dataSource, setDataSource] = useState([]);

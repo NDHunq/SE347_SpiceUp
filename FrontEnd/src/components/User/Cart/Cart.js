@@ -11,6 +11,7 @@ import {
 import {jwtDecode} from "jwt-decode";
 import instance from "../../../utils/axiosCustomize";
 import {toast} from "react-toastify";
+
 function Cart() {
     // format number with dots
     const formatNumberWithDots = (number) => {

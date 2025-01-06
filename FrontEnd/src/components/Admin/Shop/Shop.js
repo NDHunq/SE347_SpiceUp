@@ -19,7 +19,7 @@ import {jwtDecode} from "jwt-decode";
 
 function ShopAdmin(){
    const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
 
 
   const [applyButtonColor, setApplyButtonColor] = useState('#00b207');
@@ -43,7 +43,9 @@ function ShopAdmin(){
   });
   const [search, setSearch] = useState("");
   const handleSearchChange = (e) => {
-    setSearch(e.target.value);
+      setSearch(e.target.value);
+      if(e.target.value=="")
+        setProductsFilter(prev => ({...prev, product_name: null}));
   }
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -367,15 +369,18 @@ function ShopAdmin(){
             <div className="col">
               <div className="div1">
                   <div className="search">
-                    <input
-                      type="text"
-                      className="txt_search"
-                      placeholder="Search"
-                    ></input>
+                  <input
+                    type="text"
+                    className="txt_search"
+                    placeholder="Search"
+                    value={search}
+                    onChange={handleSearchChange}
+                    onKeyDown={handleKeyDown}
+                  ></input>
 
-                    <div className="search_i2">
-                      <p className="txt_search2">Search</p>
-                    </div>
+                  <div className="search_i2" onClick={handleSearch}>
+                    <p className="txt_search2">Search</p>
+                  </div>
                   </div>
                   <div className="upload_btn" onClick={()=>{showModal()}}>
                       Upload

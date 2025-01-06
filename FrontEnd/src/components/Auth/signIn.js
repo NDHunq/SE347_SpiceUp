@@ -6,7 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Header1 from "../User/Header/Header1";
 import Footer from "../User/Footer/footer";
 import { signIn } from "../../services/authServices";
+import instance from "../../utils/axiosCustomize";
+import { useDispatch } from 'react-redux';
+import {setTotalCartItem} from "../../redux/reducer/qtyInCart"
 function SignIn() {
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rememberMe, setRememberMe] = useState(false);
@@ -33,7 +37,20 @@ function SignIn() {
     localStorage.setItem("role", response.data.data.role);
 
     toast.success("Sign in successfully");
+    const fetchCart = async () => {
+      try {
+        const cartResponse = await instance.get(`api/v1/cartItem/user/${response.data.data.user_id}`);
+        console.log(cartResponse.data.data);
+        const {total}=cartResponse.data.data;
+        dispatch(setTotalCartItem(total));
 
+        // Dispatch to Redux or handle cart data as required
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
+
+    await fetchCart();
     navigate("/home");
   };
   return (

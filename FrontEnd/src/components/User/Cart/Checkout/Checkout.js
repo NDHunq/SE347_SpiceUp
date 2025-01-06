@@ -7,10 +7,14 @@ import "./Checkout.css"
 import {useNavigate} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 import instance from "../../../../utils/axiosCustomize";
+import { useDispatch } from 'react-redux';
+import {setTotalCartItem} from "../../../../redux/reducer/qtyInCart"
 const { TextArea } = Input;
 
 
 function Checkout() {
+  const dispatch = useDispatch();
+
   // format number with dots
   const formatNumberWithDots = (number) => {
     // Convert the number to a string
@@ -274,7 +278,7 @@ function Checkout() {
                   phone: phone
                 })
             )
-
+            dispatch(setTotalCartItem(0));
             toast.success("Order placed successfully");
             navigate(-1);
           }

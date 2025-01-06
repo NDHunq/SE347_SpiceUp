@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 const OrderHistory = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("jwt");
   
   const [userId,setUserId]=useState(null);
   const [orders, setOrders] = useState([]);
