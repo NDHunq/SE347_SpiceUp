@@ -258,23 +258,20 @@ function Checkout() {
                 total_cost: subTotal,
                 payment_method: payments,
                 order_notes: orderNotes,
-            }
-
-
-            await Promise.all([
-                instance.post('api/v1/order', order),
-                instance.post(`api/v1/user/billingAddress/${user_id}`, {
+                billing_address: {
                   firstName: firstName,
                   lastName: lastName,
                   companyName: companyName,
-                  province: province.label,
-                  district: district.label,
-                  commune: commune.label,
+                  province: province,
+                  district: district,
+                  commune: commune,
                   detailAddress: detailAddress,
                   email: email,
                   phone: phone
-                })
-            ])
+                }
+            }
+
+            await instance.post('api/v1/order', order);
 
             dispatch(setTotalCartItem(0));
             message.success("Order placed successfully");
@@ -338,45 +335,27 @@ function Checkout() {
                             <div class="input-line">
                               <div className="w333">
                                 <p class="name-field">Province</p>
-                                <Space.Compact class="w100">
-                                  <Select  
+                                <AutoComplete
                                     className="w100"
-                                    defaultValue="Select Province"
+                                    placeholder="Province"
                                     value={province}
-                                    onChange={setProvince}
-                                    options={provinces}
-                                    status={errors.province?"error":""}
-                                    />
-                                    {errors.province && <p className="error">{errors.province}</p>}
-                                </Space.Compact>
+                                    onChange={setProvince}/>
                               </div>
                               <div className="w333">
                                 <p class="name-field">District</p>
-                                <Space.Compact class="w100">
-                                  <Select  
+                                <AutoComplete
                                     className="w100"
+                                    placeholder="District"
                                     value={district}
-                                    disabled={!province}
-                                    onChange={setDistrict}
-                                    defaultValue="Select District"
-                                    status={errors.district?"error":""}
-                                    options={districts} />
-                                    {errors.district && <p className="error">{errors.district}</p>}
-                                </Space.Compact>
+                                    onChange={setDistrict}/>
                               </div>
                               <div className="w333">
                                 <p class="name-field">Commune</p>
-                                <Space.Compact class="w100">
-                                  <Select  
+                                <AutoComplete
                                     className="w100"
+                                    placeholder="Commune"
                                     value={commune}
-                                    onChange={setCommune}
-                                    disabled={!district} 
-                                    defaultValue="Select Commune"
-                                    status={errors.commune?"error":""}
-                                    options={communes} />
-                                    {errors.commune && <p className="error">{errors.commune}</p>}
-                                </Space.Compact>
+                                    onChange={setCommune}/>
                               </div>
                             </div>
                             <div class="input-line">
