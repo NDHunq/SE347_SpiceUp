@@ -181,7 +181,7 @@
   filter         : grayscale(100%);
   opacity        : 0.5;
 
-  background-image: url(../../../../assets/images/Admin/recipe/times.png);
+  background-image: url(../../../../assets/images/admin/recipe/times.png);
 
 }
 
@@ -197,6 +197,6 @@
   width           : 35px;
   filter          : grayscale(100%);
   opacity         : 0.7;
-  background-image: url(../../../../assets/images/Admin/recipe/check.png);
+  background-image: url(../../../../assets/images/admin/recipe/check.png);
 
 }

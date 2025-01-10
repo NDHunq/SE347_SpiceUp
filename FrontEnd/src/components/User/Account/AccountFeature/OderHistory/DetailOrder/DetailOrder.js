@@ -88,14 +88,16 @@ const DetailOrder = () => {
         setOrderDetails({
           date: response.data.data.date_ordered || "Unknown Date",
           num: response.data.data.order_items_post.length || 0,
-          firstName: response.data.data.user_id.billingAddress.firstName,
-          lastName: response.data.data.user_id.billingAddress.lastName,
-          detailAddress: response.data.data.user_id.billingAddress.detailAddress,
-          commune: response.data.data.user_id.billingAddress.commune,
-          district: response.data.data.user_id.billingAddress.district,
-          province: response.data.data.user_id.billingAddress.province,
+          firstName: response.data.data.billing_address.firstName,
+          lastName: response.data.data.billing_address.lastName,
+          detailAddress: response.data.data.billing_address.detailAddress,
+          commune: response.data.data.billing_address.commune,
+          district: response.data.data.billing_address.district,
+          province: response.data.data.billing_address.province,
           payment: response.data.data.payment_method,
           subTotal: response.data.data.total_cost,
+          phone:response.data.data.billing_address.phone,
+          email:response.data.data.billing_address.email
         });
 
         for (let i = 0; i < response.data.data.order_items_post.length; i++) {
