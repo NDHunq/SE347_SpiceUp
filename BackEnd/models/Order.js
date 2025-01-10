@@ -3,6 +3,49 @@ const Schema = mongoose.Schema;
 const CartItem = require('./CartItem.js');
 const Product = require('./Product.js');
 
+const billingAddressSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        require: true,
+    },
+    lastName: {
+        type: String,
+        require: true,
+    },
+    companyName: {
+        type: String,
+        require: false,
+    },
+    country: {
+        type: String,
+        require: false,
+    },
+    province: {
+        type: String,
+        require: true,
+    },
+    district: {
+        type: String,
+        require: true,
+    },
+    commune: {
+        type: String,
+        require: true,
+    },
+    detailAddress: {
+        type: String,
+        require: true,
+    },
+    email: {
+        type: String,
+        require: true,
+    },
+    phone: {
+        type: String,
+        require: true,
+    }
+});
+
 // Define the schema for the order collection
 const orderSchema = new Schema({
     user_id: {
@@ -45,6 +88,9 @@ const orderSchema = new Schema({
         type: String,
         required: false,
         default: ''
+    },
+    billing_address: {
+        type: billingAddressSchema,
     }
 });
 

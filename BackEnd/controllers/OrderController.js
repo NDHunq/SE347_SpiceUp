@@ -62,7 +62,7 @@ const getAllOrdersByUserID = async (req, res) => {
 
 // Create a new order
 const createOrder = async (req, res) => {
-    const { user_id, order_items, total_cost, payment_method } = req.body;
+    const { user_id, order_items, total_cost, payment_method, billing_address } = req.body;
     let { order_notes } = req.body;
     const date_ordered = Date.now();
 
@@ -70,7 +70,7 @@ const createOrder = async (req, res) => {
         order_notes = '';
     }
 
-    if (!user_id || !order_items || !payment_method || !total_cost) {
+    if (!user_id || !order_items || !payment_method || !total_cost || !billing_address) {
         return res.status(400).json(
             {
                 status: 'error',
@@ -95,7 +95,8 @@ const createOrder = async (req, res) => {
     }
 
     try {
-        const order = await Order.create({user_id, date_ordered, order_items, total_cost, payment_method, order_notes});
+        const order = await Order.create({user_id, date_ordered, order_items, total_cost, payment_method, order_notes, billing_address});
+        console.log(order);
         res.status(201).json(
             {
                 status: 'success',
@@ -188,7 +189,7 @@ const getOrderById = async (req, res) => {
         );
     }
     try {
-        const order = await Order.findById(id).populate({path: 'user_id', select: 'billingAddress'});
+        const order = await Order.findById(id);
         res.status(200).json(
             {
                 status: 'success',

@@ -9,16 +9,16 @@ router.use("/info/update/:user_id", authenticate, userController.updateInfo);
 router.use("/info/:user_id", authenticate, userController.getInfo);
 router.use("/info", authenticate, userController.getInfo);
 
-router.use('/reset_password/send', userController.sendResetLink)
-router.use('/reset_password/post', userController.resetPassword)
-router.use('/reset_password/:token', userController.resetPasswordForm)
+router.use("/reset_password/send", userController.sendResetLink);
+router.use("/reset_password/post", userController.resetPassword);
+router.use("/reset_password/:token", userController.resetPasswordForm);
 router.post("/info2", userController.getInfo2);
 
-router.use(
-  "/change_password/:user_id",
-  authenticate,
-  userController.changePassword
-);
+// router.use(
+//   "/change_password/:user_id",
+//   authenticate,
+//   userController.changePassword
+// );
 
 router.use("/change_password/:user_id", userController.changePassword);
 

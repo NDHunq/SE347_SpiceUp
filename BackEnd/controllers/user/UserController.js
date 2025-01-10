@@ -84,13 +84,13 @@ class UserController {
     try {
       const user = await User.findOne({ _id: user_id });
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(204).json({ message: "User not found" });
       }
 
       // Compare old password
       const isMatched = await bcrypt.compare(oldPassword, user.password); // Use the Promise version
       if (!isMatched) {
-        return res.status(401).json({ message: "Wrong old password" });
+        return res.status(201).json({ message: "Wrong old password" });
       }
 
       // Update to new password

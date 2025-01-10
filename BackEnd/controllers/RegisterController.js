@@ -3,13 +3,18 @@ const User = require("../models/user");
 class RegisterController {
   //[GET]
   async create(req, res) {
-    const { email, password } = req.body;
-
+    const { email, password, phone, firstName, lastName, role, avatar } = req.body
     try {
       const newUser = new User({
         email: email,
         password: password,
+        phone: phone,
+        firstname: firstName,
+        lastname: lastName,
+        //billingAddress: null,
         role: "RS1",
+        avatar: "6774082b02832c2073356445",
+        createdAt: new Date()
       });
 
       await newUser.save();
