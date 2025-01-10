@@ -3,6 +3,8 @@ import {Rate, Card, Button, Modal, Carousel, Avatar, Divider, List, Skeleton, me
 import { useState } from "react";
 import './HorizontalProduct.css'
 import {
+    MinusOutlined ,
+    PlusOutlined ,
     LinkOutlined,
     DownOutlined,
      UpOutlined } from '@ant-design/icons';
@@ -355,9 +357,15 @@ function HorizontalProduct(props){
                             <hr/>
                             <div className="container-atc">
                                 <div className="container-qty">
-                                    <Button onClick={decreaseQty} type="primary" className="qty-btn" shape="circle">-</Button>
+                                    <Button onClick={decreaseQty} 
+                                    icon={<MinusOutlined />}
+                                    //className="qty-btn" 
+                                    shape="circle"></Button>
                                     <p className="qty-display">{currentQty}</p>
-                                    <Button onClick={increaseQty} type="primary" className="qty-btn" shape="circle">+</Button>
+                                    <Button onClick={increaseQty} 
+                                    //className="qty-btn" 
+                                    shape="circle"
+                                    icon={<PlusOutlined />}></Button>
                                 </div>
                                 <Button type="primary" className="add-to-cart-btn"
                                 onClick={handleAddToCart}><b>Add to Cart</b></Button>

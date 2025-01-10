@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 import {
+    MinusOutlined ,
+    PlusOutlined ,
     LinkOutlined
   } from '@ant-design/icons';
 import './product.css'
@@ -389,9 +391,15 @@ function Product(props){
                         <hr/>
                         <div className="container-atc">
                             <div className="container-qty">
-                                <Button onClick={decreaseQty} type="primary" className="qty-btn" shape="circle">-</Button>
-                                <p className="qty-display">{currentQty}</p>
-                                <Button onClick={increaseQty} type="primary" className="qty-btn" shape="circle">+</Button>
+                            <Button onClick={decreaseQty} 
+                                    icon={<MinusOutlined />}
+                                    //className="qty-btn" 
+                                    shape="circle"></Button>
+                                    <p className="qty-display">{currentQty}</p>
+                                    <Button onClick={increaseQty} 
+                                    //className="qty-btn" 
+                                    shape="circle"
+                                    icon={<PlusOutlined />}></Button>
                             </div>
                             <Button type="primary" className="add-to-cart-btn"
                                 onClick={() => handleAddToCart (currentQty)}><b>Add to Cart</b></Button>

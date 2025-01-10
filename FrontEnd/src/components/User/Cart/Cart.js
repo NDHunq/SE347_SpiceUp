@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 import Header from "../widget/top";
 import { useState } from "react";
-import {CloseCircleOutlined}from '@ant-design/icons';
+import {CloseOutlined ,MinusOutlined ,
+    PlusOutlined }from '@ant-design/icons';
 import {Table, Button, Popconfirm, Empty, Card, Skeleton, message} from 'antd';
 import "./Cart.css"
 import {
@@ -117,11 +118,11 @@ function Cart() {
                 <div className="container-qty flex jtf-ct-fs">
                     <Button onClick={()=>{
                         handleQtyChange(record.key, "decrease")
-                    }} type="primary" className="qty-btn" shape="circle">-</Button>
+                    }}  icon={<MinusOutlined />} shape="circle"></Button>
                     <p className="qty-display">{product.qty}</p>
                     <Button onClick={()=>{
                         handleQtyChange(record.key, "increase")
-                    }} type="primary" className="qty-btn" shape="circle">+</Button>
+                    }}  icon={<PlusOutlined />} shape="circle"></Button>
                 </div>
         },
         {
@@ -137,7 +138,7 @@ function Cart() {
             render: (_, record) =>
               dataSource.length >= 1 ? (
                 <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-                  <CloseCircleOutlined />
+                  <CloseOutlined  />
                 </Popconfirm>
               ) : null,
           },

@@ -184,7 +184,7 @@ container-atc {
 }
 
 .container-atc .container-qty {
-    flex: 1.8;
+    flex: 1.2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -192,7 +192,6 @@ container-atc {
     border-radius: 24px;
     border-style: solid;
     border-width: 1px;
-    padding: 4px 8px;
     margin-right: 24px;
 }
 

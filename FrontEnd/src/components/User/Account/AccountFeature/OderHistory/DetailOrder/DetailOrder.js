@@ -80,6 +80,8 @@ const DetailOrder = () => {
               subTotal: item.sub_total,
               url_img: item.product_id.product_images[0] || "default_image_url", 
               rate: [0, ""],
+              selling_price:item.product_id.selling_price||item.product_id.price,
+              discount: item.product_id.discount
             },
           }))
         );
@@ -153,10 +155,16 @@ const DetailOrder = () => {
       render: (product) => <p>x{product.qty}</p>,
     },
     {
+      title: "DISCOUNT",
+      dataIndex: "product",
+      key: "product",
+      render: (product) => <span>-{product.discount*100}%</span>,
+    },
+    {
       title: "SUBTOTAL",
       dataIndex: "product",
       key: "product",
-      render: (product) => <b>${product.qty * product.price}</b>,
+      render: (product) => <b>${product.qty * product.selling_price}</b>,
     },
     {
       title: "",
