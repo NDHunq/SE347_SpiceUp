@@ -241,10 +241,13 @@ function ShopAdmin(){
           <div className="row ">
             <div className="col-3">
               <div className="col">
-                  <div className="filter">
-                    <b>Filter</b>
-                    <LiaFilterSolid className="img"></LiaFilterSolid>
+                  <br />
+                  <br />
+                  <br />
+                  <div className="filter_btn flex flexgap">
+                    <p>Filter</p>
                   </div>
+                  <hr className="line"></hr>
                   <FilterCategoryShop
                     listname={"All Categories"}
                     listCategory={listCategory}

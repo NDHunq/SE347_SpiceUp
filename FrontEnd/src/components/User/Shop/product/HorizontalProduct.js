@@ -348,7 +348,6 @@ function HorizontalProduct(props){
                                     <span>Brand:</span>
                                     <span className="brand-text">&nbsp; {props.brand}</span>
                                 </div>
-                                <LinkOutlined onClick={copyUrlPage}/>
                             </div>
                             <p class="grey discription">{description}</p>
                         </div>
