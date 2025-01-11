@@ -109,7 +109,7 @@ function Product(props) {
     <Modal
         open={isModalOpen}
         width={1200}
-        height={500}
+         height={500}
         onCancel={handleCloseModal}
         footer={null}
     >

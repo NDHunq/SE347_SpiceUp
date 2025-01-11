@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Rate, Card, Button, Modal, Carousel, Avatar, Divider, List, Skeleton, message} from 'antd';
+import {Rate, Image,Card, Button, Modal, Carousel, Avatar, Divider, List, Skeleton, message} from 'antd';
 import { useState } from "react";
 import './HorizontalProduct.css'
 import {
@@ -224,7 +224,7 @@ function HorizontalProduct(props){
                 setIsModalOpen(false);
             }}
             width={1200}
-            bodyStyle={{ height: '500px' }}  
+            // bodyStyle={{ height: '500px' }}  
             footer={null}>
                 <div className="modal-content">
                     <div className="im-area">
@@ -242,16 +242,15 @@ function HorizontalProduct(props){
                             { images.length > 0 ?
                                 props.urls_img.map((_, index) => (
                                     <div key={index} className="carousel-item">
-                                        <img
-                                            src={images[index]}
-                                            className={index === currentSlide ? 'active-slide' : ''}
-                                            alt={`Slide ${index + 1}`}
-                                            onClick={
-                                                ()=>{
-                                                    setCurrentSlide(index)
-                                                    setCurrentImage(images[index]);
-                                                }
-                                            }
+                                        <Image
+                                        src={images[index]}
+                                        alt={`Slide ${index + 1}`}
+                                        className={index === currentSlide ? 'active-slide' : ''}
+                                        onClick={() => {
+                                            setCurrentSlide(index);
+                                            setCurrentImage(images[index]);
+                                        }}
+                                        preview={true} 
                                         />
                                     </div>
                                 ))

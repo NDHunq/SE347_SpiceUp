@@ -1,27 +1,35 @@
 .im-area {
-    flex: 1;              
+    flex: 1;
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
     height: 100%;
 }
-.img-list-admin{
-    flex:1;
+
+.img-list-admin {
+    flex: 1;
     height: 100%;
     vertical-align: middle;
 }
-.img-product{
-    flex:5;
-}
-.info-1{
-    flex:8;
-    max-height: 90%; 
-    overflow-y: auto;  
-    padding-right: 16px; 
+
+.img-product {
+    flex: 5;
 }
 
+.info-1 {
+    flex: 8;
+    max-height: 90%;
+    overflow-y: auto;
+    padding-right: 16px;
+}
 
-.price-line .sell-price,.sell-price{
-    color:#2C742F;
+.info-area-admin {
+    margin-left: 8px;
+    flex: 8
+}
+
+.price-line .sell-price,
+.sell-price {
+    color: #2C742F;
     font-size: 24px;
 }
 
@@ -30,72 +38,100 @@
     margin: 8px 24px;
     flex-direction: row;
 }
+
 .vertical-upload .ant-upload-list {
     display: flex;
     flex-direction: column;
 }
+
 .vertical-upload .ant-upload-list-item {
-    width: 100%; 
-    margin-bottom: 8px; 
+    width: 100%;
+    margin-bottom: 8px;
 }
-.antd-modal-body{
-    height: 100%;   
-    display: flex; 
-    flex-direction: column; 
+
+.antd-modal-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
-.modal-content{
-    height: 500px; 
+
+.modal-content {
+    height: 500px;
 
 }
-.ant-upload-wrapper{
+
+.ant-upload-wrapper {
     vertical-align: middle;
 }
+
 .input-pirce .ant-input-number-input {
-    color: #2C742F !important; 
-    font-size: 24px !important; 
+    color: #2C742F !important;
+    font-size: 24px !important;
     width: 120px;
-  }
+}
 
-.input-percent-sale .ant-input-number-input{
-    color: rgb(216, 115, 115) !important; 
-    font-size: 16px !important; 
+.input-percent-sale .ant-input-number-input {
+    color: rgb(216, 115, 115) !important;
+    font-size: 16px !important;
     width: 50px;
     margin-left: 8px;
 }
 
-.input-qty .ant-input-number-input{
-    font-size: 16px !important; 
+.input-qty .ant-input-number-input {
+    font-size: 16px !important;
     width: 50px;
     margin-left: 8px;
 }
+
 .discription .ant-input {
     width: 100%;
-    color: darkgrey !important;;
+    color: darkgrey !important;
+    ;
 }
 
-.container-price-remain{
+.container-price-remain {
     display: flex;
     justify-content: space-between;
 }
 
-.price-line{
+.price-line {
     display: flex;
     justify-content: left;
 }
-.margin-left8{
+
+.margin-left8 {
     margin-left: 8px;
 }
-.margin-right8{
+
+.margin-right8 {
     margin-right: 8px;
 }
-.margin-left16{
+
+.margin-left16 {
     margin-left: 12px;
 }
 
-.paddingLeft0{
+.paddingLeft0 {
     padding-left: 0px;
 }
-.container-unit-category{
+
+.container-unit-category {
     display: flex;
     justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+
+    .container-price-remain {
+        flex-direction: column;
+    }
+
+    .container-unit-category {
+        flex-direction: column;
+    }
+}
+
+.button-line{
+    flex-direction: row;
+    display: flex;
 }

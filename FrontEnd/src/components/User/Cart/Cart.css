@@ -66,3 +66,23 @@
 .size24{
     font-size: 24px;
 }
+
+.user-cart .cart-product, 
+.user-cart .fee {
+    padding: 15px;
+}
+
+@media (max-width: 768px) {
+    .user-cart .row {
+        flex-direction: column; 
+    }
+
+    .user-cart .cart-product, 
+    .user-cart .fee {
+        width: 100%; 
+    }
+
+    .user-cart .fee {
+        margin-top: 20px; 
+    }
+}

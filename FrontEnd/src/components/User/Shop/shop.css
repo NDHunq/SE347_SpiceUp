@@ -108,3 +108,14 @@ hr{
 .marginL8px{
     margin-left: 8px;
 }
+
+@media (max-width: 1200px) {
+    .cot1{
+        display: none;
+    }
+    .cot2{
+        flex: 0 0 100%; 
+      max-width: 100%;
+
+    }
+}

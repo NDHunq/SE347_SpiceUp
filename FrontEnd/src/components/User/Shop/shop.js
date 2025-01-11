@@ -219,7 +219,7 @@ function Shop() {
         <div className="container">
           <div className="row ">
             <div className="col-3">
-              <div className="col">
+              <div className="col cot1">
                 <br />
                 <br />
                 <br />
@@ -366,7 +366,7 @@ function Shop() {
                 </div>
               </div>
             </div>
-            <div className="col">
+            <div className="col cot2">
               <div className="div1">
                 <div className="search">
                   <input
@@ -400,7 +400,7 @@ function Shop() {
               <div className="row product-area">
                 {products.length > 0 ? (
                   products.map((product) => (
-                    <div className="col-md-4 mb-4" key={product._id}>
+                    <div className="col-12 col-md-6 col-lg-4 mb-4" key={product._id}>
                       <Product
                         id={product._id}
                         urls_img={product.product_images}

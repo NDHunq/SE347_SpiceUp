@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './upload.css';
-import { Image, Upload, Button, Form, Input, InputNumber, Select, Flex,Popconfirm,message} from 'antd';
+import { Modal, Image, Upload, Button, Form, Input, InputNumber, Select, Flex, Popconfirm, message } from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
 import instance from "../../../../utils/axiosCustomize";
 import { useEffect } from "react";
@@ -12,8 +12,8 @@ function ModalModify(props) {
   const [isChanged, setIsChanged] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
-  const [categories,setCategories]=useState(props.categories);
-  const confirmDeleteProduct  =  async (e) => {
+  const [categories, setCategories] = useState(props.categories);
+  const confirmDeleteProduct = async (e) => {
     try {
       const response = await instance.delete(`api/v1/product/${props.id}`);
       if (response.status === 200 || response.status === 204) {
@@ -28,12 +28,12 @@ function ModalModify(props) {
       console.error('Error:', error);
       message.error('An error occurred');
     }
-  
+
 
   };
   useEffect(() => {
     const updatedProduct = {
-      id:props.id,
+      id: props.id,
       product_name: props.name,
       price: props.price,
       discount: props.discount,
@@ -42,20 +42,20 @@ function ModalModify(props) {
       description: props.description,
       category: props.category,
       value: props.value,
-      product_images:props.urls_img
+      product_images: props.urls_img
     };
-  
-    setProduct(updatedProduct); 
-    setCategories(props.categories || []); 
-  
+
+    setProduct(updatedProduct);
+    setCategories(props.categories || []);
+
     form.setFieldsValue(updatedProduct);
-  }, [props.name, props.price, props.discount, props.brand, props.stock, props.description, props.category, props.value, props.categories,form]);  
+  }, [props.name, props.price, props.discount, props.brand, props.stock, props.description, props.category, props.value, props.categories, form]);
 
   useEffect(() => {
     if (!product || !product.product_images || product.product_images.length === 0) {
       return;
     }
-  
+
     const fetchImage = async () => {
       try {
         const promises = product.product_images.map((fileId) =>
@@ -69,8 +69,8 @@ function ModalModify(props) {
             uid: product.product_images[index],
             name: `Image ${index + 1}`,
             status: 'done',
-            url: url, 
-            originFileObj: blob, 
+            url: url,
+            originFileObj: blob,
           };
         });
         setFileList(tempFileList);
@@ -78,9 +78,9 @@ function ModalModify(props) {
         console.error("Error fetching images:", error);
       }
     };
-  
+
     fetchImage();
-  
+
     return () => {
       fileList.forEach((file) => {
         if (file.url) {
@@ -97,50 +97,51 @@ function ModalModify(props) {
 
 
   const handlePreview = async (file) => {
-    try {
-      if (file.originFileObj instanceof Blob) {
+    if (!file.url && !file.preview) {
+      file.preview = await new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => setPreviewImage(reader.result);
-      } else if (file.url) {
-        setPreviewImage(file.url);
-      } else {
-        console.error("File is not a Blob or does not have a URL.");
-      }
-    } catch (error) {
-      console.error("Error in handlePreview:", error);
+        reader.onload = () => resolve(reader.result);
+      });
     }
+
+    setPreviewImage(file.url || file.preview); // Đặt URL của ảnh
+    Modal.info({
+      content: <Image src={file.url || file.preview} alt="Preview" />,
+      onOk: () => { },
+      onClose: () => { }
+    });
+
   };
-  
+
   const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-  
+
     try {
       const response = await instance.post('/api/v1/image/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         },
       });
-  
+
       if (response.status !== 200) {
         throw new Error(`Upload failed with status ${response.status}`);
       }
-  
-  
+
+
       const result = await response.data;
       console.log(result);
       console.log('Uploaded fileId:', result.file?.fileId);
-      return result.file?.fileId; 
+      return result.file?.fileId;
     } catch (error) {
       console.error('Error during upload:', error);
       return null;
     }
   };
   const handleChange = ({ fileList: newFileList }) => {
-    setIsChanged(true); 
-    if(newFileList.length===0)
-    {
+    setIsChanged(true);
+    if (newFileList.length === 0) {
       setIsChanged(false);
       setPreviewImage(null);
     }
@@ -153,7 +154,7 @@ function ModalModify(props) {
       product_images: prevProduct.product_images.filter(imageId => imageId !== file.uid),
     }));
   };
-  
+
   const onFinish = async (values) => {
     setIsSaving(true);
     try {
@@ -161,33 +162,33 @@ function ModalModify(props) {
 
       const uploadedFileIds = [];
       for (const file of newFiles) {
-        const fileId = await uploadFile(file.originFileObj); 
+        const fileId = await uploadFile(file.originFileObj);
         if (fileId) {
           uploadedFileIds.push(fileId);
         }
       }
-      const updatedProduct = { 
-        ...product, 
+      const updatedProduct = {
+        ...product,
         ...values,
-        product_images: [...product.product_images, ...uploadedFileIds] 
+        product_images: [...product.product_images, ...uploadedFileIds]
       };
-  
+
       console.log("Updated Product:", updatedProduct);
 
       // Reset state
       setProduct(updatedProduct);
-      setIsChanged(false); 
+      setIsChanged(false);
       const formData = {
         ...updatedProduct,
-        product_images: updatedProduct.product_images, 
+        product_images: updatedProduct.product_images,
       };
-  
+
       console.log(formData);
       // call api with form data
       const response = await instance.patch(`/api/v1/product/${product.id}`, formData);
       if (response.status === 200) {
         message.success('Changes saved successfully!');
-        if(props.refresh){
+        if (props.refresh) {
           props.refresh();
         }
       } else {
@@ -204,13 +205,13 @@ function ModalModify(props) {
   };
 
   const handleValuesChange = (_, allValues) => {
-    
+
     const hasChanges = Object.keys(product).some(
       (key) => product[key] !== allValues[key]
     );
     setIsChanged(hasChanges);
   };
-  const saveChange=()=>{
+  const saveChange = () => {
     console.log(form);
   }
 
@@ -243,16 +244,14 @@ function ModalModify(props) {
               )}
             </Upload>
           </div>
-          <div className="img-product">
-            {previewImage && <Image src={previewImage} alt="Preview" />}
-          </div>
+
         </div>
 
-        <div className="info-area">
+        <div className="info-area-admin">
           <Form
             form={form}
             initialValues={product}
-            onValuesChange={handleValuesChange} 
+            onValuesChange={handleValuesChange}
             onFinish={onFinish}
             autoComplete="off"
           >
@@ -268,28 +267,30 @@ function ModalModify(props) {
             </Form.Item>
 
             <div className="container-price-remain">
-              <Form.Item
-                name="price"
-                rules={[{ required: true, message: 'Please input price!' }]}
-              >
-                <InputNumber
-                  className="input-price"
-                  placeholder="Price"
-                  addonAfter="đ"
-                  min={1}
-                />
-              </Form.Item>
+              <div className="price-line">
 
-              <Form.Item name="discount">
-                <InputNumber
-                  className="input-percent-sale margin-left8"
-                  placeholder="Off"
-                  addonAfter="%"
-                  min={0}
-                  max={1}
-                />
-              </Form.Item>
+                <Form.Item
+                  name="price"
+                  rules={[{ required: true, message: 'Please input price!' }]}
+                >
+                  <InputNumber
+                    className="input-price"
+                    placeholder="Price"
+                    addonAfter="đ"
+                    min={1}
+                  />
+                </Form.Item>
 
+                <Form.Item name="discount">
+                  <InputNumber
+                    className="input-percent-sale margin-left8"
+                    placeholder="Off"
+                    addonAfter="%"
+                    min={0}
+                    max={1}
+                  />
+                </Form.Item>
+              </div>
               <Form.Item
                 label="Remain"
                 name="stock"
@@ -328,7 +329,7 @@ function ModalModify(props) {
                     <Select.Option key={category.id} value={category.id}>
                       {category.name}
                     </Select.Option>
-                    ))}
+                  ))}
                 </Select>
               </Form.Item>
 
@@ -337,37 +338,38 @@ function ModalModify(props) {
                 name="value"
                 rules={[{ required: true, message: 'Please input unit!' }]}
               >
-                <Input placeholder="Enter unit"  />
+                <Input placeholder="Enter unit" />
               </Form.Item>
             </div>
-
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={!isChanged} 
-              loading={isSaving}
-              onClick={saveChange}
-            >
-              Save Changes
-            </Button>
+            <div class="button-line">
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={!isChanged}
+                loading={isSaving}
+                onClick={saveChange}
+              >
+                Save Changes
+              </Button>
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure to delete this task?"
+                onConfirm={confirmDeleteProduct}
+                okText="Delete"
+                cancelText="Cancel"
+              >
+                <Button
+                  type="primary"
+                  danger
+                  style={{ marginLeft: '8px' }}
+                >
+                  Delete
+                </Button>
+              </Popconfirm>
+            </div>
+           
           </Form>
-          <Flex wrap gap="small">
-          <Popconfirm
-            title="Delete the task"
-            description="Are you sure to delete this task?"
-            onConfirm={confirmDeleteProduct}
-            okText="Delete"
-            cancelText="Cancel"
-          >
-                      <Button
-                      type="primary"
-                      danger
-                      style={{marginTop:'8px'}}
-                    >
-                      Delete
-                    </Button>
-          </Popconfirm>
-          </Flex>
+         
         </div>
       </div>
 
