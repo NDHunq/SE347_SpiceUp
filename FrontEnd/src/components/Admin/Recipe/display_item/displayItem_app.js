@@ -47,7 +47,8 @@ const DisplayItem = ({
           backgroundImage: `url(${tlink})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-        }}>
+        }}
+      >
         <div className="time" onClick={handleItemClick}>
           <FaClock className="clock" />
           <div className="timetxt">{ttime} min</div>

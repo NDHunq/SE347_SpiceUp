@@ -141,6 +141,7 @@ const Setting = () => {
     const response = await changUserInfo(userId, {
       firstname: firstName,
       lastname: lastName,
+      phone: phone,
     });
     message.info(response.data.message);
   };
