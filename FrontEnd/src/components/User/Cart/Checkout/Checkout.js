@@ -291,170 +291,188 @@ function Checkout() {
     };
 
     return(
-        <div class="user-checkout">
-            <Header navItems={navItems}/>
-            <main>
-                <div class="container margintop60px marginbt160px">
-                    <div class="row">
-                        <div class="info col-9">
-                          <h2>Billing Infomation</h2>
-                          <div>
-                            <div class="input-line">
-                              <div className="w333">
-                                <p class="name-field">First name</p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Your first name"
-                                value={firstName}
-                                onChange={setFirstName}
-                                status={errors.firstName?"error":""}
-                              />
-                              {errors.firstName && <p className="error">{errors.firstName}</p>}
-                              </div>
-                              <div className="w333">
-                                <p class="name-field">Last name</p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Your last name"
-                                value={lastName}
-                                onChange={setLastName}
-                                status={errors.lastName?"error":""}
-                              />
-                              {errors.lastName && <p className="error">{errors.lastName}</p>}
-                              </div>
-                              <div className="w333">
-                                <p class="name-field">Company name <span class="grey">(optional)</span></p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Your company name"
-                                value={companyName}
-                                onChange={setCompanyName}
-                              />
-                              </div>
-                            </div>
-                            <div class="input-line">
-                              <div className="w333">
-                                <p class="name-field">Province</p>
-                                <AutoComplete
-                                    className="w100"
-                                    placeholder="Province"
-                                    value={province}
-                                    onChange={setProvince}/>
-                              </div>
-                              <div className="w333">
-                                <p class="name-field">District</p>
-                                <AutoComplete
-                                    className="w100"
-                                    placeholder="District"
-                                    value={district}
-                                    onChange={setDistrict}/>
-                              </div>
-                              <div className="w333">
-                                <p class="name-field">Commune</p>
-                                <AutoComplete
-                                    className="w100"
-                                    placeholder="Commune"
-                                    value={commune}
-                                    onChange={setCommune}/>
-                              </div>
-                            </div>
-                            <div class="input-line">
-                              <div className="w100">
-                                <p class="name-field">Detail Address</p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Detail address"
-                                value={detailAddress}
-                                status={errors.detailAddress?"error":""}
-                                onChange={setDetailAddress}
-                              />
-                              {errors.detailAddress && <p className="error">{errors.detailAddress}</p>}
-                              </div>
-                            </div>
-                            <div class="input-line">
-                              <div className="w50">
-                                <p class="name-field">Email</p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Email address"
-                                value={email}
-                                onChange={setEmail}
-                                status={errors.email?"error":""}
-                              />
-                              {errors.email && <p className="error">{errors.email}</p>}
-                              </div>
-                              <div className="w50">
-                                <p class="name-field">Phone</p>
-                                <AutoComplete
-                                className="w100"
-                                placeholder="Phone number"
-                                value={phone}
-                                onChange={setPhone}
-                                status={errors.phone?"error":""}
-                              />
-                              {errors.phone && <p className="error">{errors.phone}</p>}
-                              </div>
-                            </div>
-                            <hr/>
-                            <h2>Addtional Infomation</h2>
-                            <div class="input-line">
-                              <div className="w100">
-                                <p class="name-field">Order Notes <span class="grey">(optional)</span></p>
-                                <TextArea 
-                                rows={4}
-                                value={orderNotes}
-                                onChange={(e) => setOrderNotes(e.target.value)}
-                                placeholder="Notes about your order, e.g. special notes for delivery" />
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                        <div class="order col-3">
-                            <Card class="container-order-info">
-                              <h4 class="marginbt8px">Order Summery</h4>
-                              {orderItems.map(orderItem => (
-                                <div className="order-items" key={orderItem.id}>
-                                  <div class="img-name">
-                                    <img class="marginr8px" width={32} height={32} src={orderItem.product.url_img}></img>
-                                    <p>{orderItem.product.name}    x{orderItem.product.qty}</p>
-                                  </div>
-                                  <b>đ {formatNumberWithDots((orderItem.product.qty * orderItem.product.price).toFixed(0))}</b>
-                                </div>
-                              ))}
-                              <div class="container-info margint8px">
-                                <p>Subtotal</p>
-                                <b class="align-right">đ {formatNumberWithDots(subTotal)}</b>
-                              </div>
-                              <hr/>
-                              <div class="container-info">
-                                <p>Shipping</p>
-                                <b>Free</b>
-                              </div>
-                              <hr/>
-                              <div class="container-info">
-                                <p>Total</p>
-                                <b class="size24">đ {formatNumberWithDots(subTotal)}</b>
-                              </div>  
-                              <h4 class="marginbt8px">Payment Method</h4>
-                              <Radio.Group onChange={onChangePayment} value={payments}>
-                                <Space direction="vertical">
-                                  <Radio value={"Cash on Delivery"}>Cash on Delivery</Radio>
-                                  <Radio value={"Internet banking"}>Internet banking</Radio>
-                                  <Radio value={"Momo"}>Momo</Radio>
-                                </Space>
-                              </Radio.Group>
-                              {errors.payments && <p className="error">{errors.payments}</p>}
-                              <Button 
-                              className="full-width-btn margint8px" 
-                              onClick={handlePlaceOrder}
-                              type="primary">Place Order</Button>
-                            </Card>
-                        </div>
-                    </div>
+      <div class="user-checkout">
+      <Header navItems={navItems} />
+      <main>
+        <div class="container mt-4 mb-5">
+          <div class="row">
+            <div class="info col-lg-9 col-md-8 col-sm-12 mb-4">
+              <h2>Billing Information</h2>
+              <div>
+                <div class="row g-3 mb-3">
+                  <div class="col-md-4">
+                    <label class="form-label">First name</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Your first name"
+                      value={firstName}
+                      onChange={setFirstName}
+                      status={errors.firstName ? "error" : ""}
+                    />
+                    {errors.firstName && <p className="error">{errors.firstName}</p>}
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Last name</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Your last name"
+                      value={lastName}
+                      onChange={setLastName}
+                      status={errors.lastName ? "error" : ""}
+                    />
+                    {errors.lastName && <p className="error">{errors.lastName}</p>}
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">
+                      Company name <span class="text-muted">(optional)</span>
+                    </label>
+                    <Input
+                      className="form-control"
+                      placeholder="Your company name"
+                      value={companyName}
+                      onChange={setCompanyName}
+                    />
+                  </div>
                 </div>
-            </main>
+    
+                <div class="row g-3 mb-3">
+                  <div class="col-md-4">
+                    <label class="form-label">Province</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Province"
+                      value={province}
+                      onChange={setProvince}
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">District</label>
+                    <Input
+                      className="form-control"
+                      placeholder="District"
+                      value={district}
+                      onChange={setDistrict}
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Commune</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Commune"
+                      value={commune}
+                      onChange={setCommune}
+                    />
+                  </div>
+                </div>
+    
+                <div class="mb-3">
+                  <label class="form-label">Detail Address</label>
+                  <Input
+                    className="form-control"
+                    placeholder="Detail address"
+                    value={detailAddress}
+                    status={errors.detailAddress ? "error" : ""}
+                    onChange={setDetailAddress}
+                  />
+                  {errors.detailAddress && (
+                    <p className="error">{errors.detailAddress}</p>
+                  )}
+                </div>
+    
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Email address"
+                      value={email}
+                      onChange={setEmail}
+                      status={errors.email ? "error" : ""}
+                    />
+                    {errors.email && <p className="error">{errors.email}</p>}
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <Input
+                      className="form-control"
+                      placeholder="Phone number"
+                      value={phone}
+                      onChange={setPhone}
+                      status={errors.phone ? "error" : ""}
+                    />
+                    {errors.phone && <p className="error">{errors.phone}</p>}
+                  </div>
+                </div>
+    
+                <hr />
+                <h2>Additional Information</h2>
+                <div class="mb-3">
+                  <label class="form-label">
+                    Order Notes <span class="text-muted">(optional)</span>
+                  </label>
+                  <TextArea
+                    rows={4}
+                    value={orderNotes}
+                    onChange={(e) => setOrderNotes(e.target.value)}
+                    placeholder="Notes about your order, e.g. special notes for delivery"
+                  />
+                </div>
+              </div>
+            </div>
+    
+            <div class="order col-lg-3 col-md-4 col-sm-12">
+              <Card class="p-3 shadow">
+                <h4 class="mb-3">Order Summary</h4>
+                {orderItems.map((orderItem) => (
+                  <div className="d-flex justify-content-between mb-2" key={orderItem.id}>
+                    <div class="d-flex align-items-center">
+                      <img
+                        class="me-2"
+                        width={32}
+                        height={32}
+                        src={orderItem.product.url_img}
+                      />
+                      <p class="mb-0">
+                        {orderItem.product.name} x{orderItem.product.qty}
+                      </p>
+                    </div>
+                    <b>đ {formatNumberWithDots((orderItem.product.qty * orderItem.product.price).toFixed(0))}</b>
+                  </div>
+                ))}
+                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                  <p>Subtotal</p>
+                  <b>đ {formatNumberWithDots(subTotal)}</b>
+                </div>
+                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                  <p>Shipping</p>
+                  <b>Free</b>
+                </div>
+                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                  <p>Total</p>
+                  <b class="fs-4">đ {formatNumberWithDots(subTotal)}</b>
+                </div>
+                <h4 class="mt-3">Payment Method</h4>
+                <Radio.Group onChange={onChangePayment} value={payments}>
+                  <Space direction="vertical">
+                    <Radio value={"Cash on Delivery"}>Cash on Delivery</Radio>
+                    <Radio value={"Internet banking"}>Internet banking</Radio>
+                    <Radio value={"Momo"}>Momo</Radio>
+                  </Space>
+                </Radio.Group>
+                {errors.payments && <p className="error">{errors.payments}</p>}
+                <Button
+                  className="w-100  mt-3"
+                  onClick={handlePlaceOrder}
+                  type="primary"
+                >
+                  Place Order
+                </Button>
+              </Card>
+            </div>
+          </div>
         </div>
+      </main>
+    </div>
     )
 }
 
