@@ -71,67 +71,67 @@ function Checkout() {
       fetchProvinces();
     }, [apiKey]);
   
-    useEffect(() => {
-      if (province) {
-        const fetchDistricts = async () => {
-          const response = await fetch('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Token': apiKey 
-            },
-            body: JSON.stringify({ "province_id": province })
-          });
-          const data = await response.json();
-          setDistricts(data.data?.map(item => ({
-            label: item.DistrictName,
-            value: item.DistrictID
-          })));
-        };
+    // useEffect(() => {
+    //   if (province) {
+    //     const fetchDistricts = async () => {
+    //       const response = await fetch('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+    //         method: 'POST',
+    //         headers: { 
+    //           'Content-Type': 'application/json',
+    //           'Token': apiKey 
+    //         },
+    //         body: JSON.stringify({ "province_id": province })
+    //       });
+    //       const data = await response.json();
+    //       setDistricts(data.data?.map(item => ({
+    //         label: item.DistrictName,
+    //         value: item.DistrictID
+    //       })));
+    //     };
   
-        fetchDistricts();
-      } else {
-        setDistricts([]); 
-      }
-      setCommune(null); 
-      setDistrict(null); 
-    }, [province, apiKey]);
+    //     fetchDistricts();
+    //   } else {
+    //     setDistricts([]); 
+    //   }
+    //   setCommune(null); 
+    //   setDistrict(null); 
+    // }, [province, apiKey]);
   
-    useEffect(() => {
-      if (district) {
-        const fetchCommunes = async () => {
-          try {
-            const response = await fetch('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
-              method: 'POST',
-              headers: { 
-                'Content-Type': 'application/json',
-                'Token': apiKey 
-              },
-              body: JSON.stringify({ "district_id": district })
-            });
+    // useEffect(() => {
+    //   if (district) {
+    //     const fetchCommunes = async () => {
+    //       try {
+    //         const response = await fetch('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
+    //           method: 'POST',
+    //           headers: { 
+    //             'Content-Type': 'application/json',
+    //             'Token': apiKey 
+    //           },
+    //           body: JSON.stringify({ "district_id": district })
+    //         });
             
-            const data = await response.json();
-            console.log('Fetched communes data:', data); 
+    //         const data = await response.json();
+    //         console.log('Fetched communes data:', data); 
             
-            if (data && data.data) {
-              setCommunes(data.data.map(item => ({
-                label: item.WardName,
-                value: item.WardCode
-              })));            } else {
-              setCommunes([]); 
-            }
-          } catch (error) {
-            console.error('Error fetching communes:', error);
-            setCommunes([]); 
-          }
-        };
+    //         if (data && data.data) {
+    //           setCommunes(data.data.map(item => ({
+    //             label: item.WardName,
+    //             value: item.WardCode
+    //           })));            } else {
+    //           setCommunes([]); 
+    //         }
+    //       } catch (error) {
+    //         console.error('Error fetching communes:', error);
+    //         setCommunes([]); 
+    //       }
+    //     };
     
-        fetchCommunes();
-      } else {
-        setCommunes([]); 
-      }
-      setCommune(null); 
-    }, [district, apiKey]);
+    //     fetchCommunes();
+    //   } else {
+    //     setCommunes([]); 
+    //   }
+    //   setCommune(null); 
+    // }, [district, apiKey]);
 
 
     const [orderItems, setOrderItems]  = useState([]);
@@ -190,12 +190,12 @@ function Checkout() {
     }
   }, [billingAddress]);
 
-  useEffect(() => {
-    if (billingAddress) {
-      setDistrict(billingAddress.district);
-      setCommune(billingAddress.commune);
-    }
-  }, [province, district]);
+  // useEffect(() => {
+  //   if (billingAddress) {
+  //     setDistrict(billingAddress.district);
+  //     setCommune(billingAddress.commune);
+  //   }
+  // }, [province, district]);
     
     const handleMenuClick = (e) => {
       message.info();
@@ -306,7 +306,7 @@ function Checkout() {
                       className="form-control"
                       placeholder="Your first name"
                       value={firstName}
-                      onChange={setFirstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       status={errors.firstName ? "error" : ""}
                     />
                     {errors.firstName && <p className="error">{errors.firstName}</p>}
@@ -317,7 +317,7 @@ function Checkout() {
                       className="form-control"
                       placeholder="Your last name"
                       value={lastName}
-                      onChange={setLastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       status={errors.lastName ? "error" : ""}
                     />
                     {errors.lastName && <p className="error">{errors.lastName}</p>}
@@ -330,7 +330,7 @@ function Checkout() {
                       className="form-control"
                       placeholder="Your company name"
                       value={companyName}
-                      onChange={setCompanyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -342,8 +342,12 @@ function Checkout() {
                       className="form-control"
                       placeholder="Province"
                       value={province}
-                      onChange={setProvince}
+                      onChange={(e) => setProvince(e.target.value)}
+                      status={errors.province ? "error" : ""}
                     />
+                     {errors.province && (
+                    <p className="error">{errors.district}</p>
+                  )}
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">District</label>
@@ -351,8 +355,12 @@ function Checkout() {
                       className="form-control"
                       placeholder="District"
                       value={district}
-                      onChange={setDistrict}
+                      onChange={(e) => setDistrict(e.target.value)}
+                      status={errors.district ? "error" : ""}
                     />
+                     {errors.district && (
+                    <p className="error">{errors.district}</p>
+                  )}
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Commune</label>
@@ -360,8 +368,12 @@ function Checkout() {
                       className="form-control"
                       placeholder="Commune"
                       value={commune}
-                      onChange={setCommune}
+                      onChange={(e) => setCommune(e.target.value)}
+                      status={errors.commune ? "error" : ""}
                     />
+                     {errors.commune && (
+                    <p className="error">{errors.commune}</p>
+                  )}
                   </div>
                 </div>
     
@@ -372,7 +384,7 @@ function Checkout() {
                     placeholder="Detail address"
                     value={detailAddress}
                     status={errors.detailAddress ? "error" : ""}
-                    onChange={setDetailAddress}
+                    onChange={(e) => setDetailAddress(e.target.value)}
                   />
                   {errors.detailAddress && (
                     <p className="error">{errors.detailAddress}</p>
@@ -386,7 +398,8 @@ function Checkout() {
                       className="form-control"
                       placeholder="Email address"
                       value={email}
-                      onChange={setEmail}
+                      type="email"
+                      onChange={(e) => setEmail(e.target.value)}
                       status={errors.email ? "error" : ""}
                     />
                     {errors.email && <p className="error">{errors.email}</p>}
@@ -396,8 +409,9 @@ function Checkout() {
                     <Input
                       className="form-control"
                       placeholder="Phone number"
+                      type="tel"
                       value={phone}
-                      onChange={setPhone}
+                      onChange={(e) => setPhone(e.target.value)}
                       status={errors.phone ? "error" : ""}
                     />
                     {errors.phone && <p className="error">{errors.phone}</p>}
