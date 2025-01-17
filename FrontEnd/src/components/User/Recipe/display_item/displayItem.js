@@ -81,22 +81,6 @@ const DisplayItem = ({
         {/* Tên món ăn và bookmark */}
         <div className="bot_row3">
           <div className="bot_row txt_name">{tname || "Unnamed Recipe"}</div>
-
-          {isbook && role === "RS1" && (
-            <div
-              onClick={(e) => {
-                e.stopPropagation(); // Ngăn chặn sự kiện click lan lên cha
-                toggleBookmark();
-              }}
-              className="bookmark"
-            >
-              {isBookmarked ? (
-                <FaBookmark className="bookmark-icon active" />
-              ) : (
-                <FaRegBookmark className="bookmark-icon" />
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>

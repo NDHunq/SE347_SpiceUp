@@ -156,9 +156,10 @@
 }
 
 .image {
-  width: 160px;
+  width: fit-content;
+
   height: 130px;
-  background-size: cover;
+  background-size: fill;
   background-position: center;
   border-radius: 10px;
 }
@@ -313,4 +314,10 @@
 .textclred {
   color: crimson !important;
   font-size: 18px !important;
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

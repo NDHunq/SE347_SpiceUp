@@ -25,10 +25,11 @@ import {
   getImage,
   getUser,
 } from "../../../services/userServices";
-
+import { Spin } from "antd";
 const { TextArea, Search } = Input; // Destructure TextArea and Search from Input
 
 function SingleRecipe() {
+  const [loading, setLoading] = useState(true);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const handleImageClick = (img) => {
@@ -113,6 +114,7 @@ function SingleRecipe() {
   useEffect(() => {
     const getRecipe = async () => {
       try {
+        setLoading(true);
         const jwt = localStorage.getItem("jwt");
         if (jwt) {
           setisLogin(true);
@@ -151,7 +153,7 @@ function SingleRecipe() {
         }
         setSteps(steps);
         setIgredients(recipe.ingredients);
-        if (islogin) {
+        if (jwt) {
           if (recipe.savedUserId.includes(userId)) {
             setIsBookmarked(true);
           } else {
@@ -174,6 +176,7 @@ function SingleRecipe() {
           const urlAvatar = await getImage(user.avatar);
           setUserAvatar(urlAvatar);
         }
+        setLoading(false);
 
         const rawcomments = await getComment(id);
         const comments = [];
@@ -243,273 +246,275 @@ function SingleRecipe() {
     }
   };
 
-  {
+  if (loading) {
     return (
-      <ConfigProvider
-        theme={{
-          components: {
-            Input: {
-              hoverBorderColor: "#00B207",
-              activeBorderColor: "#00B207",
-              hoverBorderColor: "#00B207",
-            },
-          },
-          token: {
-            primaryColor: "#00B207",
-            colorPrimaryActive: "#00B207",
-            colorPrimaryHover: "#00B207",
-          },
-        }}
-      >
-        <div className="recipes">
-          <Header navItems={navItems} />
+      <div className="loading-container">
+        <Spin size="large" tip="Loading..." />
+      </div>
+    );
+  }
 
-          <main className="content">
-            <div className="container">
-              <div className="row">
-                <div className="col-8 ">
-                  <div className="flexible">
-                    <div className="col">
-                      <div
-                        className="cover_image"
-                        onClick={() => handleImageClick(coverImage)}
-                        style={{
-                          backgroundImage: `url(${coverImage})`,
+  return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Input: {
+            hoverBorderColor: "#00B207",
+            activeBorderColor: "#00B207",
+            hoverBorderColor: "#00B207",
+          },
+        },
+        token: {
+          primaryColor: "#00B207",
+          colorPrimaryActive: "#00B207",
+          colorPrimaryHover: "#00B207",
+        },
+      }}
+    >
+      <div className="recipes">
+        <Header navItems={navItems} />
 
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }}
-                      ></div>
+        <main className="content">
+          <div className="container">
+            <div className="row">
+              <div className="col-8 ">
+                <div className="flexible">
+                  <div className="col">
+                    <div
+                      className="cover_image"
+                      onClick={() => handleImageClick(coverImage)}
+                      style={{
+                        backgroundImage: `url(${coverImage})`,
+
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    ></div>
+                    <div className="tag_chain">
+                      <SlTag className="icon_chain"></SlTag>
+                      <div className="txt_chain">{tags}</div>
+                      <LiaUser className="icon_chain"></LiaUser>
+                      <div className="txt_chain">{authorrole}</div>
+                      <LiaCommentAltSolid className="icon_chain"></LiaCommentAltSolid>
+                      <div className="txt_chain"> {cmt} comments</div>
+                      <LuEye className="icon_chain"></LuEye>
+                      <div className="txt_chain">{views} views</div>
+                      <FaRegClock className="icon_chain"></FaRegClock>
+                      <div className="txt_chain">{mins} mins</div>
+                    </div>
+                    <div className="title_single">{recipeName}</div>
+                    <div className="space_between topbot20px">
                       <div className="tag_chain">
-                        <SlTag className="icon_chain"></SlTag>
-                        <div className="txt_chain">{tags}</div>
-                        <LiaUser className="icon_chain"></LiaUser>
-                        <div className="txt_chain">{authorrole}</div>
-                        <LiaCommentAltSolid className="icon_chain"></LiaCommentAltSolid>
-                        <div className="txt_chain"> {cmt} comments</div>
-                        <LuEye className="icon_chain"></LuEye>
-                        <div className="txt_chain">{views} views</div>
-                        <FaRegClock className="icon_chain"></FaRegClock>
-                        <div className="txt_chain">{mins} mins</div>
-                      </div>
-                      <div className="title_single">{recipeName}</div>
-                      <div className="space_between topbot20px">
-                        <div className="tag_chain">
-                          <div
-                            className="avatar_single"
-                            style={{
-                              backgroundImage: `url(${userAvatar})`,
-                            }}
-                          ></div>
-                          <div>
-                            {" "}
-                            <div className="name_single">{userName}</div>
-                            <div className="tag_chain date_single left10px">
-                              {" "}
-                              <div>{date}</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="tag_chain2">
-                          <IoLinkOutline
-                            className="link_icon"
-                            onClick={handleCopyLink}
-                          />
-                          {isBookmarked !== null && islogin === true ? (
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleBookmark();
-                              }}
-                              className="bookmarksingle"
-                            >
-                              {isBookmarked ? (
-                                <FaBookmark
-                                  onClick={handelSave}
-                                  className="bookmark-icon-single active"
-                                />
-                              ) : (
-                                <FaRegBookmark
-                                  onClick={handelSave}
-                                  className="bookmark-icon-single"
-                                />
-                              )}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                      <div className="description">{description}</div>
-                      <div className="hd ">Cooking instructions</div>
-                      <div className="steps">
-                        {steps.map((step, index) => (
-                          <div className="step_container">
-                            <div className="step_icon">{index + 1}</div>
-                            <div className="step" key={index}>
-                              <div className="content">{step.description}</div>
-                              <div className="images">
-                                {step.image.map((img, imgIndex) => (
-                                  <img
-                                    key={imgIndex}
-                                    src={img}
-                                    className="image"
-                                    onClick={() => handleImageClick(img)} // Thêm sự kiện click
-                                    alt={`Step ${index + 1} image ${
-                                      imgIndex + 1
-                                    }`}
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {status === "RS2" && islogin === true ? (
+                        <div
+                          className="avatar_single"
+                          style={{
+                            backgroundImage: `url(${userAvatar})`,
+                          }}
+                        ></div>
                         <div>
-                          <div className="leaveacomment">Leave a comment</div>
-                          <div className="message">Message</div>
-                          <TextArea
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                            placeholder="Write your comment here..."
-                            autoSize={{
-                              minRows: 3,
-                              maxRows: 5,
-                            }}
-                          />
-                          <div className="button margin0" onClick={handlePost}>
-                            <p className="save post">Post Comments</p>
+                          {" "}
+                          <div className="name_single">{userName}</div>
+                          <div className="tag_chain date_single left10px">
+                            {" "}
+                            <div>{date}</div>
                           </div>
                         </div>
-                      ) : null}
-                      {islogin === false ? (
-                        <>
-                          <div className="leaveacomment">
-                            Please Sign in to leave a comment
-                          </div>
-                          <div
-                            className="button margin0"
-                            onClick={handleSingin}
-                          >
-                            {" "}
-                            <p className="save post">Sign In Now</p>
-                          </div>
-                        </>
-                      ) : null}
-
-                      <div className="cmt">Comments</div>
-                      <div className="comments">
-                        {comments.map((comment, index) => (
-                          <div>
-                            <div className="cmt_container" key={index}>
-                              <div
-                                className="cmt_icon"
-                                style={{
-                                  backgroundImage: `url(${comment.image})`,
-                                }}
-                              ></div>
-                              <div>
-                                <div className="flex">
-                                  {" "}
-                                  <p className="cmt_name">{comment.email} - </p>
-                                  <p className="cmt_date"> {comment.date}</p>
-                                </div>
-
-                                <p className="cmt_content">{comment.content}</p>
-                              </div>
-                            </div>
-                            <div className="line topbot"></div>
-                          </div>
-                        ))}
                       </div>
-                      {/* <div className="button_sv margin0 width0">
+                      <div className="tag_chain2">
+                        <IoLinkOutline
+                          className="link_icon"
+                          onClick={handleCopyLink}
+                        />
+                        {islogin === true ? (
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleBookmark();
+                            }}
+                            className="bookmarksingle"
+                          >
+                            {isBookmarked ? (
+                              <FaBookmark
+                                onClick={handelSave}
+                                className="bookmark-icon-single active"
+                              />
+                            ) : (
+                              <FaRegBookmark
+                                onClick={handelSave}
+                                className="bookmark-icon-single"
+                              />
+                            )}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                    <div className="description">{description}</div>
+                    <div className="hd ">Cooking instructions</div>
+                    <div className="steps">
+                      {steps.map((step, index) => (
+                        <div className="step_container">
+                          <div className="step_icon">{index + 1}</div>
+                          <div className="step" key={index}>
+                            <div className="content">{step.description}</div>
+                            <div className="images">
+                              {step.image.map((img, imgIndex) => (
+                                <img
+                                  key={imgIndex}
+                                  src={img}
+                                  className="image"
+                                  onClick={() => handleImageClick(img)} // Thêm sự kiện click
+                                  alt={`Step ${index + 1} image ${
+                                    imgIndex + 1
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {status === "RS2" && islogin === true ? (
+                      <div>
+                        <div className="leaveacomment">Leave a comment</div>
+                        <div className="message">Message</div>
+                        <TextArea
+                          value={value}
+                          onChange={(e) => setValue(e.target.value)}
+                          placeholder="Write your comment here..."
+                          autoSize={{
+                            minRows: 3,
+                            maxRows: 5,
+                          }}
+                        />
+                        <div className="button margin0" onClick={handlePost}>
+                          <p className="save post">Post Comments</p>
+                        </div>
+                      </div>
+                    ) : null}
+                    {islogin === false ? (
+                      <>
+                        <div className="leaveacomment">
+                          Please Sign in to leave a comment
+                        </div>
+                        <div className="button margin0" onClick={handleSingin}>
+                          {" "}
+                          <p className="save post">Sign In Now</p>
+                        </div>
+                      </>
+                    ) : null}
+
+                    <div className="cmt">Comments</div>
+                    <div className="comments">
+                      {comments.map((comment, index) => (
+                        <div>
+                          <div className="cmt_container" key={index}>
+                            <div
+                              className="cmt_icon"
+                              style={{
+                                backgroundImage: `url(${comment.image})`,
+                              }}
+                            ></div>
+                            <div>
+                              <div className="flex">
+                                {" "}
+                                <p className="cmt_name">{comment.email} - </p>
+                                <p className="cmt_date"> {comment.date}</p>
+                              </div>
+
+                              <p className="cmt_content">{comment.content}</p>
+                            </div>
+                          </div>
+                          <div className="line topbot"></div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* <div className="button_sv margin0 width0">
                         <p className="save post">Load more</p>
                       </div> */}
-                      <br />
-                      <br />
-                      <br />
-                      <br />
-                    </div>
-                    <div className="flexible2"></div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                   </div>
+                  <div className="flexible2"></div>
                 </div>
+              </div>
 
-                <div className="col scot2 ">
-                  {status === "RS1" ? (
-                    <div className="ccontainer newcon">
-                      <div className="rcapp textclred">
-                        Recipe is not currently public.
-                      </div>
+              <div className="col scot2 ">
+                {status === "RS1" ? (
+                  <div className="ccontainer newcon">
+                    <div className="rcapp textclred">
+                      Recipe is not currently public.
                     </div>
-                  ) : null}
-                  <Search
-                    placeholder="Find more recipes..."
-                    onSearch={onSearch}
-                    style={{
-                      width: "100%",
-                      height: "30px",
-                    }}
-                  />
-
-                  <div className="igre">Ingredients:</div>
-                  <div className="ingredients-list">
-                    {igredients.map((ingredient, index) => (
-                      <div className="ingredient-item" key={index}>
-                        <div
-                          className="flex clickable"
-                          onClick={() =>
-                            openLink(ingredient.link, ingredient.igredient)
-                          }
-                        >
-                          <div className="ingredient-name">
-                            {ingredient.name}
-                          </div>
-                          {ingredient.link === "" ||
-                          ingredient.link === undefined ? (
-                            <IoMdSearch className="ingredient-icon" />
-                          ) : (
-                            <MdOpenInNew className="ingredient-icon" />
-                          )}
-                        </div>
-
-                        <div className="ingredient-quantity">
-                          {ingredient.quantity}
-                        </div>
-                      </div>
-                    ))}
                   </div>
-                  <div className="line topbotl"></div>
-                  <div className="igre">Discover Others</div>
+                ) : null}
+                <Search
+                  placeholder="Find more recipes..."
+                  onSearch={onSearch}
+                  style={{
+                    width: "100%",
+                    height: "30px",
+                  }}
+                />
 
-                  {discovers.map((discover, index) => (
-                    <div>
-                      <DisplayItem
-                        key={index}
-                        id={discover.id}
-                        istrue={true}
-                        isbook={false}
-                        ttime={discover.cookingTime}
-                        ttag={discover.type}
-                        tby={discover.userName}
-                        tcomments={discover.views} // Assuming comments count is not available
-                        tname={discover.name}
-                        tlink={discover.image}
-                      />
-                      <br></br>
+                <div className="igre">Ingredients:</div>
+                <div className="ingredients-list">
+                  {igredients.map((ingredient, index) => (
+                    <div className="ingredient-item" key={index}>
+                      <div
+                        className="flex clickable"
+                        onClick={() =>
+                          openLink(ingredient.link, ingredient.igredient)
+                        }
+                      >
+                        <div className="ingredient-name">{ingredient.name}</div>
+                        {ingredient.link === "" ||
+                        ingredient.link === undefined ? (
+                          <IoMdSearch className="ingredient-icon" />
+                        ) : (
+                          <MdOpenInNew className="ingredient-icon" />
+                        )}
+                      </div>
+
+                      <div className="ingredient-quantity">
+                        {ingredient.quantity}
+                      </div>
                     </div>
                   ))}
                 </div>
+                <div className="line topbotl"></div>
+                <div className="igre">Discover Others</div>
+
+                {discovers.map((discover, index) => (
+                  <div>
+                    <DisplayItem
+                      key={index}
+                      id={discover.id}
+                      istrue={true}
+                      isbook={false}
+                      ttime={discover.cookingTime}
+                      ttag={discover.type}
+                      tby={discover.userName}
+                      tcomments={discover.views} // Assuming comments count is not available
+                      tname={discover.name}
+                      tlink={discover.image}
+                    />
+                    <br></br>
+                  </div>
+                ))}
               </div>
             </div>
-          </main>
-        </div>
-        {isLightboxOpen && (
-          <Lightbox
-            mainSrc={selectedImage}
-            onCloseRequest={() => setIsLightboxOpen(false)}
-          />
-        )}
-      </ConfigProvider>
-    );
-  }
+          </div>
+        </main>
+      </div>
+      {isLightboxOpen && (
+        <Lightbox
+          mainSrc={selectedImage}
+          onCloseRequest={() => setIsLightboxOpen(false)}
+        />
+      )}
+    </ConfigProvider>
+  );
 }
+
 export default SingleRecipe;
