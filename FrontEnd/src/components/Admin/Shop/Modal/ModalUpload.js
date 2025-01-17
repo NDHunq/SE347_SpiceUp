@@ -18,6 +18,7 @@ function ModalUpload(props) {
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
   const [categories, setCatgories] = useState([]);
+  const [discount,setDiscount]=useState(0);
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -119,7 +120,8 @@ function ModalUpload(props) {
       const formData = form.getFieldsValue();
       const uploadedFileIds = await uploadFiles();
       formData.product_images = uploadedFileIds;
-      console.log(formData)
+      formData.discount=discount/100;
+      console.log("a",formData)
       const response = await instance.post('/api/v1/product', formData);
 
       message.success('Create product successfully');
@@ -237,7 +239,7 @@ function ModalUpload(props) {
                 </Form.Item>
                 <Form.Item
                   className="input-percent-sale margin-left8"
-                  name="discount"
+                  //name="discount"
                   rules={[
                     {
                       required: false,
@@ -249,8 +251,10 @@ function ModalUpload(props) {
                     placeholder="Off"
                     addonAfter="%"
                     type='number'
+                    value={discount}
+                    onChange={setDiscount}
                     min={0}
-                    max={1} />
+                    max={100} />
                 </Form.Item>
               </div>
 

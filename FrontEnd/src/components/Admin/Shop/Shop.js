@@ -3,7 +3,7 @@ import Header from "../widget/top";
 import { useState } from "react";
 import { LiaFilterSolid } from "react-icons/lia";
 import "./shop.css"
-import FilterCategoryShop from "../../User/Recipe/filter_drop_category/filter_category";
+import FilterCategoryShop from "../../User/Shop/filter_category_shop/filter_category_shop";
 import FilterRate from "../../User/Shop/filter_rate/filter_rate";
 import { useNavigate } from "react-router";
 import '../../User/Recipe/filter_drop_category/filter_category.css'

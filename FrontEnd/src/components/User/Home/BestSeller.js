@@ -122,22 +122,24 @@ const BestSeller = (props) => {
 
                 :
                 bestSellerProducts.map((product, index) => (
-                  <Product
-                    id={product._id}
-                    urls_img={product.product_images}
-                    price={product.price}
-                    name={product.product_name}
-                    discount={product.discount}
-                    average_rating={product.average_ratings}
-                    review_count={product.review_count}
-                    product_status={product.product_status}
-                    description={product.description}
-                    value={product.value}
-                    category={product.category}
-                    stock={product.stock}
-                    sold={product.sold}
-                    brand={product.brand}
-                  />
+                  <div class="col">
+                    <Product
+                      id={product._id}
+                      urls_img={product.product_images}
+                      price={product.price}
+                      name={product.product_name}
+                      discount={product.discount}
+                      average_rating={product.average_ratings}
+                      review_count={product.review_count}
+                      product_status={product.product_status}
+                      description={product.description}
+                      value={product.value}
+                      category={product.category}
+                      stock={product.stock}
+                      sold={product.sold}
+                      brand={product.brand}
+                    />
+                  </div>
                 ))
 
             }

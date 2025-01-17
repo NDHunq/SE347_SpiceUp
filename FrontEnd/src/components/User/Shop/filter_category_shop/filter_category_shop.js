@@ -24,7 +24,11 @@ function FilterCategoryShop(props) {
     const onChange = (e) => {
         debugger;
         setSelectedCategory(e.target.value);
-        props.onCategoryChange(e.target.value);
+        if (typeof props.onCategoryChange === "function") {
+            props.onCategoryChange(e.target.value);
+          } else {
+            console.error("onCategoryChange không phải là một hàm");
+          }
     };
 
     return (

@@ -36,7 +36,7 @@ function ModalModify(props) {
       id: props.id,
       product_name: props.name,
       price: props.price,
-      discount: props.discount,
+      discount: props.discount*100,
       brand: props.brand,
       stock: props.stock,
       description: props.description,
@@ -170,7 +170,8 @@ function ModalModify(props) {
       const updatedProduct = {
         ...product,
         ...values,
-        product_images: [...product.product_images, ...uploadedFileIds]
+        product_images: [...product.product_images, ...uploadedFileIds],
+        discount: values.discount / 100
       };
 
       console.log("Updated Product:", updatedProduct);
@@ -183,7 +184,7 @@ function ModalModify(props) {
         product_images: updatedProduct.product_images,
       };
 
-      console.log(formData);
+      console.log("a",formData);
       // call api with form data
       const response = await instance.patch(`/api/v1/product/${product.id}`, formData);
       if (response.status === 200) {
@@ -281,13 +282,13 @@ function ModalModify(props) {
                   />
                 </Form.Item>
 
-                <Form.Item name="discount">
+                <Form.Item name="discount" >
                   <InputNumber
                     className="input-percent-sale margin-left8"
                     placeholder="Off"
                     addonAfter="%"
                     min={0}
-                    max={1}
+                    max={100}
                   />
                 </Form.Item>
               </div>
