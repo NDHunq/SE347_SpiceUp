@@ -51,24 +51,28 @@ class UserController {
   async updateInfo(req, res) {
     try {
       await connectToDb();
-
+    
       const { user_id } = req.params;
-      const user = await User.findOne({ _id: user_id });
-
-      for (const key in req.body) {
-        user[key] = req.body[key];
+    
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: user_id },
+        { '$set': req.body }, // Only update the fields provided in req.body
+        { new: true, runValidators: true } // Return the updated document and apply validation
+      );
+    
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
       }
-
-      await user.save();
-
+    
       res.status(200).json({
-        userInfo: user,
+        userInfo: updatedUser,
         message: "Update user info successfully",
       });
     } catch (e) {
       res.status(500).send(e);
       console.log("Error", e);
     }
+    
   }
 
   async changePassword(req, res) {
