@@ -118,11 +118,11 @@ function ModalUpload(props) {
     setIsUploading(true);
     try {
       const formData = form.getFieldsValue();
-      //const uploadedFileIds = await uploadFiles();
-      //formData.product_images = uploadedFileIds;
+      const uploadedFileIds = await uploadFiles();
+      formData.product_images = uploadedFileIds;
       formData.discount=discount/100;
       console.log("a",formData)
-      //const response = await instance.post('/api/v1/product', formData);
+      const response = await instance.post('/api/v1/product', formData);
 
       message.success('Create product successfully');
       setIsUploading(false);
